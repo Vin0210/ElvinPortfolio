@@ -1,0 +1,118 @@
+.hero-container {
+    position: relative;
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #333; 
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222; 
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .navbar-list {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar-item {
+    margin: 0 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    cursor: default; 
+  }
+  
+  .navbar-item:hover {
+    color: #5c6bc0;
+  }
+  
+  .hero-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+  
+  .my-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  }
+  
+  .hero-content h1,
+  .hero-content h2,
+  .hero-content h3 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.8);
+  }
+  
+  .hero-content p {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+    color: #ddd;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-content .highlight {
+    font-weight: bold;
+    text-shadow: none;
+  }
+  
+  .hero-content .web-developer {
+    color: #4caf50; 
+  }
+  
+  .hero-content .tech-enthusiast {
+    color: #ff9800;
+  }
+  
+  .hero-content .problem-solver {
+    color: #2196f3;
+  }
+  
+  .hero-content button {
+    padding: 10px 20px;
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .hero-content button:hover {
+    background-color: #3f51b5;
+  }
+  
+  .profile-pic-container {
+    margin-bottom: 20px;
+  }
+  
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+  }
+  

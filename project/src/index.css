@@ -1,0 +1,42 @@
+/* src/App.css */
+
+.hero-container {
+  background-image: url('https://via.placeholder.com/1200x600'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Full height of the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.hero-content button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.hero-content button:hover {
+  background-color: #0056b3;
+}
