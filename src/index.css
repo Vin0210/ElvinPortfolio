@@ -1,4 +1,3 @@
-/* General Styles */
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
@@ -7,7 +6,6 @@ body {
   color: #333;
 }
 
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
@@ -33,7 +31,6 @@ nav a {
   font-size: 1.2rem;
 }
 
-/* Hero Section */
 .hero {
   display: flex;
   justify-content: center;
@@ -69,7 +66,6 @@ nav a {
   background: #f0f0f0;
 }
 
-/* About Section */
 #about {
   padding: 4rem 2rem;
   text-align: center;
@@ -80,7 +76,6 @@ nav a {
   margin: 0 auto;
 }
 
-/* Projects Section */
 #projects {
   padding: 4rem 2rem;
   background: #fff;
@@ -121,7 +116,6 @@ nav a {
   border-radius: 5px;
 }
 
-/* Contact Section */
 #contact {
   padding: 4rem 2rem;
   background: #f4f4f9;
@@ -157,7 +151,6 @@ form button:hover {
   background: #555;
 }
 
-/* General Styles */
 body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
@@ -166,13 +159,12 @@ body {
   color: #333;
 }
 
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: #ff6f61; /* Vibrant red */
+  background: #ff6f61; 
   color: #fff;
 }
 
@@ -188,23 +180,22 @@ nav a {
 }
 
 .social-icon {
-  color: #ff6f61; /* Vibrant red */
+  color: #ff6f61; 
   font-size: 1.5rem;
   margin: 0 0.5rem;
   transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-  color: #00bcd4; /* Vibrant blue */
+  color: #00bcd4; 
 }
 
-/* Hero Section */
 .hero {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4); /* Soft pastel gradient */
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4); 
   color: #fff;
   text-align: left;
   padding: 0 2rem;
@@ -218,8 +209,8 @@ nav a {
 .cta-button {
   padding: 0.75rem 2rem;
   font-size: 1rem;
-  color: #fff; /* White text */
-  background: #ff6f61; /* Vibrant red */
+  color: #fff; 
+  background: #ff6f61; 
   border: none;
   border-radius: 5px;
   text-decoration: none;
@@ -227,7 +218,7 @@ nav a {
 }
 
 .cta-button:hover {
-  background: #00bcd4; /* Vibrant blue */
+  background: #00bcd4; 
 }
 
 .anime-character {
@@ -247,7 +238,6 @@ nav a {
   }
 }
 
-/* Projects Section */
 #projects {
   padding: 4rem 2rem;
   background: #f4f4f9;
@@ -283,7 +273,6 @@ nav a {
   border-radius: 10px;
 }
 
-/* Contact Section */
 #contact {
   padding: 4rem 2rem;
   background: #fff;
@@ -307,7 +296,7 @@ form input, form textarea {
 
 form button {
   padding: 0.75rem;
-  background: #ff6f61; /* Vibrant red */
+  background: #ff6f61; 
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -316,10 +305,10 @@ form button {
 }
 
 form button:hover {
-  background: #00bcd4; /* Vibrant blue */
+  background: #00bcd4; 
 }
 
-/* Reset default styles */
+
 html, body {
   margin: 0;
   padding: 0;
@@ -332,25 +321,24 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Profile Picture Styles */
+
 .profile-picture {
-  width: 150px; /* Adjust the size as needed */
-  height: 150px; /* Make it square */
-  border-radius: 50%; /* Make it circular */
-  border: 4px solid #fff; /* Add a border */
-  position: absolute; /* Position it absolutely */
-  top: 2rem; /* Distance from the top */
-  right: 2rem; /* Distance from the right */
-  animation: float 3s ease-in-out infinite; /* Add floating animation */
+  width: 150px; 
+  height: 150px; 
+  border-radius: 50%; 
+  border: 4px solid #fff; 
+  position: absolute; 
+  top: 2rem; 
+  right: 2rem; 
+  animation: float 3s ease-in-out infinite; 
 }
 
-/* Floating Animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px); /* Adjust the floating height */
+    transform: translateY(-10px);
   }
 }
 .profile-picture {

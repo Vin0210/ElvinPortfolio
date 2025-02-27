@@ -41,7 +41,7 @@ export default function Hero() {
           View My Work
         </motion.a>
       </div>
-      {/* Make the anime character smaller and position it like a profile picture */}
+      
       <img
         src={animeCharacter}
         alt="Anime Character"
