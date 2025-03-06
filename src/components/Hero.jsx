@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import animeBackground from '../assets/images/anime-background.jpg';
+
 import animeCharacter from '../assets/images/anime-character.png';
 
 export default function Hero() {
