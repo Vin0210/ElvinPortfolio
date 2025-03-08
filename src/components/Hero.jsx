@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import animeBackground from '../assets/images/anime-background.jpg';
-import animeCharacter from '../assets/images/anime-character.png';
+import animeCharacter from '../assets/images/cat1.jpg';
 
 export default function Hero() {
   return (
@@ -10,11 +9,6 @@ export default function Hero() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      style={{
-        backgroundImage: `url(${animeBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
     >
       <div className="hero-content">
         <motion.h1
@@ -41,7 +35,7 @@ export default function Hero() {
           View My Work
         </motion.a>
       </div>
-      
+
       <img
         src={animeCharacter}
         alt="Anime Character"

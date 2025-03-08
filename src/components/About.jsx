@@ -10,12 +10,11 @@ export default function About() {
     >
       <h2>About Me</h2>
       <motion.p
-        initial={{ x: -100, opacity: 0 }}
-        whileInView={{ x: 0, opacity: 1 }}
+        initial={{ y: 50, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        Hi, I'm a web developer passionate about building amazing websites! I specialize in React,
-        JavaScript, and modern web technologies.
+        Hi, I'm Elvin, a passionate web developer with expertise in building modern and responsive websites. I specialize in React, JavaScript, and modern web technologies. I love creating user-friendly and visually appealing applications that solve real-world problems.
       </motion.p>
     </motion.section>
   );
