@@ -16,13 +16,13 @@ html, body {
   box-sizing: border-box;
 }
 
-/* Fixed Header */
+
 .fixed-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(90deg, #1a1a1a, #333); /* Gradient background */
+  background: linear-gradient(90deg, #1a1a1a, #333); 
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   display: flex;
@@ -31,26 +31,22 @@ html, body {
   padding: 10px 20px;
 }
 
-/* Header Content (Logo + Title) */
 .header-content {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Logo or Icon */
 .logo {
   font-size: 1.5rem;
 }
 
-/* Header Title */
 .fixed-header h1 {
   margin: 0;
   font-size: 1.5rem;
   color: #ffffff;
 }
 
-/* Navigation Links */
 .fixed-header nav {
   display: flex;
   gap: 20px;
@@ -64,7 +60,6 @@ html, body {
   transition: color 0.3s ease;
 }
 
-/* Animated Underline Effect */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -84,7 +79,6 @@ html, body {
   color: #007bff;
 }
 
-/* Social Links */
 .social-links {
   display: flex;
   gap: 15px;
@@ -97,99 +91,95 @@ html, body {
 
 .social-link:hover {
   color: #007bff;
-  transform: scale(1.2); /* Scale up on hover */
+  transform: scale(1.2); 
 }
 
-/* Social Icons */
 .social-icon {
   font-size: 1.2rem;
 }
-/* Hero Section */
+
 .hero {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2); /* Vibrant gradient */
-  color: #fff; /* White text for contrast */
+  background: linear-gradient(135deg, #667eea, #764ba2); 
+  color: #fff; 
   text-align: center;
   padding: 0 2rem;
   position: relative;
-  overflow: hidden; /* Ensure animations don't overflow */
+  overflow: hidden; 
 }
 
 .hero-content {
   max-width: 600px;
   text-align: center;
-  z-index: 1; /* Ensure content is above the anime character */
+  z-index: 1; 
 }
 
 .hero-content h1 {
   font-size: 4rem;
   margin-bottom: 1rem;
-  font-family: 'Poppins', sans-serif; /* Modern font */
-  font-weight: 700; /* Bold */
-  color: #fff; /* White text */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Text shadow for depth */
+  font-family: 'Poppins', sans-serif; 
+  font-weight: 700; 
+  color: #fff; 
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
 }
 
 .hero-content p {
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  color: #e0e0e0; /* Light gray text */
-  font-family: 'Poppins', sans-serif; /* Modern font */
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle text shadow */
+  color: #e0e0e0; 
+  font-family: 'Poppins', sans-serif; 
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); 
 }
 
 .cta-button {
   padding: 1rem 2.5rem;
   font-size: 1.1rem;
-  color: #fff; /* White text */
-  background: #00bcd4; /* Vibrant cyan */
+  color: #fff;
+  background: #00bcd4; 
   border: none;
-  border-radius: 30px; /* Rounded edges */
+  border-radius: 30px;
   text-decoration: none;
   transition: background 0.3s ease, transform 0.3s ease;
-  font-family: 'Poppins', sans-serif; /* Modern font */
-  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4); /* Shadow for depth */
+  font-family: 'Poppins', sans-serif; 
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4); 
 }
 
 .cta-button:hover {
-  background: #57053c; /* Vibrant coral on hover */
-  transform: translateY(-5px); /* Slight lift on hover */
-  box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4); /* Enhanced shadow on hover */
+  background: #57053c; 
+  transform: translateY(-5px); 
+  box-shadow: 0 6px 20px rgba(255, 111, 97, 0.4); 
 }
 
-/* Profile Picture */
 .profile-picture {
-  width: 250px; /* Adjust size as needed */
-  height: 250px; /* Make it square */
-  border-radius: 50%; /* Make it circular */
-  border: 5px solid #fff; /* Add a border */
+  width: 250px;
+  height: 250px; 
+  border-radius: 50%; 
+  border: 5px solid #fff; 
   position: absolute;
-  bottom: 2rem; /* Position at the bottom */
-  right: 2rem; /* Position at the right */
-  animation: float 4s ease-in-out infinite; /* Floating animation */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  bottom: 2rem;
+  right: 2rem; 
+  animation: float 4s ease-in-out infinite; 
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-picture:hover {
-  transform: scale(1.1); /* Enlarge on hover */
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+  transform: scale(1.1); 
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); 
 }
 
-/* Floating Animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-20px); /* Adjust floating height */
+    transform: translateY(-20px); 
   }
 }
 
-/* Additional Background Animation */
 .hero::before {
   content: '';
   position: absolute;
@@ -211,35 +201,35 @@ html, body {
     transform: translateY(-1000px);
   }
 }
-/* About Section */
+
 #about {
   padding: 4rem 2rem;
-  background: #f4f4f9; /* Light background */
+  background: #f4f4f9; 
   text-align: center;
 }
 
 #about h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #333; /* Dark text */
+  color: #333; 
 }
 
 #about p {
   max-width: 800px;
   margin: 0 auto;
   font-size: 1.25rem;
-  color: #555; /* Slightly lighter text */
+  color: #555; 
 }
 #projects {
   padding: 4rem 2rem;
-  background: #fff; /* White background */
+  background: #fff; 
   text-align: center;
 }
 
 #projects h2 {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #333; /* Dark text */
+  color: #333; 
 }
 
 .project-list {
@@ -272,15 +262,15 @@ html, body {
 .project-card h3 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #333; /* Dark text */
+  color: #333;
 }
 
 .project-card p {
   font-size: 1rem;
-  color: #555; /* Slightly lighter text */
+  color: #555; 
 }
 
-/* Contact Section */
+
 #contact {
   padding: 4rem 2rem;
   background: #fff;
@@ -304,7 +294,7 @@ form input, form textarea {
 
 form button {
   padding: 0.75rem;
-  background: #57053c; /* Vibrant red */
+  background: #57053c; 
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -313,22 +303,22 @@ form button {
 }
 
 form button:hover {
-  background: #00bcd4; /* Vibrant blue */
+  background: #00bcd4; 
 }
 
 .social-links {
   display: flex;
-  gap: 1rem; /* Space between icons */
+  gap: 1rem;
 }
 
 .social-icon {
-  color: #fff; /* White color for icons */
-  font-size: 1.5rem; /* Icon size */
-  transition: color 0.3s ease; /* Smooth color transition */
+  color: #fff; 
+  font-size: 1.5rem; 
+  transition: color 0.3s ease; 
 }
 
 .social-icon:hover {
-  color: #00bcd4; /* Change color on hover */
+  color: #00bcd4; 
 }
 form {
   max-width: 600px;
@@ -347,13 +337,13 @@ form textarea {
 }
 
 form textarea {
-  resize: vertical; /* Allow vertical resizing */
-  min-height: 150px; /* Set a minimum height */
+  resize: vertical; 
+  min-height: 150px; 
 }
 
 form button {
   padding: 0.75rem;
-  background: #ff6f61; /* Vibrant red */
+  background: #ff6f61; 
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -363,29 +353,29 @@ form button {
 }
 
 form button:hover {
-  background: #00bcd4; /* Vibrant blue */
+  background: #00bcd4; 
 }
 
 form button:disabled {
-  background: #ccc; /* Gray out when disabled */
+  background: #ccc; 
   cursor: not-allowed;
 }
 
-/* Modal Overlay */
+
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  background: rgba(0, 0, 0, 0.7); 
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it's on top */
+  z-index: 1000; 
 }
 
-/* Modal Content */
+
 .modal-content {
   background: #fff;
   padding: 2rem;
@@ -424,7 +414,7 @@ form button:disabled {
 
 .project-links a {
   padding: 0.5rem 1rem;
-  background: #ff6f61; /* Vibrant red */
+  background: #ff6f61; 
   color: #fff;
   text-decoration: none;
   border-radius: 5px;
@@ -432,7 +422,7 @@ form button:disabled {
 }
 
 .project-links a:hover {
-  background: #00bcd4; /* Vibrant blue */
+  background: #00bcd4;
 }
 
 .modal-content button {
