@@ -9,6 +9,7 @@ export default function About() {
       whileInView={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      
       <motion.h2
         className="about-title"
         initial={{ y: -50, opacity: 0 }}
