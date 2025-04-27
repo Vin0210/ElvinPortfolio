@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import animeCharacter from '../assets/images/cat1.jpg';
-
 export default function Hero() {
   return (
     <motion.section
@@ -16,7 +15,7 @@ export default function Hero() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1 }}
         >
-          Hi, I'm Elvin
+          Hi, I'm Elvin!
         </motion.h1>
         <motion.p
           initial={{ y: 50, opacity: 0 }}
@@ -36,10 +35,14 @@ export default function Hero() {
         </motion.a>
       </div>
 
-      <img
+      
+      <motion.img
         src={animeCharacter}
         alt="Anime Character"
         className="profile-picture"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
       />
     </motion.section>
   );
