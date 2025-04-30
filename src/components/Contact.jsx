@@ -192,7 +192,7 @@ export default function Contact() {
               type="text"
               id="name"
               name="name"
-              placeholder="John Doe"
+              placeholder="Elvin Ramos"
               required
               style={{
                 width: '100%',
@@ -222,7 +222,7 @@ export default function Contact() {
               type="email"
               id="email"
               name="email"
-              placeholder="john@example.com"
+              placeholder="user@email.com"
               required
               style={{
                 width: '100%',
