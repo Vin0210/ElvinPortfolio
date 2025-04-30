@@ -7,7 +7,6 @@ import Experience from './components/Experience';
 import Qualifications from './components/Qualifications';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
-import Trips from './components/Trips'; 
 import Footer from './components/Footer';
 import './index.css';
 
@@ -21,7 +20,6 @@ function App() {
       <Experience />
       <Qualifications />
       <Projects />
-      <Trips /> {/* Add the Trips component */}
       <Contact />
       
       <Footer/>
