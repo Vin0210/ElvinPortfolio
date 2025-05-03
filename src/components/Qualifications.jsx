@@ -88,7 +88,7 @@ export default function Qualifications() {
     {
       id: 1,
       title: "Snake Identification App",
-      institution: "Personal Project",
+      institution: "Capstone Project",
       year: "2025",
       description: "Accessible application for identifying snake species native to the Philippines",
       image: "/images/Snake.jpg",
@@ -100,8 +100,8 @@ export default function Qualifications() {
     {
       id: 2,
       title: "Pokémon Web",
-      institution: "Personal Project",
-      year: "2024",
+      institution: "Weekly Project",
+      year: "2025",
       description: "Comprehensive Pokémon encyclopedia with team building features",
       image: "/images/project2.jpg",
       technologies: ["React", "CSS", "JSON Server"],
@@ -112,8 +112,8 @@ export default function Qualifications() {
     {
       id: 3,
       title: "Todo List",
-      institution: "Personal Project",
-      year: "2023",
+      institution: "Weekly Project 2",
+      year: "2025",
       description: "Productivity app for task management",
       image: "/images/project3.jpg",
       technologies: ["React", "CSS"],
@@ -124,7 +124,7 @@ export default function Qualifications() {
     {
       id: 4,
       title: "Fast Food E-Commerce",
-      institution: "Personal Project",
+      institution: "IT Elective 2 Project",
       year: "2023",
       description: "Online ordering platform for food delivery",
       image: "/images/project5.jpg",
