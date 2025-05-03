@@ -31,14 +31,14 @@ export default function Qualifications() {
       id: 2,
       title: "Senior High School Diploma",
       institution: "Culianan National High School",
-      year: "2020",
+      year: "2018 - 2020",
       description: "Intensive 2-years program focusing on Research, History and Technology"
     },
     {
       id: 3,
       title: "High School Diploma",
       institution: "Culianan National High School",
-      year: "2015 - 2020",
+      year: "2015 - 2018",
       description: "Gained essential knowledge in math, science, and computer fundamentals to prepare for further studies."
     }
   ];
@@ -158,14 +158,14 @@ export default function Qualifications() {
   const renderContent = (item) => {
     if (activeTab === 'projects') {
       return (
-        <div 
-        id="projects"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.3rem',
-          
-        }}>
+        <div
+          id="projects"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.3rem',
+
+          }}>
           {/* Project header */}
           <div style={{
             display: 'flex',
@@ -220,9 +220,9 @@ export default function Qualifications() {
           </div>
 
           {/* Project image */}
-          <div 
+          <div
             onClick={(e) => handleImageClick(e, item.image)}
-            style={{ 
+            style={{
               cursor: 'zoom-out',
               height: '200px',
               width: '100%',
@@ -231,9 +231,9 @@ export default function Qualifications() {
               marginBottom: '1rem',
             }}
           >
-            <img 
-              src={item.image} 
-              alt={item.title} 
+            <img
+              src={item.image}
+              alt={item.title}
               style={{
                 width: '100%',
                 height: '100%',
@@ -263,8 +263,8 @@ export default function Qualifications() {
             marginBottom: '1rem'
           }}>
             {item.technologies.map((tech, techIndex) => (
-              <span 
-                key={techIndex} 
+              <span
+                key={techIndex}
                 style={{
                   padding: '0.25rem 0.75rem',
                   borderRadius: '20px',
@@ -301,7 +301,7 @@ export default function Qualifications() {
                 fontSize: '0.9rem',
                 transition: 'all 0.3s ease',
               }}
-              whileHover={{ 
+              whileHover={{
                 backgroundColor: '#fc00ff',
                 transform: 'scale(1.05)'
               }}
@@ -326,7 +326,7 @@ export default function Qualifications() {
                 border: '1px solid rgba(255, 255, 255, 0.2)',
                 transition: 'all 0.3s ease',
               }}
-              whileHover={{ 
+              whileHover={{
                 backgroundColor: 'rgba(255, 255, 255, 0.2)',
                 transform: 'scale(1.05)'
               }}
@@ -477,11 +477,11 @@ export default function Qualifications() {
             style={{
               padding: '0.75rem 1.5rem',
               borderRadius: '50px',
-              backgroundColor: activeTab === tab.id 
-                ? 'rgba(0, 219, 222, 0.2)' 
+              backgroundColor: activeTab === tab.id
+                ? 'rgba(0, 219, 222, 0.2)'
                 : 'rgba(255, 255, 255, 0.05)',
-              border: activeTab === tab.id 
-                ? '1px solid rgba(0, 219, 222, 0.5)' 
+              border: activeTab === tab.id
+                ? '1px solid rgba(0, 219, 222, 0.5)'
                 : '1px solid rgba(255, 255, 255, 0.1)',
               color: 'white',
               cursor: 'pointer',
@@ -490,9 +490,9 @@ export default function Qualifications() {
               gap: '0.5rem',
               transition: 'all 0.3s ease',
             }}
-            whileHover={{ 
-              backgroundColor: activeTab === tab.id 
-                ? 'rgba(0, 219, 222, 0.3)' 
+            whileHover={{
+              backgroundColor: activeTab === tab.id
+                ? 'rgba(0, 219, 222, 0.3)'
                 : 'rgba(255, 255, 255, 0.1)',
             }}
           >
@@ -525,7 +525,7 @@ export default function Qualifications() {
               overflow: 'hidden',
               transition: 'all 0.3s ease'
             }}
-            whileHover={{ 
+            whileHover={{
               transform: activeTab !== 'projects' ? 'translateY(-5px)' : 'none',
               boxShadow: activeTab !== 'projects' ? '0 15px 40px rgba(0, 219, 222, 0.3)' : '0 10px 30px rgba(0, 0, 0, 0.2)'
             }}
@@ -543,7 +543,7 @@ export default function Qualifications() {
                 borderRadius: '2px'
               }} />
             )}
-            
+
             {renderContent(item)}
           </motion.div>
         ))}
@@ -571,7 +571,7 @@ export default function Qualifications() {
             padding: '2rem',
           }}
         >
-          <button 
+          <button
             onClick={(e) => {
               e.stopPropagation();
               setExpandedImage(null);
@@ -590,9 +590,9 @@ export default function Qualifications() {
           >
             <FiX />
           </button>
-          <motion.img 
-            src={expandedImage} 
-            alt="Expanded view" 
+          <motion.img
+            src={expandedImage}
+            alt="Expanded view"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.2 }}
@@ -644,7 +644,7 @@ export default function Qualifications() {
               position: 'relative',
             }}
           >
-            <button 
+            <button
               onClick={() => setSelectedProject(null)}
               style={{
                 position: 'absolute',
@@ -669,9 +669,9 @@ export default function Qualifications() {
               {selectedProject.title}
             </h3>
 
-            <div 
+            <div
               onClick={(e) => handleImageClick(e, selectedProject.image)}
-              style={{ 
+              style={{
                 cursor: 'zoom-in',
                 marginBottom: '1.5rem',
                 borderRadius: '8px',
@@ -679,9 +679,9 @@ export default function Qualifications() {
                 height: '300px',
               }}
             >
-              <img 
-                src={selectedProject.image} 
-                alt={selectedProject.title} 
+              <img
+                src={selectedProject.image}
+                alt={selectedProject.title}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -715,8 +715,8 @@ export default function Qualifications() {
                 gap: '0.5rem',
               }}>
                 {selectedProject.technologies.map((tech, index) => (
-                  <span 
-                    key={index} 
+                  <span
+                    key={index}
                     style={{
                       padding: '0.5rem 1rem',
                       borderRadius: '20px',
@@ -752,7 +752,7 @@ export default function Qualifications() {
                   fontWeight: '500',
                   transition: 'all 0.3s ease',
                 }}
-                whileHover={{ 
+                whileHover={{
                   backgroundColor: '#fc00ff',
                   transform: 'scale(1.05)'
                 }}
@@ -776,7 +776,7 @@ export default function Qualifications() {
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   transition: 'all 0.3s ease',
                 }}
-                whileHover={{ 
+                whileHover={{
                   backgroundColor: 'rgba(255, 255, 255, 0.2)',
                   transform: 'scale(1.05)'
                 }}

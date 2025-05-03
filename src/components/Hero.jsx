@@ -31,7 +31,10 @@ const HeroSection = () => {
         color: 'white',
         padding: 'clamp(1rem, 5vw, 4rem)',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        paddingTop: '80px', // Add padding equal to header height
+        scrollMarginTop: '80px'
+
       }}
     >
       <div style={{
@@ -61,6 +64,7 @@ const HeroSection = () => {
   src="/images/profile.jpg" 
   alt="Profile"
   style={{
+    
     width: '120px',
     height: '120px',
     borderRadius: '50%',

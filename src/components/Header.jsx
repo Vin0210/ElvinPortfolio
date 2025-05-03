@@ -97,6 +97,7 @@ export default function Header() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         style={{
+          height: '80px',
           position: 'fixed',
           top: 0,
           left: 0,
