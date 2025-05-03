@@ -4,34 +4,21 @@ import { useState, useEffect } from 'react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
+  const [activeSection, setActiveSection] = useState('hero');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   const navItems = [
     { id: 'hero', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
+    { id: 'qualifications', label: 'Qualifications' },
     { id: 'contact', label: 'Contact' }
   ];
 
-  // Handle CV download
-  const handleDownloadCV = () => {
-    // Replace with your actual CV file path
-    const cvUrl = '/public/documents/Elvin_Ramos_CV.pdf';
-    
-    // Create a temporary anchor element
-    const link = document.createElement('a');
-    link.href = cvUrl;
-    link.download = 'Elvin_Ramos_CV.pdf'; // Set the filename for download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Close mobile menu if open
-    if (isMobile) {
-      setIsMenuOpen(false);
-    }
+  // Handle blog view
+  const handleViewBlog = () => {
+    window.open('https://elvinsblog.netlify.app/', '_blank');
+    if (isMobile) setIsMenuOpen(false);
   };
 
   // Handle resize and mobile detection
@@ -41,7 +28,6 @@ export default function Header() {
       setIsMobile(mobile);
       if (!mobile) setIsMenuOpen(false);
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -49,20 +35,41 @@ export default function Header() {
   // Track active section
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
-      
-      for (const item of navItems) {
+      const sections = navItems.map(item => {
         const element = document.getElementById(item.id);
-        if (element && scrollPosition >= element.offsetTop) {
-          setActiveSection(item.id);
+        return {
+          id: item.id,
+          element,
+          top: element ? element.offsetTop : 0,
+          height: element ? element.offsetHeight : 0
+        };
+      });
+
+      const scrollPosition = window.scrollY + 100;
+
+      // Check which section is currently in view
+      let currentSection = 'hero'; // Default to hero
+      for (const section of sections) {
+        if (!section.element) continue;
+        
+        const sectionBottom = section.top + section.height;
+        if (scrollPosition >= section.top && scrollPosition < sectionBottom) {
+          currentSection = section.id;
           break;
         }
       }
+
+      setActiveSection(currentSection);
     };
 
+    // Add event listener
     window.addEventListener('scroll', handleScroll);
+    
+    // Initial check
+    handleScroll();
+
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -110,14 +117,16 @@ export default function Header() {
           style={{
             fontSize: '1.8rem',
             fontWeight: 700,
-            background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            cursor: 'pointer'
+            color: '#00dbde',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease'
           }}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ 
+            scale: 1.05,
+            color: '#fc00ff'
+          }}
         >
-          Elvin.
+          ELvin.
         </motion.div>
 
         {/* Desktop Navigation */}
@@ -139,13 +148,13 @@ export default function Header() {
                   position: 'relative',
                   padding: '0.5rem 0',
                   cursor: 'pointer',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
+                  transition: 'all 0.3s ease'
                 }}
                 whileHover={{ 
                   color: '#fc00ff',
                   y: -2
                 }}
-                transition={{ duration: 0.3 }}
               >
                 {item.label}
                 {activeSection === item.id && (
@@ -156,7 +165,7 @@ export default function Header() {
                       left: 0,
                       right: 0,
                       height: '2px',
-                      background: 'linear-gradient(90deg, #00dbde, #fc00ff)'
+                      backgroundColor: '#00dbde'
                     }}
                     layoutId="activeIndicator"
                   />
@@ -165,23 +174,27 @@ export default function Header() {
             ))}
 
             <motion.button
-              onClick={handleDownloadCV}
+              onClick={handleViewBlog}
               style={{
                 padding: '0.7rem 1.8rem',
-                background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
+                backgroundColor: '#00dbde',
                 border: 'none',
                 borderRadius: '50px',
-                color: 'white',
+                color: 'black',
                 fontWeight: 600,
                 cursor: 'pointer',
                 fontSize: '0.9rem',
                 boxShadow: '0 4px 15px rgba(0, 219, 222, 0.3)',
-                marginLeft: '1rem'
+                marginLeft: '1rem',
+                transition: 'all 0.3s ease'
               }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ 
+                scale: 1.05,
+                backgroundColor: '#fc00ff'
+              }}
               whileTap={{ scale: 0.95 }}
             >
-              Download CV
+              View Blog
             </motion.button>
           </motion.nav>
         )}
@@ -239,23 +252,23 @@ export default function Header() {
                 padding: '0.5rem 1rem',
                 cursor: 'pointer',
                 width: '100%',
-                textAlign: 'center'
+                textAlign: 'center',
+                transition: 'all 0.3s ease'
               }}
               whileHover={{ 
                 color: '#fc00ff',
                 x: 10
               }}
-              transition={{ duration: 0.3 }}
             >
               {item.label}
             </motion.div>
           ))}
           
           <motion.button
-            onClick={handleDownloadCV}
+            onClick={handleViewBlog}
             style={{
               padding: '1rem 2.5rem',
-              background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
+              backgroundColor: '#00dbde',
               border: 'none',
               borderRadius: '50px',
               color: 'white',
@@ -263,12 +276,16 @@ export default function Header() {
               cursor: 'pointer',
               fontSize: '1rem',
               marginTop: '1rem',
-              boxShadow: '0 4px 15px rgba(0, 219, 222, 0.3)'
+              boxShadow: '0 4px 15px rgba(0, 219, 222, 0.3)',
+              transition: 'all 0.3s ease'
             }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ 
+              scale: 1.05,
+              backgroundColor: '#fc00ff'
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            Download CV
+            View Blog
           </motion.button>
         </motion.div>
       )}

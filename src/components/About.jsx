@@ -15,29 +15,27 @@ export default function About() {
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.8 }}
       style={{
+        
         padding: '6rem 2rem',
         maxWidth: '1200px',
         margin: '0 auto',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: '#1a1a2e'
       }}
     >
       {/* Decorative elements */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={inView ? { scale: 1 } : {}}
-        transition={{ duration: 1, delay: 0.5 }}
-        style={{
-          position: 'absolute',
-          right: '-10%',
-          top: '-10%',
-          width: '500px',
-          height: '500px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,219,222,0.1) 0%, rgba(252,0,255,0.05) 70%, transparent 100%)',
-          zIndex: -1
-        }}
-      />
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 1,
+        opacity: 0.03,
+        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
+        backgroundSize: '40px 40px'
+      }} />
       
       <motion.div
         initial={{ scale: 0 }}
@@ -47,11 +45,12 @@ export default function About() {
           position: 'absolute',
           left: '-15%',
           bottom: '-15%',
-          width: '600px',
-          height: '600px',
+          width: '400px',
+          height: '400px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,219,222,0.1) 0%, rgba(252,0,255,0.05) 70%, transparent 100%)',
-          zIndex: -1
+          backgroundColor: 'rgba(252, 0, 255, 0.05)',
+          zIndex: 0,
+          filter: 'blur(30px)'
         }}
       />
 
@@ -62,11 +61,9 @@ export default function About() {
         style={{
           fontSize: '2.5rem',
           fontWeight: '700',
-          marginBottom: '2rem',
+          marginBottom: '3rem',
           textAlign: 'center',
-          background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
+          color: '#00dbde',
           position: 'relative'
         }}
       >
@@ -78,7 +75,7 @@ export default function About() {
           style={{
             display: 'block',
             height: '4px',
-            background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
+            backgroundColor: '#00dbde',
             margin: '0.5rem auto 0',
             borderRadius: '2px'
           }}
@@ -90,9 +87,9 @@ export default function About() {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.5, duration: 0.8 }}
         style={{
-          background: 'rgba(26, 26, 46, 0.7)',
+          backgroundColor: 'rgba(26, 26, 46, 0.8)',
           backdropFilter: 'blur(10px)',
-          borderRadius: '20px',
+          borderRadius: '12px',
           padding: '3rem',
           border: '1px solid rgba(255, 255, 255, 0.1)',
           maxWidth: '800px',
@@ -109,17 +106,13 @@ export default function About() {
             textAlign: 'center'
           }}
         >
-          Hi, I'm <span style={{ fontWeight: '600', color: '#00dbde' }}>Elvin</span>, a passionate web developer with expertise in building modern and responsive websites. I specialize in <span style={{ 
-            background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+          Hi, I'm <span style={{ fontWeight: '600', color: '#00dbde' }}>Elvin</span>, I enjoy building modern, responsive websites. I work with tools like <span style={{ 
+            color: '#00dbde',
             fontWeight: '600'
-          }}>React</span>, <span style={{ 
-            background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
+          }}>React</span> and <span style={{ 
+            color: '#00dbde',
             fontWeight: '600'
-          }}>JavaScript</span>, and modern web technologies.
+          }}>JavaScript</span>, to create clean and useful web apps.
         </motion.p>
         
         <motion.p
@@ -127,10 +120,11 @@ export default function About() {
             fontSize: '1.1rem',
             lineHeight: '1.8',
             color: 'rgba(255, 255, 255, 0.9)',
-            textAlign: 'center'
+            textAlign: 'center',
+            marginBottom: '2rem'
           }}
         >
-          I love creating <span style={{ fontStyle: 'italic' }}>user-friendly</span> and <span style={{ fontStyle: 'italic' }}>visually appealing</span> applications that solve real problems. With a keen eye for design and a passion for clean code, I strive to build experiences that users love.
+          I love creating <span style={{ fontStyle: 'italic', color: '#00dbde' }}>user-friendly</span> and <span style={{ fontStyle: 'italic', color: '#00dbde' }}>visually appealing</span> applications. With a keen eye for design and a passion for clean code, I care about good design and writing code that works well, so users have a great experience.
         </motion.p>
 
         <motion.div
@@ -145,17 +139,19 @@ export default function About() {
             flexWrap: 'wrap'
           }}
         >
-          {['Web Development', 'UI/UX Design', 'Responsive Design', 'Performance'].map((item, index) => (
+          {['Web Development', 'UI/UX', 'Responsive', 'Performance', 'Clean Code'].map((item, index) => (
             <motion.span
               key={index}
-              whileHover={{ y: -3 }}
+              whileHover={{ y: -3, backgroundColor: 'rgba(0, 219, 222, 0.2)' }}
               style={{
-                padding: '0.5rem 1rem',
-                background: 'rgba(0, 219, 222, 0.1)',
+                padding: '0.5rem 1.2rem',
+                backgroundColor: 'rgba(0, 219, 222, 0.1)',
                 borderRadius: '50px',
                 color: '#00dbde',
                 border: '1px solid rgba(0, 219, 222, 0.3)',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                transition: 'all 0.3s ease'
               }}
             >
               {item}
@@ -163,6 +159,8 @@ export default function About() {
           ))}
         </motion.div>
       </motion.div>
+
+    
     </motion.section>
   );
 }

@@ -61,8 +61,9 @@ export default function Contact() {
           width: '400px',
           height: '400px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(0,219,222,0.1) 0%, rgba(252,0,255,0.05) 70%, transparent 100%)',
-          zIndex: -1
+          backgroundColor: 'rgba(0, 219, 222, 0.1)',
+          zIndex: -1,
+          filter: 'blur(30px)'
         }}
       />
 
@@ -75,9 +76,7 @@ export default function Contact() {
           fontWeight: '700',
           marginBottom: '3rem',
           textAlign: 'center',
-          background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
+          color: '#00dbde',
           position: 'relative'
         }}
       >
@@ -87,9 +86,8 @@ export default function Contact() {
           whileInView={{ width: '100px' }}
           transition={{ delay: 0.5, duration: 0.8 }}
           style={{
-            display: 'block',
             height: '4px',
-            background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
+            backgroundColor: '#00dbde',
             margin: '0.5rem auto 0',
             borderRadius: '2px'
           }}
@@ -102,7 +100,7 @@ export default function Contact() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           style={{
-            background: 'rgba(26, 26, 46, 0.7)',
+            backgroundColor: 'rgba(26, 26, 46, 0.7)',
             backdropFilter: 'blur(10px)',
             borderRadius: '16px',
             padding: '3rem 2rem',
@@ -148,15 +146,17 @@ export default function Contact() {
             whileTap={{ scale: 0.95 }}
             style={{
               padding: '0.75rem 1.5rem',
-              background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
+              backgroundColor: '#00dbde',
               color: 'white',
               border: 'none',
               borderRadius: '50px',
               cursor: 'pointer',
               fontWeight: '500',
               fontSize: '1rem',
-              marginTop: '1rem'
+              marginTop: '1rem',
+              transition: 'all 0.3s ease'
             }}
+          
           >
             Send Another Message
           </motion.button>
@@ -169,7 +169,7 @@ export default function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
           style={{
-            background: 'rgba(26, 26, 46, 0.7)',
+            backgroundColor: 'rgba(26, 26, 46, 0.7)',
             backdropFilter: 'blur(10px)',
             borderRadius: '16px',
             padding: '2.5rem',
@@ -199,7 +199,7 @@ export default function Contact() {
                 padding: '0.75rem 1rem',
                 borderRadius: '8px',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                background: 'rgba(255, 255, 255, 0.05)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 color: 'white',
                 fontSize: '1rem',
                 outline: 'none',
@@ -229,7 +229,7 @@ export default function Contact() {
                 padding: '0.75rem 1rem',
                 borderRadius: '8px',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                background: 'rgba(255, 255, 255, 0.05)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 color: 'white',
                 fontSize: '1rem',
                 outline: 'none',
@@ -259,7 +259,7 @@ export default function Contact() {
                 padding: '0.75rem 1rem',
                 borderRadius: '8px',
                 border: '1px solid rgba(255, 255, 255, 0.2)',
-                background: 'rgba(255, 255, 255, 0.05)',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 color: 'white',
                 fontSize: '1rem',
                 outline: 'none',
@@ -293,8 +293,8 @@ export default function Contact() {
             style={{
               width: '100%',
               padding: '0.75rem 1.5rem',
-              background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-              color: 'white',
+              backgroundColor: '#00dbde',
+              color: 'black',
               border: 'none',
               borderRadius: '50px',
               cursor: 'pointer',
@@ -304,8 +304,10 @@ export default function Contact() {
               alignItems: 'center',
               justifyContent: 'center',
               gap: '0.5rem',
-              opacity: isLoading ? 0.8 : 1
+              opacity: isLoading ? 0.8 : 1,
+              transition: 'all 0.3s ease'
             }}
+            
           >
             {isLoading ? (
               <>

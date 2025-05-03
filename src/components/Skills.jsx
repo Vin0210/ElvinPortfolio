@@ -43,7 +43,6 @@ const Skills = () => {
   return (
     <motion.section 
       id="skills"
-      className="skills-section"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -51,10 +50,10 @@ const Skills = () => {
         padding: '4rem 2rem',
         maxWidth: '1200px',
         margin: '0 auto',
+        backgroundColor: '#1a1a2e'
       }}
     >
       <motion.h2
-        className="section-title"
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.8 }}
@@ -63,9 +62,7 @@ const Skills = () => {
           fontWeight: '700',
           marginBottom: '3rem',
           textAlign: 'center',
-          background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
+          color: '#00dbde' // Changed from gradient to solid color
         }}
       >
         My Skills
@@ -89,8 +86,8 @@ const Skills = () => {
             style={{
               padding: '0.75rem 1.5rem',
               borderRadius: '50px',
-              background: activeCategory === category.category 
-                ? 'linear-gradient(90deg, rgba(0, 219, 222, 0.2), rgba(252, 0, 255, 0.2))' 
+              backgroundColor: activeCategory === category.category 
+                ? 'rgba(0, 219, 222, 0.2)' 
                 : 'rgba(255, 255, 255, 0.05)',
               border: activeCategory === category.category 
                 ? '1px solid rgba(0, 219, 222, 0.5)' 
@@ -103,7 +100,7 @@ const Skills = () => {
               transition: 'all 0.3s ease',
             }}
             whileHover={{ 
-              background: 'rgba(255, 255, 255, 0.1)',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
             }}
           >
             <span style={{ fontSize: '1.2rem' }}>{category.icon}</span>
@@ -127,7 +124,7 @@ const Skills = () => {
             onMouseEnter={() => setHoveredSkill(skill.name)}
             onMouseLeave={() => setHoveredSkill(null)}
             style={{
-              background: 'rgba(26, 26, 46, 0.7)',
+              backgroundColor: 'rgba(26, 26, 46, 0.7)',
               backdropFilter: 'blur(10px)',
               borderRadius: '12px',
               padding: '1.5rem',
@@ -143,13 +140,12 @@ const Skills = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '1rem',
-              marginBottom: '1rem',
             }}>
               <div style={{
                 width: '50px',
                 height: '50px',
                 borderRadius: '10px',
-                background: 'rgba(255, 255, 255, 0.1)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -183,115 +179,9 @@ const Skills = () => {
                 {skill.name}
               </h3>
             </div>
-
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}>
-              <div style={{
-                flex: 1,
-                height: '8px',
-                borderRadius: '4px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                overflow: 'hidden',
-              }}>
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: index * 0.1 }}
-                  style={{
-                    height: '100%',
-                    background: 'linear-gradient(90deg, #00dbde, #fc00ff)',
-                    borderRadius: '4px',
-                  }}
-                />
-              </div>
-              <span style={{
-                color: '#00dbde',
-                fontWeight: '600',
-                fontSize: '0.9rem',
-              }}>
-                {skill.level}%
-              </span>
-            </div>
           </motion.div>
         ))}
       </div>
-
-      {/* Circular Skills Alternative (Uncomment to use) */}
-      {/*
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-        gap: '2rem',
-        marginTop: '3rem',
-      }}>
-        {activeSkills.map((skill, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '1rem',
-            }}
-          >
-            <div style={{
-              position: 'relative',
-              width: '100px',
-              height: '100px',
-            }}>
-              <svg viewBox="0 0 36 36" style={{
-                width: '100%',
-                height: '100%',
-                transform: 'rotate(-90deg)',
-              }}>
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="rgba(255, 255, 255, 0.1)"
-                  strokeWidth="3"
-                />
-                <motion.path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="url(#skill-gradient)"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  initial={{ strokeDasharray: '0, 100' }}
-                  whileInView={{ 
-                    strokeDasharray: [`${skill.level}, 100`],
-                    transition: { duration: 1, delay: index * 0.1 }
-                  }}
-                />
-              </svg>
-              <div style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: 'white',
-                fontWeight: '600',
-                fontSize: '1.2rem',
-              }}>
-                {skill.level}%
-              </div>
-            </div>
-            <span style={{
-              color: 'white',
-              fontWeight: '500',
-              textAlign: 'center',
-            }}>
-              {skill.name}
-            </span>
-          </motion.div>
-        ))}
-      </div>
-      */}
     </motion.section>
   );
 };
