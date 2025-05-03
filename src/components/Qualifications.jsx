@@ -128,7 +128,7 @@ export default function Qualifications() {
       year: "2023",
       description: "Online ordering platform for food delivery",
       image: "/images/project5.jpg",
-      technologies: ["React", "CSS"],
+      technologies: ["PHP", "phpMyAdmin", "XAMPP"],
       liveLink: "https://elvinsblog.netlify.app/",
       githubLink: "https://github.com/Vin0210/Blog",
       moreDescription: "A full-featured fast food ordering system with menu browsing, cart functionality, and order tracking. Features responsive design for optimal viewing on all devices.",
