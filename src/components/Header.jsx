@@ -186,7 +186,7 @@ export default function Header() {
               }}
               whileTap={{ scale: 0.95 }}
             >
-              View Blog
+              Tour Blog
             </motion.button>
           </motion.nav>
         )}
@@ -261,7 +261,7 @@ export default function Header() {
               backgroundColor: '#00dbde',
               border: 'none',
               borderRadius: '50px',
-              color: 'white',
+              color: 'black',
               fontWeight: 600,
               cursor: 'pointer',
               fontSize: '1rem',
@@ -275,7 +275,7 @@ export default function Header() {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            View Blog
+            Tour Blog
           </motion.button>
         </motion.div>
       )}

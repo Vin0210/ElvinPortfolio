@@ -61,7 +61,7 @@ export default function Footer() {
             },
             {
               icon: <FaLinkedin />,
-              url: 'https://linkedin.com/in/elvinramos',
+              url: 'https://www.linkedin.com/in/elvin-ramos-a347b2339/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BNzyFk2%2BlSKm8xcnCVk2hYA%3D%3D',
               color: '#0A66C2'
             },
             {

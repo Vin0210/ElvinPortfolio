@@ -129,8 +129,8 @@ export default function Qualifications() {
       description: "Online ordering platform for food delivery",
       image: "/images/project5.jpg",
       technologies: ["PHP", "phpMyAdmin", "XAMPP"],
-      liveLink: "https://elvinsblog.netlify.app/",
-      githubLink: "https://github.com/Vin0210/Blog",
+      liveLink: "https://cat-bounce.com/",
+      githubLink: "https://github.com/Annur12/e-commerce",
       moreDescription: "A full-featured fast food ordering system with menu browsing, cart functionality, and order tracking. Features responsive design for optimal viewing on all devices.",
     }
   ];
@@ -445,7 +445,6 @@ export default function Qualifications() {
           animate={inView ? { width: '100px' } : {}}
           transition={{ delay: 0.5, duration: 0.8 }}
           style={{
-            display: 'block',
             height: '4px',
             backgroundColor: '#00dbde',
             margin: '0.5rem auto 0',

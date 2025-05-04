@@ -72,7 +72,6 @@ export default function About() {
           animate={inView ? { width: '100px' } : {}}
           transition={{ delay: 0.5, duration: 0.8 }}
           style={{
-            display: 'block',
             height: '4px',
             backgroundColor: '#00dbde',
             margin: '0.5rem auto 0',
