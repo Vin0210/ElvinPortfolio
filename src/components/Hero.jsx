@@ -19,8 +19,8 @@ const HeroSection = () => {
   };
 
   return (
-    <section 
-      id="hero" 
+    <section
+      id="hero"
       ref={ref}
       style={{
         minHeight: '100vh',
@@ -32,7 +32,7 @@ const HeroSection = () => {
         padding: 'clamp(1rem, 5vw, 4rem)',
         position: 'relative',
         overflow: 'hidden',
-        paddingTop: '80px', // Add padding equal to header height
+        paddingTop: '80px',
         scrollMarginTop: '80px'
 
       }}
@@ -47,7 +47,7 @@ const HeroSection = () => {
         alignItems: 'center',
         textAlign: 'center'
       }}>
-        {/* Main Content */}
+
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -59,23 +59,23 @@ const HeroSection = () => {
             gap: '1.5rem'
           }}
         >
-       
-          <img 
-  src="/images/profile.jpg" 
-  alt="Profile"
-  style={{
-    
-    width: '120px',
-    height: '120px',
-    borderRadius: '50%',
-    objectFit: 'cover',
-    border: '3px solid #00dbde',
-    boxShadow: '0 4px 15px rgba(0, 219, 222, 0.4)'
-  }}
-/>
+
+          <img
+            src="/images/profile.jpg"
+            alt="Profile"
+            style={{
+
+              width: '120px',
+              height: '120px',
+              borderRadius: '50%',
+              objectFit: 'cover',
+              border: '3px solid #00dbde',
+              boxShadow: '0 4px 15px rgba(0, 219, 222, 0.4)'
+            }}
+          />
 
 
-          {/* Main Heading */}
+
           <h1 style={{
             fontSize: 'clamp(2rem, 8vw, 4.5rem)',
             fontWeight: 800,
@@ -86,7 +86,7 @@ const HeroSection = () => {
             Hi, I'm <span style={{ color: '#00dbde' }}>Elvin</span>
           </h1>
 
-          {/* Subheading */}
+
           <motion.h2
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -101,7 +101,7 @@ const HeroSection = () => {
             Web Developer
           </motion.h2>
 
-          {/* Description */}
+
           <motion.p
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
@@ -134,10 +134,10 @@ const HeroSection = () => {
         >
           {[
             { value: '10+', label: 'Projects Completed' },
-            { value: '100%', label: 'Code Quality' }, 
+            { value: '100%', label: 'Code Quality' },
             { value: 'Fast', label: 'Problem Solver' }
           ].map((stat, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               whileHover={{ y: -5 }}
               style={{
@@ -176,18 +176,18 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 1.2 }}
-          style={{ 
+          style={{
             display: 'flex',
             gap: '1.5rem',
             flexWrap: 'wrap',
             justifyContent: 'center'
           }}
         >
-        
-          
+
+
           <motion.button
             onClick={() => scrollToSection('contact')}
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               backgroundColor: 'rgba(0, 219, 222, 0.1)',
               borderColor: '#00dbde'
@@ -228,9 +228,9 @@ const HeroSection = () => {
         backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
         backgroundSize: '40px 40px'
       }} />
-      
+
       {/* Subtle floating dots */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 0.1 } : {}}
         transition={{ duration: 1.5, delay: 0.5 }}
@@ -246,8 +246,8 @@ const HeroSection = () => {
           zIndex: 1
         }}
       />
-      
-      <motion.div 
+
+      <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 0.1 } : {}}
         transition={{ duration: 1.5, delay: 0.7 }}

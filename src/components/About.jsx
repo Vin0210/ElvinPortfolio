@@ -15,7 +15,7 @@ export default function About() {
       animate={inView ? { opacity: 1 } : {}}
       transition={{ duration: 0.8 }}
       style={{
-        
+
         padding: '6rem 2rem',
         maxWidth: '1200px',
         margin: '0 auto',
@@ -24,7 +24,6 @@ export default function About() {
         backgroundColor: '#1a1a2e'
       }}
     >
-      {/* Decorative elements */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -36,7 +35,7 @@ export default function About() {
         backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
         backgroundSize: '40px 40px'
       }} />
-      
+
       <motion.div
         initial={{ scale: 0 }}
         animate={inView ? { scale: 1 } : {}}
@@ -106,15 +105,15 @@ export default function About() {
             textAlign: 'center'
           }}
         >
-          Hi, I'm <span style={{ fontWeight: '600', color: '#00dbde' }}>Elvin</span>, I enjoy building modern, responsive websites. I work with tools like <span style={{ 
+          Hi, I'm <span style={{ fontWeight: '600', color: '#00dbde' }}>Elvin</span>, I enjoy building modern, responsive websites. I work with tools like <span style={{
             color: '#00dbde',
             fontWeight: '600'
-          }}>React</span> and <span style={{ 
+          }}>React</span> and <span style={{
             color: '#00dbde',
             fontWeight: '600'
           }}>JavaScript</span>, to create clean and useful web apps.
         </motion.p>
-        
+
         <motion.p
           style={{
             fontSize: '1.1rem',
@@ -160,7 +159,7 @@ export default function About() {
         </motion.div>
       </motion.div>
 
-    
+
     </motion.section>
   );
 }

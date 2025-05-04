@@ -37,7 +37,6 @@ export default function Footer() {
         alignItems: 'center',
         gap: '2rem'
       }}>
-        {/* Social Media Links */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -50,23 +49,23 @@ export default function Footer() {
           }}
         >
           {[
-            { 
-              icon: <FaFacebook />, 
+            {
+              icon: <FaFacebook />,
               url: 'https://facebook.com/elvinramos.meme',
               color: '#1877F2'
             },
-            { 
-              icon: <FaInstagram />, 
+            {
+              icon: <FaInstagram />,
               url: 'https://www.instagram.com/_thevinsea?igsh=aDQzMzB1bGl4NWhy',
               color: '#E4405F'
             },
-            { 
-              icon: <FaLinkedin />, 
+            {
+              icon: <FaLinkedin />,
               url: 'https://linkedin.com/in/elvinramos',
               color: '#0A66C2'
             },
-            { 
-              icon: <FaGithub />, 
+            {
+              icon: <FaGithub />,
               url: 'https://github.com/Vin0210',
               color: '#181717'
             }
@@ -79,7 +78,7 @@ export default function Footer() {
               initial={{ scale: 0 }}
               animate={inView ? { scale: 1 } : {}}
               transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
-              whileHover={{ 
+              whileHover={{
                 y: -5,
                 color: social.color,
                 scale: 1.1
@@ -104,7 +103,6 @@ export default function Footer() {
           ))}
         </motion.div>
 
-        {/* Copyright Notice */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -119,13 +117,12 @@ export default function Footer() {
           &copy; {new Date().getFullYear()} Elvin Ramos. All rights reserved.
         </motion.p>
 
-        {/* Back to Top Button */}
         <motion.button
           onClick={scrollToTop}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 1, duration: 0.5 }}
-          whileHover={{ 
+          whileHover={{
             y: -5,
             background: 'linear-gradient(90deg, #00dbde, #fc00ff)'
           }}

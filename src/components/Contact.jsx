@@ -49,7 +49,6 @@ export default function Contact() {
         position: 'relative'
       }}
     >
-      {/* Decorative elements */}
       <motion.div
         initial={{ scale: 0 }}
         whileInView={{ scale: 1 }}
@@ -156,7 +155,7 @@ export default function Contact() {
               marginTop: '1rem',
               transition: 'all 0.3s ease'
             }}
-          
+
           >
             Send Another Message
           </motion.button>
@@ -307,7 +306,7 @@ export default function Contact() {
               opacity: isLoading ? 0.8 : 1,
               transition: 'all 0.3s ease'
             }}
-            
+
           >
             {isLoading ? (
               <>

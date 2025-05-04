@@ -117,7 +117,7 @@ export default function Qualifications() {
       description: "Productivity app for task management",
       image: "/images/project3.jpg",
       technologies: ["React", "CSS"],
-      liveLink: "https://apptodo12.netlify.app/",
+      liveLink: "https://todotodo1222.netlify.app/",
       githubLink: "https://github.com/Vin0210/ToDo",
       moreDescription: "A clean, intuitive to-do list application with task prioritization, completion tracking, and responsive design. Built with React for state management and modern CSS for styling.",
     },

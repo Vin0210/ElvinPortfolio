@@ -15,13 +15,11 @@ export default function Header() {
     { id: 'contact', label: 'Contact' }
   ];
 
-  // Handle blog view
   const handleViewBlog = () => {
     window.open('https://elvinsblog.netlify.app/', '_blank');
     if (isMobile) setIsMenuOpen(false);
   };
 
-  // Handle resize and mobile detection
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth <= 768;
@@ -32,7 +30,6 @@ export default function Header() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Track active section
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map(item => {
@@ -47,11 +44,10 @@ export default function Header() {
 
       const scrollPosition = window.scrollY + 100;
 
-      // Check which section is currently in view
-      let currentSection = 'hero'; // Default to hero
+      let currentSection = 'hero';
       for (const section of sections) {
         if (!section.element) continue;
-        
+
         const sectionBottom = section.top + section.height;
         if (scrollPosition >= section.top && scrollPosition < sectionBottom) {
           currentSection = section.id;
@@ -62,22 +58,18 @@ export default function Header() {
       setActiveSection(currentSection);
     };
 
-    // Add event listener
     window.addEventListener('scroll', handleScroll);
-    
-    // Initial check
+
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [navItems]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'auto';
     return () => { document.body.style.overflow = 'auto'; };
   }, [isMenuOpen]);
 
-  // Smooth scroll to section
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
     if (element) {
@@ -112,8 +104,8 @@ export default function Header() {
           borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
         }}
       >
-        {/* Logo */}
-        <motion.div 
+
+        <motion.div
           onClick={() => scrollToSection('hero')}
           style={{
             fontSize: '1.8rem',
@@ -122,7 +114,7 @@ export default function Header() {
             cursor: 'pointer',
             transition: 'all 0.3s ease'
           }}
-          whileHover={{ 
+          whileHover={{
             scale: 1.05,
             color: '#fc00ff'
           }}
@@ -130,7 +122,6 @@ export default function Header() {
           ELvin.
         </motion.div>
 
-        {/* Desktop Navigation */}
         {!isMobile && (
           <motion.nav
             initial={{ opacity: 0 }}
@@ -152,7 +143,7 @@ export default function Header() {
                   whiteSpace: 'nowrap',
                   transition: 'all 0.3s ease'
                 }}
-                whileHover={{ 
+                whileHover={{
                   color: '#fc00ff',
                   y: -2
                 }}
@@ -189,7 +180,7 @@ export default function Header() {
                 marginLeft: '1rem',
                 transition: 'all 0.3s ease'
               }}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
                 backgroundColor: '#fc00ff'
               }}
@@ -200,7 +191,6 @@ export default function Header() {
           </motion.nav>
         )}
 
-        {/* Mobile Menu Button */}
         {isMobile && (
           <motion.button
             style={{
@@ -219,7 +209,6 @@ export default function Header() {
         )}
       </motion.header>
 
-      {/* Mobile Menu Overlay */}
       {isMobile && isMenuOpen && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -256,7 +245,7 @@ export default function Header() {
                 textAlign: 'center',
                 transition: 'all 0.3s ease'
               }}
-              whileHover={{ 
+              whileHover={{
                 color: '#fc00ff',
                 x: 10
               }}
@@ -264,7 +253,7 @@ export default function Header() {
               {item.label}
             </motion.div>
           ))}
-          
+
           <motion.button
             onClick={handleViewBlog}
             style={{
@@ -280,7 +269,7 @@ export default function Header() {
               boxShadow: '0 4px 15px rgba(0, 219, 222, 0.3)',
               transition: 'all 0.3s ease'
             }}
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               backgroundColor: '#fc00ff'
             }}
