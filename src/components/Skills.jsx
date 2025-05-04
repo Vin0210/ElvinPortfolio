@@ -22,8 +22,7 @@ const Skills = () => {
       skills: [
         { name: "Node.js", level: 80, icon: "/icons/nodejs.jpg" },
         { name: "Django", level: 75, icon: "/icons/django.jpg" },
-        { name: "MongoDB", level: 70, icon: "/icons/mongodb.jpg" },
-        { name: "Firebase", level: 65, icon: "/icons/firebase.jpg" },
+        { name: "mySQL", level: 65, icon: "/icons/firebase.jpg" },
       ]
     },
     {
@@ -32,8 +31,6 @@ const Skills = () => {
       skills: [
         { name: "Git", level: 85, icon: "/icons/git.jpg" },
         { name: "VS Code", level: 90, icon: "/icons/vscode.jpg" },
-        { name: "Tensorflow", level: 75, icon: "/icons/tensorflow.jpg" },
-        { name: "Flutter", level: 60, icon: "/icons/flutter.jpg" },
       ]
     }
   ];
@@ -62,7 +59,7 @@ const Skills = () => {
           fontWeight: '700',
           marginBottom: '3rem',
           textAlign: 'center',
-          color: '#00dbde' // Changed from gradient to solid color
+          color: '#00dbde' 
         }}
       >
         My Skills
