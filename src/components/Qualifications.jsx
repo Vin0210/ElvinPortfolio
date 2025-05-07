@@ -70,17 +70,35 @@ export default function Qualifications() {
   const certificationData = [
     {
       id: 1,
-      title: "Python Certifications",
-      institution: "LinkedIn",
+      title: "Python for Beginners Certification",
+      institution: "Simplilearn",
       year: "2025",
-      description: "Python for Beginners certification."
+      description: "Completed comprehensive Python programming course covering fundamentals to advanced concepts.",
+      image: "/images/cert3.png"
     },
     {
       id: 2,
-      title: "Machine Learning",
-      institution: "LinkedIn",
+      title: "Machine Learning using Python",
+      institution: "SimpliLearn",
       year: "2025",
-      description: "Machine Learing using Python certification."
+      description: "Certified in machine learning concepts including supervised and unsupervised learning algorithms.",
+      image: "/images/cert1.png"
+    },
+    {
+      id: 3,
+      title: "Responsive Web Design Certificate",
+      institution: "freeCodeCamp",
+      year: "2025",
+      description: "Completed responsive web design certification covering HTML5, CSS3, Flexbox, and Grid.",
+      image: "/images/cert5.png"
+    },
+    {
+      id: 4,
+      title: "JavaScript Algorithms and Data Structures Certificate",
+      institution: "freeCodeCamp",
+      year: "2025",
+      description: "Certified in JavaScript fundamentals, ES6, algorithms, and data structures.",
+      image: "/images/cert6.png"
     }
   ];
 
@@ -164,7 +182,6 @@ export default function Qualifications() {
             display: 'flex',
             flexDirection: 'column',
             gap: '0.3rem',
-
           }}>
           {/* Project header */}
           <div style={{
@@ -334,6 +351,104 @@ export default function Qualifications() {
               <FiGithub size={14} /> View Code
             </a>
           </div>
+        </div>
+      );
+    } else if (activeTab === 'certifications') {
+      return (
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.5rem',
+        }}>
+          {/* Item header */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            marginBottom: '0.5rem'
+          }}>
+            <div style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(0, 219, 222, 0.1)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#00dbde',
+              fontSize: '1.2rem'
+            }}>
+              {getIcon()}
+            </div>
+            <h3 style={{
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              color: 'white',
+              margin: 0
+            }}>
+              {item.title}
+            </h3>
+          </div>
+
+          {/* Item meta */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            alignItems: 'center',
+            marginBottom: '0.5rem'
+          }}>
+            <span style={{
+              color: '#00dbde',
+              fontWeight: '500',
+              fontSize: '0.9rem'
+            }}>
+              {item.institution}
+            </span>
+            <span style={{
+              color: 'rgba(255, 255, 255, 0.6)',
+              fontSize: '0.9rem'
+            }}>
+              {item.year}
+            </span>
+          </div>
+
+          {/* Certification image */}
+          {item.image && (
+            <div
+              onClick={(e) => handleImageClick(e, item.image)}
+              style={{
+                cursor: 'zoom-in',
+                height: '200px',
+                width: '100%',
+                overflow: 'hidden',
+                borderRadius: '8px',
+                marginBottom: '1rem',
+              }}
+            >
+              <img
+                src={item.image}
+                alt={item.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              />
+            </div>
+          )}
+
+          {/* Description */}
+          <p style={{
+            color: 'rgba(255, 255, 255, 0.8)',
+            lineHeight: '1.6',
+            margin: 0
+          }}>
+            {item.description}
+          </p>
         </div>
       );
     } else {
@@ -525,13 +640,13 @@ export default function Qualifications() {
               transition: 'all 0.3s ease'
             }}
             whileHover={{
-              transform: activeTab !== 'projects' ? 'translateY(-5px)' : 'none',
-              boxShadow: activeTab !== 'projects' ? '0 15px 40px rgba(0, 219, 222, 0.3)' : '0 10px 30px rgba(0, 0, 0, 0.2)'
+              transform: activeTab !== 'projects' && activeTab !== 'certifications' ? 'translateY(-5px)' : 'none',
+              boxShadow: activeTab !== 'projects' && activeTab !== 'certifications' ? '0 15px 40px rgba(0, 219, 222, 0.3)' : '0 10px 30px rgba(0, 0, 0, 0.2)'
             }}
             onClick={activeTab === 'projects' ? () => setSelectedProject(item) : undefined}
           >
             {/* Timeline indicator for non-project items */}
-            {activeTab !== 'projects' && (
+            {activeTab !== 'projects' && activeTab !== 'certifications' && (
               <div style={{
                 position: 'absolute',
                 left: '2rem',

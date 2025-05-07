@@ -118,7 +118,6 @@ const HeroSection = () => {
           </motion.p>
         </motion.div>
 
-        {/* Stats */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -171,7 +170,6 @@ const HeroSection = () => {
           ))}
         </motion.div>
 
-        {/* CTA Buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -216,7 +214,6 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Decorative elements */}
       <div style={{
         position: 'absolute',
         top: 0,
@@ -229,7 +226,6 @@ const HeroSection = () => {
         backgroundSize: '40px 40px'
       }} />
 
-      {/* Subtle floating dots */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 0.1 } : {}}
