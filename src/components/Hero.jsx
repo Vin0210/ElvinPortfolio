@@ -92,7 +92,7 @@ const Hero = () => {
         >
           <div className="hero-image-wrapper">
             <img
-              src="/images/profile.jpg"
+              src="/images/elvin.jpg"
               alt="Elvin - Web Developer"
               className="hero-image"
               loading="eager"
