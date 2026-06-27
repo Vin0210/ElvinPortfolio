@@ -1,906 +1,376 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { FaGraduationCap, FaBriefcase, FaAward, FaCode } from 'react-icons/fa';
-import { FiX, FiExternalLink, FiGithub } from 'react-icons/fi';
+import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Briefcase, GraduationCap, Award, Code, ExternalLink, X, Maximize2 } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import './Qualifications.css';
 
-export default function Qualifications() {
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
-  const [activeTab, setActiveTab] = useState('education');
+const Qualifications = () => {
+  const [activeTab, setActiveTab] = useState('projects');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [expandedImage, setExpandedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // New state for image viewing
 
+  const tabs = useMemo(() => [
+    { id: 'projects', icon: <Code size={18} />, label: 'Projects' },
+    { id: 'education', icon: <GraduationCap size={18} />, label: 'Education' },
+    { id: 'experience', icon: <Briefcase size={18} />, label: 'Experience' },
+    { id: 'certifications', icon: <Award size={18} />, label: 'Certifications' }
+  ], []);
+
+  const projects = useMemo(() => [
+    {
+      id: 1,
+      title: 'Snake Identification App',
+      description: 'Machine learning app for identifying Philippine snake species',
+      image: '/images/Snake.jpg',
+      tech: ['Flutter', 'TensorFlow'],
+      github: '#',
+      demo: '#',
+      fullDescription: 'This app helps users identify Philippine snake species through image recognition. Built with Flutter for cross-platform compatibility and TensorFlow for machine learning capabilities.'
+    },
+    {
+      id: 2,
+      title: 'Pokémon Web',
+      description: 'Comprehensive Pokémon encyclopedia with team building',
+      image: '/images/project2.jpg',
+      tech: ['React', 'CSS', 'JSON Server'],
+      github: 'https://github.com/Vin0210/Pokemon',
+      demo: 'https://pokemonhehe.netlify.app/',
+      fullDescription: 'A feature-rich Pokémon web app that allows users to explore detailed Pokémon information, build custom teams, simulate battles, and track battle history.'
+    },
+    {
+      id: 3,
+      title: 'Todo List',
+      description: 'Productivity app with task management features',
+      image: '/images/project3.jpg',
+      tech: ['React', 'CSS'],
+      github: 'https://github.com/Vin0210/todo-app',
+      demo: 'https://todotodo1222.netlify.app/',
+      fullDescription: 'A clean, intuitive to-do list application with task prioritization, completion tracking, and responsive design.'
+    },
+    {
+      id: 4,
+      title: 'Fast Food E-Commerce',
+      description: 'Online ordering platform for food delivery',
+      image: '/images/project5.jpg',
+      tech: ['PHP', 'phpMyAdmin', 'XAMPP'],
+      github: 'https://github.com/Annur12/e-commerce',
+      demo: 'https://cat-bounce.com/',
+      fullDescription: 'A full-featured fast food ordering system with menu browsing, cart functionality, and order tracking.'
+    },
+    {
+      id: 5,
+      title: 'RMMC System',
+      description: 'Comprehensive School Management System for academic and administrative operations.',
+      image: '/images/rmmc.png',
+      tech: ['Laravel', 'Node.js', 'Mysql', 'HTML', 'CSS', 'Javascript', 'Bootstrap', 'GithubDesktop', 'WampServer', 'Jquery', 'phpMyAdmin'],
+      github: '',
+      demo: 'https://rmmcmain.com/',
+      fullDescription: 'Designed, developed and maintained a comprehensive School Management System for RMMC that digitizes and streamlines institutional processes. The platform features integrated modules for Admissions, Enrollment, Registrar, Finance, Cashier, Student and Teacher Portals, grading, scheduling, and analytics, enabling efficient management of academic and administrative workflows through a centralized system.'
+    }
+  ], []);
+
+  const education = useMemo(() => [
+    {
+      id: 1,
+      title: 'Information Technology Degree',
+      institution: 'Western Mindanao State University',
+      year: '2020 - 2025',
+      description: 'Specialized in Web Development and Software Engineering'
+    },
+    {
+      id: 2,
+      title: 'Senior High School Diploma',
+      institution: 'Culianan National High School',
+      year: '2018 - 2020',
+      description: 'Focused on Research, History and Technology'
+    }
+  ], []);
+
+  const experience = useMemo(() => [
+    {
+      
+      id: 1,
+      title: 'Web Developer',
+      institution: 'Itech Rar, Inc.',
+      year: 'June 2025 - Present',
+      description: 'Developing and maintaining enterprise web applications, including school management systems, by implementing new features, optimizing performance, and collaborating with cross-functional teams to deliver reliable software solutions.'
+
+    },
+    {
+      id: 2,
+      title: 'Document Archiving System Developer',
+      institution: 'Western Mindanao State University (WMSU)',
+      year: '2022',
+      description: 'Assisted in developing a Document Archiving System for WESMAARDEC at WMSU. Contributed to building a secure and efficient document management solution for academic records and institutional documents.'
+    },
+    {
+      id: 3,
+      title: 'Capstone Project 2',
+      institution: 'WMSU CCS',
+      year: '2025 - Present',
+      description: 'Building Snake Recognition app using Machine Learning'
+    },
+    {
+      id: 4,
+      title: 'e-Commerce Website',
+      institution: 'WMSU CCS',
+      year: '2023',
+      description: 'Developed full-featured e-commerce platform'
+    }
+  ], []);
+
+  const certifications = useMemo(() => [
+    {
+      id: 1,
+      title: 'Python for Beginners',
+      institution: 'Simplilearn',
+      year: '2025',
+      image: '/images/cert3.png'
+    },
+    {
+      id: 2,
+      title: 'Machine Learning with Python',
+      institution: 'SimpliLearn',
+      year: '2025',
+      image: '/images/cert1.png'
+    },
+    {
+      id: 3,
+      title: 'Responsive Web Design',
+      institution: 'freeCodeCamp',
+      year: '2025',
+      image: '/images/cert5.png'
+    },
+    {
+      id: 4,
+      title: 'JavaScript Algorithms and Data Structures',
+      institution: 'freeCodeCamp',
+      year: '2025',
+      image: '/images/cert6.png'
+    }
+  ], []);
+
+  const getContent = () => {
+    switch(activeTab) {
+      case 'projects': return projects;
+      case 'education': return education;
+      case 'experience': return experience;
+      case 'certifications': return certifications;
+      default: return projects;
+    }
+  };
+
+  // Handle image click to open in full view
   const handleImageClick = (e, image) => {
     e.stopPropagation();
-    setExpandedImage(image);
+    setSelectedImage(image);
   };
 
-  const educationData = [
-    {
-      id: 1,
-      title: "Information Technology Degree",
-      institution: "Western Mindanao State University",
-      year: "2020 - 2025",
-      description: "Specialized in Web Development, Application Development and Software Engineering."
-    },
-    {
-      id: 2,
-      title: "Senior High School Diploma",
-      institution: "Culianan National High School",
-      year: "2018 - 2020",
-      description: "Intensive 2-years program focusing on Research, History and Technology"
-    },
-    {
-      id: 3,
-      title: "High School Diploma",
-      institution: "Culianan National High School",
-      year: "2015 - 2018",
-      description: "Gained essential knowledge in math, science, and computer fundamentals to prepare for further studies."
-    }
-  ];
-
-  const experienceData = [
-    {
-      id: 1,
-      title: "Capstone Project 2",
-      institution: "WMSU CCS",
-      year: "2025 - Present",
-      description: "Collaborating with the team of developers building an application for Snake Recognition using Machine Learning"
-    },
-    {
-      id: 2,
-      title: "e-Commerce Website",
-      institution: "WMSU CCS",
-      year: "2023",
-      description: "Developed and maintained an e-Commerce Web for IT - Elective 2"
-    },
-    {
-      id: 3,
-      title: "Software Engineering",
-      institution: "WMSU CCS",
-      year: "2022",
-      description: "Assisted in developing Document Archiving System for WESMAARDEC in WMSU."
-    }
-  ];
-
-  const certificationData = [
-    {
-      id: 1,
-      title: "Python for Beginners Certification",
-      institution: "Simplilearn",
-      year: "2025",
-      description: "Completed comprehensive Python programming course covering fundamentals to advanced concepts.",
-      image: "/images/cert3.png"
-    },
-    {
-      id: 2,
-      title: "Machine Learning using Python",
-      institution: "SimpliLearn",
-      year: "2025",
-      description: "Certified in machine learning concepts including supervised and unsupervised learning algorithms.",
-      image: "/images/cert1.png"
-    },
-    {
-      id: 3,
-      title: "Responsive Web Design Certificate",
-      institution: "freeCodeCamp",
-      year: "2025",
-      description: "Completed responsive web design certification covering HTML5, CSS3, Flexbox, and Grid.",
-      image: "/images/cert5.png"
-    },
-    {
-      id: 4,
-      title: "JavaScript Algorithms and Data Structures Certificate",
-      institution: "freeCodeCamp",
-      year: "2025",
-      description: "Certified in JavaScript fundamentals, ES6, algorithms, and data structures.",
-      image: "/images/cert6.png"
-    }
-  ];
-
-  const projectsData = [
-    {
-      id: 1,
-      title: "Snake Identification App",
-      institution: "Capstone Project",
-      year: "2025",
-      description: "Accessible application for identifying snake species native to the Philippines",
-      image: "/images/Snake.jpg",
-      technologies: ["Flutter", "TensorFlow"],
-      liveLink: "https://snake.io/",
-      githubLink: "https://github.com/project1",
-      moreDescription: "This app helps users identify Philippine snake species through image recognition. Built with Flutter for cross-platform compatibility and TensorFlow for machine learning capabilities.",
-    },
-    {
-      id: 2,
-      title: "Pokémon Web",
-      institution: "Weekly Project",
-      year: "2025",
-      description: "Comprehensive Pokémon encyclopedia with team building features",
-      image: "/images/project2.jpg",
-      technologies: ["React", "CSS", "JSON Server"],
-      liveLink: "https://pokemonhehe.netlify.app/",
-      githubLink: "https://github.com/Vin0210/Pokemon",
-      moreDescription: "A feature-rich Pokémon web app that allows users to explore detailed Pokémon information, build custom teams, simulate battles, and track battle history. Uses React for the frontend and JSON Server for mock API responses.",
-    },
-    {
-      id: 3,
-      title: "Todo List",
-      institution: "Weekly Project 2",
-      year: "2025",
-      description: "Productivity app for task management",
-      image: "/images/project3.jpg",
-      technologies: ["React", "CSS"],
-      liveLink: "https://todotodo1222.netlify.app/",
-      githubLink: "https://github.com/Vin0210/ToDo",
-      moreDescription: "A clean, intuitive to-do list application with task prioritization, completion tracking, and responsive design. Built with React for state management and modern CSS for styling.",
-    },
-    {
-      id: 4,
-      title: "Fast Food E-Commerce",
-      institution: "IT Elective 2 Project",
-      year: "2023",
-      description: "Online ordering platform for food delivery",
-      image: "/images/project5.jpg",
-      technologies: ["PHP", "phpMyAdmin", "XAMPP"],
-      liveLink: "https://cat-bounce.com/",
-      githubLink: "https://github.com/Annur12/e-commerce",
-      moreDescription: "A full-featured fast food ordering system with menu browsing, cart functionality, and order tracking. Features responsive design for optimal viewing on all devices.",
-    }
-  ];
-
-  const getActiveData = () => {
-    switch (activeTab) {
-      case 'education': return educationData;
-      case 'experience': return experienceData;
-      case 'certifications': return certificationData;
-      case 'projects': return projectsData;
-      default: return educationData;
-    }
-  };
-
-  const getIcon = () => {
-    switch (activeTab) {
-      case 'education': return <FaGraduationCap />;
-      case 'experience': return <FaBriefcase />;
-      case 'certifications': return <FaAward />;
-      case 'projects': return <FaCode />;
-      default: return <FaGraduationCap />;
-    }
-  };
-
-  const renderContent = (item) => {
+  const renderCard = (item) => {
     if (activeTab === 'projects') {
       return (
-        <div
-          id="projects"
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.3rem',
-          }}>
-          {/* Project header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            marginBottom: '0.5rem'
-          }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(0, 219, 222, 0.1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#00dbde',
-              fontSize: '1.2rem'
-            }}>
-              {getIcon()}
-            </div>
-            <h3 style={{
-              fontSize: '1.3rem',
-              fontWeight: '600',
-              color: 'white',
-              margin: 0
-            }}>
-              {item.title}
-            </h3>
-          </div>
-
-          {/* Project meta */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            alignItems: 'center',
-            marginBottom: '0.5rem'
-          }}>
-            <span style={{
-              color: '#00dbde',
-              fontWeight: '500',
-              fontSize: '0.9rem'
-            }}>
-              {item.institution}
-            </span>
-            <span style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontSize: '0.9rem'
-            }}>
-              {item.year}
-            </span>
-          </div>
-
-          {/* Project image */}
-          <div
+        <motion.div
+          className="project-card"
+          whileHover={{ y: -8 }}
+        >
+          <div 
+            className="project-image"
             onClick={(e) => handleImageClick(e, item.image)}
-            style={{
-              cursor: 'zoom-out',
-              height: '200px',
-              width: '100%',
-              overflow: 'hidden',
-              borderRadius: '8px',
-              marginBottom: '1rem',
-            }}
           >
-            <img
-              src={item.image}
-              alt={item.title}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                transition: 'transform 0.3s ease',
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            />
+            <img src={item.image} alt={item.title} loading="lazy" />
+            <div className="project-overlay">
+              <div className="project-overlay-content">
+                <Maximize2 size={24} />
+                <span>Click to view full image</span>
+              </div>
+            </div>
           </div>
-
-          {/* Project description */}
-          <p style={{
-            color: 'rgba(255, 255, 255, 0.8)',
-            lineHeight: '1.6',
-            margin: 0,
-            marginBottom: '1rem'
-          }}>
-            {item.description}
-          </p>
-
-          {/* Technologies */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '0.5rem',
-            marginBottom: '1rem'
-          }}>
-            {item.technologies.map((tech, techIndex) => (
-              <span
-                key={techIndex}
-                style={{
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '20px',
-                  backgroundColor: 'rgba(0, 219, 222, 0.1)',
-                  color: '#00dbde',
-                  fontSize: '0.8rem',
-                  border: '1px solid rgba(0, 219, 222, 0.3)'
-                }}
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          {/* Links */}
-          <div style={{
-            display: 'flex',
-            gap: '1rem',
-          }}>
-            <a
-              href={item.liveLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.5rem 1rem',
-                backgroundColor: '#00dbde',
-                color: 'black',
-                borderRadius: '50px',
-                textDecoration: 'none',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                transition: 'all 0.3s ease',
-              }}
-              whileHover={{
-                backgroundColor: '#fc00ff',
-                transform: 'scale(1.05)'
-              }}
+          <div className="project-info">
+            <h3 className="project-title">{item.title}</h3>
+            <p className="project-description">{item.description}</p>
+            <div className="project-tech">
+              {item.tech.map((tech, i) => (
+                <span key={i} className="tech-tag">{tech}</span>
+              ))}
+            </div>
+            <button 
+              className="project-details-btn"
+              onClick={() => setSelectedProject(item)}
             >
-              <FiExternalLink size={14} /> Live Demo
-            </a>
-            <a
-              href={item.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                padding: '0.5rem 1rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                color: 'white',
-                borderRadius: '50px',
-                textDecoration: 'none',
-                fontWeight: '500',
-                fontSize: '0.9rem',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                transition: 'all 0.3s ease',
-              }}
-              whileHover={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                transform: 'scale(1.05)'
-              }}
-            >
-              <FiGithub size={14} /> View Code
-            </a>
+              View Details →
+            </button>
           </div>
-        </div>
+        </motion.div>
       );
-    } else if (activeTab === 'certifications') {
+    }
+
+    if (activeTab === 'certifications') {
       return (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.5rem',
-        }}>
-          {/* Item header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            marginBottom: '0.5rem'
-          }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(0, 219, 222, 0.1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#00dbde',
-              fontSize: '1.2rem'
-            }}>
-              {getIcon()}
+        <div 
+          className="cert-card"
+          onClick={(e) => handleImageClick(e, item.image)}
+        >
+          <div className="cert-image-wrapper">
+            <img src={item.image} alt={item.title} className="cert-image" loading="lazy" />
+            <div className="cert-overlay">
+              <Maximize2 size={20} />
+              <span>Click to view</span>
             </div>
-            <h3 style={{
-              fontSize: '1.3rem',
-              fontWeight: '600',
-              color: 'white',
-              margin: 0
-            }}>
-              {item.title}
-            </h3>
           </div>
-
-          {/* Item meta */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            alignItems: 'center',
-            marginBottom: '0.5rem'
-          }}>
-            <span style={{
-              color: '#00dbde',
-              fontWeight: '500',
-              fontSize: '0.9rem'
-            }}>
-              {item.institution}
-            </span>
-            <span style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontSize: '0.9rem'
-            }}>
-              {item.year}
-            </span>
+          <div className="cert-info">
+            <h4 className="cert-title">{item.title}</h4>
+            <span className="cert-institution">{item.institution}</span>
+            <span className="cert-year">{item.year}</span>
           </div>
-
-          {/* Certification image */}
-          {item.image && (
-            <div
-              onClick={(e) => handleImageClick(e, item.image)}
-              style={{
-                cursor: 'zoom-in',
-                height: '200px',
-                width: '100%',
-                overflow: 'hidden',
-                borderRadius: '8px',
-                marginBottom: '1rem',
-              }}
-            >
-              <img
-                src={item.image}
-                alt={item.title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.3s ease',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              />
-            </div>
-          )}
-
-          {/* Description */}
-          <p style={{
-            color: 'rgba(255, 255, 255, 0.8)',
-            lineHeight: '1.6',
-            margin: 0
-          }}>
-            {item.description}
-          </p>
-        </div>
-      );
-    } else {
-      return (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.5rem',
-          paddingLeft: '3rem'
-        }}>
-          {/* Item header */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            marginBottom: '0.5rem'
-          }}>
-            <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '50%',
-              backgroundColor: 'rgba(0, 219, 222, 0.1)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#00dbde',
-              fontSize: '1.2rem'
-            }}>
-              {getIcon()}
-            </div>
-            <h3 style={{
-              fontSize: '1.3rem',
-              fontWeight: '600',
-              color: 'white',
-              margin: 0
-            }}>
-              {item.title}
-            </h3>
-          </div>
-
-          {/* Item meta */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '1rem',
-            alignItems: 'center',
-            marginBottom: '0.5rem'
-          }}>
-            <span style={{
-              color: '#00dbde',
-              fontWeight: '500',
-              fontSize: '0.9rem'
-            }}>
-              {item.institution}
-            </span>
-            <span style={{
-              color: 'rgba(255, 255, 255, 0.6)',
-              fontSize: '0.9rem'
-            }}>
-              {item.year}
-            </span>
-          </div>
-
-          {/* Description */}
-          <p style={{
-            color: 'rgba(255, 255, 255, 0.8)',
-            lineHeight: '1.6',
-            margin: 0
-          }}>
-            {item.description}
-          </p>
         </div>
       );
     }
+
+    return (
+      <div className="item-card">
+        <div className="item-header">
+          <h3 className="item-title">{item.title}</h3>
+          <span className="item-year">{item.year}</span>
+        </div>
+        <div className="item-institution">{item.institution}</div>
+        <p className="item-description">{item.description}</p>
+      </div>
+    );
   };
 
   return (
-    <motion.section
-      ref={ref}
-      id="qualifications"
-      initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.8 }}
-      style={{
-        padding: '6rem 2rem',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        position: 'relative',
-        backgroundColor: '#1a1a2e'
-      }}
-    >
-      {/* Section title */}
-      <motion.h2
-        initial={{ y: -50, opacity: 0 }}
-        animate={inView ? { y: 0, opacity: 1 } : {}}
-        transition={{ delay: 0.2, duration: 0.8 }}
-        style={{
-          fontSize: '2.5rem',
-          fontWeight: '700',
-          marginBottom: '3rem',
-          textAlign: 'center',
-          color: '#00dbde',
-          position: 'relative'
-        }}
-      >
-        Qualifications
-        <motion.span
-          initial={{ width: 0 }}
-          animate={inView ? { width: '100px' } : {}}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          style={{
-            height: '4px',
-            backgroundColor: '#00dbde',
-            margin: '0.5rem auto 0',
-            borderRadius: '2px'
-          }}
-        />
-      </motion.h2>
-
-      {/* Tab navigation */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        gap: '1rem',
-        marginBottom: '3rem',
-        flexWrap: 'wrap'
-      }}>
-        {[
-          { id: 'education', label: 'Education', icon: <FaGraduationCap /> },
-          { id: 'experience', label: 'Experience', icon: <FaBriefcase /> },
-          { id: 'certifications', label: 'Certifications', icon: <FaAward /> },
-          { id: 'projects', label: 'Projects', icon: <FaCode /> }
-        ].map((tab) => (
-          <motion.button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            style={{
-              padding: '0.75rem 1.5rem',
-              borderRadius: '50px',
-              backgroundColor: activeTab === tab.id
-                ? 'rgba(0, 219, 222, 0.2)'
-                : 'rgba(255, 255, 255, 0.05)',
-              border: activeTab === tab.id
-                ? '1px solid rgba(0, 219, 222, 0.5)'
-                : '1px solid rgba(255, 255, 255, 0.1)',
-              color: 'white',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              transition: 'all 0.3s ease',
-            }}
-            whileHover={{
-              backgroundColor: activeTab === tab.id
-                ? 'rgba(0, 219, 222, 0.3)'
-                : 'rgba(255, 255, 255, 0.1)',
-            }}
-          >
-            {tab.icon}
-            {tab.label}
-          </motion.button>
-        ))}
-      </div>
-
-      {/* Content grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr',
-        gap: '1.5rem'
-      }}>
-        {getActiveData().map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-            style={{
-              backgroundColor: 'rgba(26, 26, 46, 0.8)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '12px',
-              padding: '2rem',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
-              position: 'relative',
-              overflow: 'hidden',
-              transition: 'all 0.3s ease'
-            }}
-            whileHover={{
-              transform: activeTab !== 'projects' && activeTab !== 'certifications' ? 'translateY(-5px)' : 'none',
-              boxShadow: activeTab !== 'projects' && activeTab !== 'certifications' ? '0 15px 40px rgba(0, 219, 222, 0.3)' : '0 10px 30px rgba(0, 0, 0, 0.2)'
-            }}
-            onClick={activeTab === 'projects' ? () => setSelectedProject(item) : undefined}
-          >
-            {/* Timeline indicator for non-project items */}
-            {activeTab !== 'projects' && activeTab !== 'certifications' && (
-              <div style={{
-                position: 'absolute',
-                left: '2rem',
-                top: '2.5rem',
-                bottom: '2.5rem',
-                width: '4px',
-                backgroundColor: '#00dbde',
-                borderRadius: '2px'
-              }} />
-            )}
-
-            {renderContent(item)}
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Expanded Image Modal */}
-      {expandedImage && (
+    <section id="qualifications" className="qualifications section-padding">
+      <div className="qualifications-container">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setExpandedImage(null)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.95)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            cursor: 'zoom-out',
-            padding: '2rem',
-          }}
+          className="qualifications-header"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setExpandedImage(null);
-            }}
-            style={{
-              position: 'absolute',
-              top: '2rem',
-              right: '2rem',
-              background: 'transparent',
-              border: 'none',
-              color: 'white',
-              fontSize: '1.5rem',
-              cursor: 'pointer',
-              zIndex: 1001,
-            }}
-          >
-            <FiX />
-          </button>
-          <motion.img
-            src={expandedImage}
-            alt="Expanded view"
-            initial={{ scale: 0.9 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.2 }}
-            style={{
-              maxHeight: '90vh',
-              maxWidth: '90vw',
-              objectFit: 'contain',
-              borderRadius: '8px',
-            }}
-          />
+          <h2 className="section-title">My Work & Qualifications</h2>
         </motion.div>
-      )}
+
+        <div className="qualifications-tabs">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`q-tab ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.icon}
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            className="qualifications-grid"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+          >
+            {getContent().map((item, index) => (
+              <motion.div
+                key={item.id || index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+              >
+                {renderCard(item)}
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Project Details Modal */}
-      {selectedProject && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setSelectedProject(null)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0,0,0,0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            padding: '1rem',
-          }}
-        >
+      <AnimatePresence>
+        {selectedProject && (
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              backgroundColor: 'rgba(26, 26, 46, 0.95)',
-              borderRadius: '12px',
-              padding: '2rem',
-              maxWidth: '800px',
-              width: '100%',
-              maxHeight: '90vh',
-              overflowY: 'auto',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              position: 'relative',
-            }}
+            className="modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
           >
-            <button
-              onClick={() => setSelectedProject(null)}
-              style={{
-                position: 'absolute',
-                top: '1rem',
-                right: '1rem',
-                background: 'transparent',
-                border: 'none',
-                color: 'white',
-                fontSize: '1.5rem',
-                cursor: 'pointer',
-              }}
+            <motion.div
+              className="modal-content"
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <FiX />
-            </button>
-
-            <h3 style={{
-              fontSize: '2rem',
-              fontWeight: '600',
-              marginBottom: '1rem',
-              color: '#00dbde',
-            }}>
-              {selectedProject.title}
-            </h3>
-
-            <div
-              onClick={(e) => handleImageClick(e, selectedProject.image)}
-              style={{
-                cursor: 'zoom-in',
-                marginBottom: '1.5rem',
-                borderRadius: '8px',
-                overflow: 'hidden',
-                height: '300px',
-              }}
-            >
-              <img
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.3s ease',
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              />
-            </div>
-
-            <p style={{
-              color: 'rgba(255, 255, 255, 0.8)',
-              lineHeight: '1.6',
-              marginBottom: '2rem',
-            }}>
-              {selectedProject.moreDescription}
-            </p>
-
-            <div style={{ marginBottom: '2rem' }}>
-              <h4 style={{
-                color: 'white',
-                fontSize: '1.2rem',
-                marginBottom: '1rem',
-              }}>
-                Technologies Used:
-              </h4>
-              <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '0.5rem',
-              }}>
-                {selectedProject.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      borderRadius: '20px',
-                      backgroundColor: 'rgba(0, 219, 222, 0.1)',
-                      color: '#00dbde',
-                      border: '1px solid rgba(0, 219, 222, 0.3)'
-                    }}
-                  >
-                    {tech}
-                  </span>
+              <button className="modal-close" onClick={() => setSelectedProject(null)}>
+                <X size={24} />
+              </button>
+              
+              {/* Clickable project image in modal */}
+              <div 
+                className="modal-image-wrapper"
+                onClick={(e) => handleImageClick(e, selectedProject.image)}
+              >
+                <img src={selectedProject.image} alt={selectedProject.title} />
+                <div className="modal-image-overlay">
+                  <Maximize2 size={24} />
+                  <span>View full size</span>
+                </div>
+              </div>
+              
+              <h2>{selectedProject.title}</h2>
+              <p>{selectedProject.fullDescription || selectedProject.description}</p>
+              <div className="modal-tech">
+                {selectedProject.tech.map((tech, i) => (
+                  <span key={i} className="tech-tag">{tech}</span>
                 ))}
               </div>
-            </div>
-
-            <div style={{
-              display: 'flex',
-              gap: '1rem',
-              marginTop: '2rem',
-            }}>
-              <a
-                href={selectedProject.liveLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  backgroundColor: '#00dbde',
-                  color: 'black',
-                  borderRadius: '50px',
-                  textDecoration: 'none',
-                  fontWeight: '500',
-                  transition: 'all 0.3s ease',
-                }}
-                whileHover={{
-                  backgroundColor: '#fc00ff',
-                  transform: 'scale(1.05)'
-                }}
-              >
-                <FiExternalLink /> Live Demo
-              </a>
-              <a
-                href={selectedProject.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                  color: 'white',
-                  borderRadius: '50px',
-                  textDecoration: 'none',
-                  fontWeight: '500',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  transition: 'all 0.3s ease',
-                }}
-                whileHover={{
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                  transform: 'scale(1.05)'
-                }}
-              >
-                <FiGithub /> View Code
-              </a>
-            </div>
+              <div className="modal-links">
+                <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  <ExternalLink size={18} /> Live Demo
+                </a>
+                <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  <FaGithub size={18} /> View Code
+                </a>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
-      )}
-    </motion.section>
+        )}
+      </AnimatePresence>
+
+      {/* Full Image View Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            className="image-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              className="image-modal-content"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="image-modal-close" onClick={() => setSelectedImage(null)}>
+                <X size={28} />
+              </button>
+              <img src={selectedImage} alt="Full view" />
+              <div className="image-modal-footer">
+                <span>Click anywhere outside to close</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
-}
+};
+
+export default React.memo(Qualifications);

@@ -1,266 +1,132 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { ArrowRight,  Mail } from 'lucide-react';
+import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import './Hero.css';
 
-const HeroSection = () => {
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
-
-  const scrollToSection = (id) => {
+const Hero = () => {
+  const scrollTo = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
       window.scrollTo({
-        top: element.offsetTop - headerHeight,
+        top: element.offsetTop - 80,
         behavior: 'smooth'
       });
     }
   };
 
   return (
-    <section
-      id="hero"
-      ref={ref}
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#1a1a2e',
-        color: 'white',
-        padding: 'clamp(1rem, 5vw, 4rem)',
-        position: 'relative',
-        overflow: 'hidden',
-        paddingTop: '80px',
-        scrollMarginTop: '80px'
-
-      }}
-    >
-      <div style={{
-        maxWidth: '1200px',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 'clamp(1.5rem, 4vw, 3rem)',
-        zIndex: 2,
-        alignItems: 'center',
-        textAlign: 'center'
-      }}>
-
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1.5rem'
-          }}
-        >
-
-          <img
-            src="/images/profile.jpg"
-            alt="Profile"
-            style={{
-
-              width: '120px',
-              height: '120px',
-              borderRadius: '50%',
-              objectFit: 'cover',
-              border: '3px solid #00dbde',
-              boxShadow: '0 4px 15px rgba(0, 219, 222, 0.4)'
-            }}
-          />
-
-
-
-          <h1 style={{
-            fontSize: 'clamp(2rem, 8vw, 4.5rem)',
-            fontWeight: 800,
-            lineHeight: 1.1,
-            margin: 0,
-            color: 'white'
-          }}>
-            Hi, I'm <span style={{ color: '#00dbde' }}>Elvin</span>
-          </h1>
-
-
-          <motion.h2
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            style={{
-              fontSize: 'clamp(1.25rem, 4vw, 2rem)',
-              fontWeight: 600,
-              margin: 0,
-              color: '#00dbde'
-            }}
+    <section id="home" className="hero">
+      <div className="hero-container">
+        <div className="hero-content">
+          <motion.div
+            className="hero-badge"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            Web Developer
-          </motion.h2>
+            <span className="badge-dot" />
+            Open to opportunities
+          </motion.div>
 
+          <motion.h1
+            className="hero-title"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Hi, I'm{' '}
+            <span className="gradient-text">Elvin</span>
+            <br />
+            Web Developer
+          </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            style={{
-              fontSize: 'clamp(1rem, 3vw, 1.25rem)',
-              opacity: 0.85,
-              maxWidth: '700px',
-              lineHeight: 1.6,
-              margin: '0.5rem 0'
-            }}
+            className="hero-description"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Fresh and enthusiastic developer ready to bring ideas to life through clean code and creative solutions.
+            Crafting modern, responsive, and user-centric web experiences
+            with clean code and creative solutions.
           </motion.p>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 'clamp(1.5rem, 4vw, 3rem)',
-            justifyContent: 'center',
-            width: '100%',
-            maxWidth: '800px'
-          }}
-        >
-          {[
-            { value: '10+', label: 'Projects Completed' },
-            { value: '100%', label: 'Code Quality' },
-            { value: 'Fast', label: 'Problem Solver' }
-          ].map((stat, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ y: -5 }}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '1.5rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                borderRadius: '16px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(10px)',
-                minWidth: '140px'
-              }}
-            >
-              <span style={{
-                fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: 700,
-                color: '#00dbde',
-                marginBottom: '0.5rem'
-              }}>
-                {stat.value}
-              </span>
-              <span style={{
-                fontSize: 'clamp(0.9rem, 3vw, 1rem)',
-                opacity: 0.8,
-                fontWeight: 500
-              }}>
-                {stat.label}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 1.2 }}
-          style={{
-            display: 'flex',
-            gap: '1.5rem',
-            flexWrap: 'wrap',
-            justifyContent: 'center'
-          }}
-        >
-
-
-          <motion.button
-            onClick={() => scrollToSection('contact')}
-            whileHover={{
-              scale: 1.05,
-              backgroundColor: 'rgba(0, 219, 222, 0.1)',
-              borderColor: '#00dbde'
-            }}
-            whileTap={{ scale: 0.95 }}
-            style={{
-              padding: '1rem 2.5rem',
-              fontSize: '1.1rem',
-              fontWeight: 600,
-              color: '#00dbde',
-              backgroundColor: 'transparent',
-              border: '2px solid rgba(0, 219, 222, 0.5)',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}
+          <motion.div
+            className="hero-actions"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Contact Me
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
-            </svg>
-          </motion.button>
+            <button className="btn-primary btn-large" onClick={() => scrollTo('contact')}>
+              Get in Touch
+              <ArrowRight size={18} />
+            </button>
+            <button className="btn-secondary" onClick={() => scrollTo('qualifications')}>
+              View My Work
+            </button>
+          </motion.div>
+
+          <motion.div
+            className="hero-social"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <a href="https://github.com/Vin0210" target="_blank" rel="noopener noreferrer" className="social-link">
+              <FaGithub size={20} />
+            </a>
+            <a href="https://www.instagram.com/vin.viinn/" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                          <FaInstagram size={20} />
+                        </a>
+                        <a href="https://www.facebook.com/elvinramos.meme" target="_blank" rel="noopener noreferrer" className="footer-social-link">
+                          <FaFacebook size={20} />
+                        </a>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="hero-visual"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="hero-image-wrapper">
+            <img
+              src="/images/profile.jpg"
+              alt="Elvin - Web Developer"
+              className="hero-image"
+              loading="eager"
+            />
+            <div className="hero-ring ring-1" />
+            <div className="hero-ring ring-2" />
+            <div className="hero-ring ring-3" />
+          </div>
+
+          <div className="floating-card card-1 float">
+            <div className="card-icon">⚡</div>
+            <div>
+              <div className="card-label">Projects</div>
+              <div className="card-value">10+</div>
+            </div>
+          </div>
+
+          <div className="floating-card card-2 float" style={{ animationDelay: '1s' }}>
+            <div className="card-icon">🎯</div>
+            <div>
+              <div className="card-label">Experience</div>
+              <div className="card-value">2+ Years</div>
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 1,
-        opacity: 0.03,
-        backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)',
-        backgroundSize: '40px 40px'
-      }} />
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 0.1 } : {}}
-        transition={{ duration: 1.5, delay: 0.5 }}
-        style={{
-          position: 'absolute',
-          right: '10%',
-          top: '20%',
-          width: '100px',
-          height: '100px',
-          borderRadius: '50%',
-          backgroundColor: '#00dbde',
-          filter: 'blur(30px)',
-          zIndex: 1
-        }}
-      />
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 0.1 } : {}}
-        transition={{ duration: 1.5, delay: 0.7 }}
-        style={{
-          position: 'absolute',
-          left: '15%',
-          bottom: '15%',
-          width: '150px',
-          height: '150px',
-          borderRadius: '50%',
-          backgroundColor: '#fc00ff',
-          filter: 'blur(30px)',
-          zIndex: 1
-        }}
-      />
+      <div className="hero-background">
+        <div className="bg-blob blob-1" />
+        <div className="bg-blob blob-2" />
+        <div className="bg-blob blob-3" />
+      </div>
     </section>
   );
 };
 
-export default HeroSection;
+export default React.memo(Hero);
