@@ -59,7 +59,7 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="skill-tags">
-              {['React', 'JavaScript', 'TypeScript', 'Next.js', 'Node.js', 'Python', 'Tailwind CSS', 'Figma'].map((skill, index) => (
+              {['Laravel', 'JavaScript', 'Jquery', 'MySQL', 'Node.js', 'CSS', 'HTML', 'Bootstrap', 'React', 'PHP'].map((skill, index) => (
                 <motion.span
                   key={skill}
                   className="skill-tag"
