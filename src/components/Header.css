@@ -158,19 +158,21 @@
 
 .mobile-nav {
   position: fixed;
-  top: 80px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background: var(--bg-secondary);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 40px;
-  z-index: 999;
+  padding: 100px 40px 40px;
+  z-index: 900;
+  overflow-y: auto;
 }
 
 .mobile-nav-link {
@@ -191,4 +193,16 @@
 
 .mobile-cta {
   margin-top: 16px;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  transform-origin: 0% 50%;
+  z-index: 1001;
+  pointer-events: none;
 }

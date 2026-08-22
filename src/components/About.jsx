@@ -1,14 +1,44 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { Code, Globe, Zap, Users } from 'lucide-react';
 import './About.css';
 
+const STAT_VALUES = ['10+', '5+', '500+', '8+'];
+
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
 const About = () => {
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true });
+  const [counts, setCounts] = useState(['0', '0', '0', '0']);
+
+  useEffect(() => {
+    if (!statsInView) return;
+    const duration = 1400;
+    let start;
+    let raf;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      setCounts(
+        STAT_VALUES.map((value) => {
+          const match = value.match(/(\d+)(.*)/);
+          const target = parseInt(match[1], 10);
+          const suffix = match[2] || '';
+          return Math.round(target * easeOutCubic(progress)) + suffix;
+        })
+      );
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [statsInView]);
+
   const stats = [
-    { icon: <Code size={24} />, label: 'Projects', value: '10+' },
-    { icon: <Globe size={24} />, label: 'Clients', value: '5+' },
-    { icon: <Zap size={24} />, label: 'Hours Coded', value: '500+' },
-    { icon: <Users size={24} />, label: 'Collaborations', value: '8+' }
+    { icon: <Code size={24} />, label: 'Projects' },
+    { icon: <Globe size={24} />, label: 'Clients' },
+    { icon: <Zap size={24} />, label: 'Hours Coded' },
+    { icon: <Users size={24} />, label: 'Collaborations' }
   ];
 
   return (
@@ -34,17 +64,17 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <p className="about-text">
-              I'm a Web Developer with a strong passion for building modern, scalable, and user-centric web applications. With hands-on experience developing enterprise school management systems, I specialize in PHP, Laravel, React, JavaScript, and MySQL.
+              I&apos;m a Web Developer with a strong passion for building modern, scalable, and user-centric web applications. With hands-on experience developing enterprise school management systems, I specialize in PHP, Laravel, React, JavaScript, and MySQL.
             </p>
             <p className="about-text">
               I enjoy transforming complex requirements into reliable, efficient, and intuitive digital solutions.
             </p>
 
-            <div className="about-stats">
+            <div className="about-stats" ref={statsRef}>
               {stats.map((stat, index) => (
                 <div key={index} className="stat-item">
                   <div className="stat-icon">{stat.icon}</div>
-                  <div className="stat-value">{stat.value}</div>
+                  <div className="stat-value">{counts[index]}</div>
                   <div className="stat-label">{stat.label}</div>
                 </div>
               ))}

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2, Server, Wrench } from 'lucide-react';
 import './Skills.css';
@@ -45,6 +45,12 @@ const Skills = () => {
 
   const activeSkills = categories[activeCategory]?.skills || [];
 
+  const handleSpotlight = useCallback((e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+  }, []);
+
   return (
     <section id="skills" className="skills section-padding">
       <div className="skills-container">
@@ -89,6 +95,7 @@ const Skills = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
                 whileHover={{ y: -4 }}
+                onMouseMove={handleSpotlight}
               >
                 <div className="skill-header">
                   <span className="skill-name">{skill.name}</span>

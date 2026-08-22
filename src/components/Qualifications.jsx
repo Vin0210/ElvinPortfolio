@@ -313,7 +313,7 @@ const Qualifications = () => {
                 className="modal-image-wrapper"
                 onClick={(e) => handleImageClick(e, selectedProject.image)}
               >
-                <img src={selectedProject.image} alt={selectedProject.title} />
+                <img src={selectedProject.image} alt={selectedProject.title} decoding="async" />
                 <div className="modal-image-overlay">
                   <Maximize2 size={24} />
                   <span>View full size</span>
@@ -361,7 +361,7 @@ const Qualifications = () => {
               <button className="image-modal-close" onClick={() => setSelectedImage(null)}>
                 <X size={28} />
               </button>
-              <img src={selectedImage} alt="Full view" />
+              <img src={selectedImage} alt="Full view" decoding="async" />
               <div className="image-modal-footer">
                 <span>Click anywhere outside to close</span>
               </div>
