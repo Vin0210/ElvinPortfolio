@@ -62,6 +62,105 @@
   }
 }
 
+/* Register theme variables as animatable <color> types
+   so gradients and gradient-text melt smoothly between themes */
+@property --primary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #6C63FF;
+}
+
+@property --primary-dark {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #5A52D5;
+}
+
+@property --secondary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #00D4FF;
+}
+
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #FF6B9D;
+}
+
+@property --bg-primary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #F8F9FA;
+}
+
+@property --bg-secondary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #FFFFFF;
+}
+
+@property --bg-card {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.7);
+}
+
+@property --bg-elevated {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #FFFFFF;
+}
+
+@property --text-primary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1A1A2E;
+}
+
+@property --text-secondary {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #4A4A6A;
+}
+
+@property --text-muted {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #8A8AA8;
+}
+
+@property --border-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: rgba(0, 0, 0, 0.08);
+}
+
+/* Theme switch: slow black-and-white morph across the whole page */
+.theme-morphing,
+.theme-morphing *,
+.theme-morphing *::before,
+.theme-morphing *::after {
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --primary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --primary-dark 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --secondary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --accent 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --bg-primary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --bg-secondary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --bg-card 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --bg-elevated 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --text-primary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --text-secondary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --text-muted 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+              --border-color 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
 html {
   scroll-behavior: smooth;
 }

@@ -1,14 +1,17 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 
 const ThemeContext = createContext();
 
+const MORPH_MS = 1400;
+
+let morphTimer;
+
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    // Check localStorage first
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) return savedTheme;
-    
-    // Check system preference
+
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
@@ -16,13 +19,29 @@ export const ThemeProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    // Update localStorage and document class
     localStorage.setItem('theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    const next = theme === 'dark' ? 'light' : 'dark';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTheme(next);
+      return;
+    }
+
+    const root = document.documentElement;
+    root.classList.add('theme-morphing');
+    clearTimeout(morphTimer);
+    flushSync(() => {
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      setTheme(next);
+    });
+    morphTimer = setTimeout(() => {
+      root.classList.remove('theme-morphing');
+    }, MORPH_MS);
   };
 
   return (
