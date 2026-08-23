@@ -61,11 +61,22 @@ const Qualifications = () => {
       id: 5,
       title: 'RMMC System',
       description: 'Comprehensive School Management System for academic and administrative operations.',
-      image: '/images/rmmc.png',
+      image: '/images/rmmc.webp',
       tech: ['Laravel', 'Node.js', 'Mysql', 'HTML', 'CSS', 'Javascript', 'Bootstrap', 'GithubDesktop', 'WampServer', 'Jquery', 'phpMyAdmin'],
       github: '',
       demo: 'https://rmmcmain.com/',
       fullDescription: 'Designed, developed and maintained a comprehensive School Management System for RMMC that digitizes and streamlines institutional processes. The platform features integrated modules for Admissions, Enrollment, Registrar, Finance, Cashier, Student and Teacher Portals, grading, scheduling, and analytics, enabling efficient management of academic and administrative workflows through a centralized system.'
+    },
+    {
+      id: 6,
+      title: 'SmashPoint',
+      description: 'Pickleball court booking management system',
+      image: '/images/smashpoint1.webp',
+      images: ['/images/smashpoint1.webp', '/images/smashpoint2.webp'],
+      tech: ['Laravel', 'MySQL', 'React'],
+      github: 'https://github.com/Vin0210/SmashPoint',
+      demo: 'https://smashpoint.whf.bz/',
+      fullDescription: 'A full-stack pickleball booking management system that lets users browse courts, schedule reservations, and manage bookings in real time. Built with a Laravel REST API and MySQL database on the backend, paired with a dynamic React frontend for a fast and responsive booking experience.'
     }
   ], []);
 
@@ -125,28 +136,28 @@ const Qualifications = () => {
       title: 'Python for Beginners',
       institution: 'Simplilearn',
       year: '2025',
-      image: '/images/cert3.png'
+      image: '/images/cert3.webp'
     },
     {
       id: 2,
       title: 'Machine Learning with Python',
       institution: 'SimpliLearn',
       year: '2025',
-      image: '/images/cert1.png'
+      image: '/images/cert1.webp'
     },
     {
       id: 3,
       title: 'Responsive Web Design',
       institution: 'freeCodeCamp',
       year: '2025',
-      image: '/images/cert5.png'
+      image: '/images/cert5.webp'
     },
     {
       id: 4,
       title: 'JavaScript Algorithms and Data Structures',
       institution: 'freeCodeCamp',
       year: '2025',
-      image: '/images/cert6.png'
+      image: '/images/cert6.webp'
     }
   ], []);
 
@@ -160,10 +171,18 @@ const Qualifications = () => {
     }
   };
 
-  // Handle image click to open in full view
+  // Handle image click to open in full view.
+  // Pre-decode off the main thread first so the open animation never stutters.
   const handleImageClick = (e, image) => {
     e.stopPropagation();
-    setSelectedImage(image);
+    const img = new Image();
+    img.src = image;
+    const open = () => setSelectedImage(image);
+    if (img.decode) {
+      img.decode().then(open).catch(open);
+    } else {
+      open();
+    }
   };
 
   const renderCard = (item) => {
@@ -248,6 +267,7 @@ const Qualifications = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          <span className="section-tag">Portfolio</span>
           <h2 className="section-title">My Work & Qualifications</h2>
         </motion.div>
 
@@ -308,17 +328,35 @@ const Qualifications = () => {
                 <X size={24} />
               </button>
               
-              {/* Clickable project image in modal */}
-              <div 
-                className="modal-image-wrapper"
-                onClick={(e) => handleImageClick(e, selectedProject.image)}
-              >
-                <img src={selectedProject.image} alt={selectedProject.title} decoding="async" />
-                <div className="modal-image-overlay">
-                  <Maximize2 size={24} />
-                  <span>View full size</span>
+              {/* Clickable project image(s) in modal */}
+              {selectedProject.images ? (
+                <div className="modal-images-gallery">
+                  {selectedProject.images.map((img, i) => (
+                    <div 
+                      key={i}
+                      className="modal-image-wrapper"
+                      onClick={(e) => handleImageClick(e, img)}
+                    >
+                      <img src={img} alt={`${selectedProject.title} screenshot ${i + 1}`} decoding="async" />
+                      <div className="modal-image-overlay">
+                        <Maximize2 size={24} />
+                        <span>View full size</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </div>
+              ) : (
+                <div 
+                  className="modal-image-wrapper"
+                  onClick={(e) => handleImageClick(e, selectedProject.image)}
+                >
+                  <img src={selectedProject.image} alt={selectedProject.title} decoding="async" />
+                  <div className="modal-image-overlay">
+                    <Maximize2 size={24} />
+                    <span>View full size</span>
+                  </div>
+                </div>
+              )}
               
               <h2>{selectedProject.title}</h2>
               <p>{selectedProject.fullDescription || selectedProject.description}</p>

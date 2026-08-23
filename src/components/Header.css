@@ -112,6 +112,24 @@
   background: rgba(108, 99, 255, 0.05);
 }
 
+/* Grow-from-center hover underline */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transform: translateX(-50%);
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav-link:not(.active):hover::after {
+  width: 24px;
+}
+
 .nav-link.active {
   color: var(--text-primary);
 }
@@ -184,6 +202,16 @@
   cursor: pointer;
   transition: var(--transition);
   padding: 8px 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.mobile-nav-index {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--primary);
+  letter-spacing: 1px;
 }
 
 .mobile-nav-link:hover,

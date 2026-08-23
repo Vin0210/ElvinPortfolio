@@ -37,7 +37,7 @@ const Contact = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-        
+          <span className="section-tag">Get In Touch</span>
           <h2 className="section-title">Let's work together</h2>
           <p className="contact-subtitle">
             Have a project in mind? I'd love to hear from you.

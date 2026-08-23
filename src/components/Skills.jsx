@@ -61,7 +61,7 @@ const Skills = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          
+          <span className="section-tag">My Stack</span>
           <h2 className="section-title">Technologies I work with</h2>
         </motion.div>
 
@@ -71,9 +71,19 @@ const Skills = () => {
               key={key}
               className={`tab-btn ${activeCategory === key ? 'active' : ''}`}
               onClick={() => setActiveCategory(key)}
+              style={{ position: 'relative' }}
             >
-              {category.icon}
-              {category.label}
+              {activeCategory === key && (
+                <motion.span
+                  layoutId="skillsTabPill"
+                  className="tab-pill"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                />
+              )}
+              <span className="tab-content">
+                {category.icon}
+                {category.label}
+              </span>
             </button>
           ))}
         </div>

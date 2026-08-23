@@ -51,7 +51,7 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          {/* <span className="section-tag">About Me</span> */}
+          <span className="section-tag">About Me</span>
           <h2 className="section-title">Passionate about creating <br />digital experiences</h2>
         </motion.div>
 

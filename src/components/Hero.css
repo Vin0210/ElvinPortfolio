@@ -76,6 +76,33 @@
   background-clip: text;
 }
 
+/* Rotating role text — fixed size via hidden sizer so swaps never shift layout */
+.role-rotator {
+  display: inline-grid;
+  overflow: hidden;
+  vertical-align: bottom;
+  text-align: left;
+}
+
+.role-rotator > .role-sizer,
+.role-rotator > .role-text {
+  grid-area: 1 / 1;
+}
+
+.role-sizer {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.role-text {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  white-space: nowrap;
+}
+
 .hero-description {
   font-size: clamp(1rem, 1.2vw, 1.2rem);
   color: var(--text-secondary);
@@ -108,6 +135,14 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.btn-arrow {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-primary:hover .btn-arrow {
+  transform: translateX(4px);
 }
 
 .btn-secondary {
@@ -199,31 +234,46 @@
   z-index: 2;
 }
 
+/* Subtle animated rings around the profile photo */
 .hero-ring {
   position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(108, 99, 255, 0.1);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
 }
 
+/* Inner: faint full circle, steady slow spin */
 .ring-1 {
   width: 120%;
   height: 120%;
+  border: 1px solid rgba(108, 99, 255, 0.12);
   animation: spin 20s linear infinite;
 }
 
+/* Middle: gradient arc so the rotation is actually visible */
 .ring-2 {
   width: 140%;
   height: 140%;
-  animation: spin 25s linear infinite reverse;
+  border: 1px solid transparent;
+  border-top-color: var(--primary);
+  border-right-color: rgba(0, 212, 255, 0.35);
+  opacity: 0.7;
+  animation: spin 12s linear infinite reverse, ringPulse 4s ease-in-out infinite;
 }
 
+/* Outer: dashed ring drifting slowly */
 .ring-3 {
   width: 160%;
   height: 160%;
-  animation: spin 30s linear infinite;
+  border: 1px dashed rgba(108, 99, 255, 0.16);
+  animation: spin 45s linear infinite;
+}
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.9; }
 }
 
 @keyframes spin {
@@ -281,6 +331,14 @@
 
 .card-icon {
   font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(108, 99, 255, 0.15), rgba(0, 212, 255, 0.15));
+  color: var(--primary);
 }
 
 .card-label {
@@ -344,4 +402,41 @@
   left: 50%;
   transform: translate(-50%, -50%);
   animation: float 6s ease-in-out infinite;
+}
+
+/* Scroll cue */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  z-index: 3;
+  animation: scrollCue 2s ease-in-out infinite;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-scroll-cue:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+@keyframes scrollCue {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 8px); }
+}
+
+@media (max-width: 992px) {
+  .hero-scroll-cue {
+    display: none;
+  }
 }

@@ -35,6 +35,23 @@
   transition: var(--transition);
 }
 
+.tab-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-pill {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1px solid var(--primary);
+  background: rgba(108, 99, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.18);
+}
+
 .tab-btn:hover {
   color: var(--text-primary);
   border-color: rgba(255, 255, 255, 0.2);

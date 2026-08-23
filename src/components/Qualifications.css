@@ -409,6 +409,17 @@
   margin-bottom: 20px;
 }
 
+.modal-images-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-images-gallery .modal-image-wrapper {
+  margin-bottom: 0;
+}
+
 .modal-image-wrapper img {
   width: 100%;
   height: 250px;
@@ -573,6 +584,10 @@
   
   .modal-image-wrapper img {
     height: 180px;
+  }
+  
+  .modal-images-gallery {
+    grid-template-columns: 1fr;
   }
 }
 

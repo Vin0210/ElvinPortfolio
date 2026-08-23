@@ -21,28 +21,34 @@ const Header = () => {
   ], []);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 50);
 
-      const sections = navItems.map(item => ({
-        id: item.id,
-        element: document.getElementById(item.id)
-      }));
+        const sections = navItems.map(item => ({
+          id: item.id,
+          element: document.getElementById(item.id)
+        }));
 
-      const scrollPos = window.scrollY + 100;
+        const scrollPos = window.scrollY + 100;
 
-      for (const section of sections) {
-        if (section.element) {
-          const { offsetTop, offsetHeight } = section.element;
-          if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
-            setActive(section.id);
-            break;
+        for (const section of sections) {
+          if (section.element) {
+            const { offsetTop, offsetHeight } = section.element;
+            if (scrollPos >= offsetTop && scrollPos < offsetTop + offsetHeight) {
+              setActive(section.id);
+              break;
+            }
           }
         }
-      }
+        ticking = false;
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [navItems]);
 
@@ -158,6 +164,7 @@ const Header = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
+                <span className="mobile-nav-index">0{index + 1}</span>
                 {item.label}
               </motion.button>
             ))}

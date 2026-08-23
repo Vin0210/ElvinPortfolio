@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { flushSync } from 'react-dom';
 
 const ThemeContext = createContext();
 
-const MORPH_MS = 1400;
+const MORPH_MS = 350;
 
 let morphTimer;
 
@@ -34,11 +33,9 @@ export const ThemeProvider = ({ children }) => {
     const root = document.documentElement;
     root.classList.add('theme-morphing');
     clearTimeout(morphTimer);
-    flushSync(() => {
-      root.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      setTheme(next);
-    });
+    root.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    setTheme(next);
     morphTimer = setTimeout(() => {
       root.classList.remove('theme-morphing');
     }, MORPH_MS);
