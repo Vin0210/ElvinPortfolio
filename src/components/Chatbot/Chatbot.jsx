@@ -54,6 +54,34 @@ const Chatbot = () => {
 
   useEffect(() => () => clearTimeout(typingTimeoutRef.current), []);
 
+  useEffect(() => {
+    if (!isOpen) {
+      document.documentElement.style.removeProperty('--keyboard-offset');
+      return;
+    }
+
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const updateOffset = () => {
+      const overlap = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      document.documentElement.style.setProperty(
+        '--keyboard-offset',
+        `${Math.round(overlap)}px`
+      );
+    };
+
+    vv.addEventListener('resize', updateOffset);
+    vv.addEventListener('scroll', updateOffset);
+    updateOffset();
+
+    return () => {
+      vv.removeEventListener('resize', updateOffset);
+      vv.removeEventListener('scroll', updateOffset);
+      document.documentElement.style.removeProperty('--keyboard-offset');
+    };
+  }, [isOpen]);
+
   const openChat = () => {
     setIsOpen(true);
     setMessages((prev) => {
