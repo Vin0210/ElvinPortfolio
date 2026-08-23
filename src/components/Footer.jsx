@@ -1,13 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowUp, ArrowRight, Mail, Download } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { FaFacebook, FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { scrollToTop } from '../utils/smoothScroll';
 import './Footer.css';
 
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const handleScrollToTop = () => scrollToTop();
 
   return (
     <footer className="footer">
@@ -42,7 +40,7 @@ const Footer = () => {
           <p className="footer-copyright">
             &copy; {new Date().getFullYear()} Elvin Ramos. All rights reserved.
           </p>
-          <button className="footer-back-top" onClick={scrollToTop}>
+          <button className="footer-back-top" onClick={handleScrollToTop} aria-label="Back to top">
             <ArrowUp size={18} />
           </button>
         </div>

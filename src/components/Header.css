@@ -202,16 +202,6 @@
   cursor: pointer;
   transition: var(--transition);
   padding: 8px 16px;
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-
-.mobile-nav-index {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--primary);
-  letter-spacing: 1px;
 }
 
 .mobile-nav-link:hover,

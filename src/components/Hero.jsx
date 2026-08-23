@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, FolderGit2, Briefcase, ChevronDown } from 'lucide-react';
 import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import { scrollToSection } from '../utils/smoothScroll';
 import './Hero.css';
 
 const ROLES = ['Web Developer', 'Laravel Developer', 'React Enthusiast'];
@@ -16,15 +17,7 @@ const Hero = () => {
     return () => clearInterval(id);
   }, []);
 
-  const scrollTo = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-  };
+  const scrollTo = (id) => scrollToSection(id);
 
   return (
     <section id="home" className="hero">

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { Menu, X, Sparkles } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
+import { scrollToSection } from '../utils/smoothScroll';
 import './Header.css';
 
 const Header = () => {
@@ -76,14 +77,7 @@ const Header = () => {
   }, [isOpen]);
 
   const scrollTo = useCallback((id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const headerHeight = 80;
-      window.scrollTo({
-        top: element.offsetTop - headerHeight,
-        behavior: 'smooth'
-      });
-    }
+    scrollToSection(id);
     setIsOpen(false);
   }, []);
 
@@ -164,7 +158,6 @@ const Header = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <span className="mobile-nav-index">0{index + 1}</span>
                 {item.label}
               </motion.button>
             ))}
