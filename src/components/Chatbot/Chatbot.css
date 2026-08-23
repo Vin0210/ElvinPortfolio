@@ -1,6 +1,6 @@
 .chatbot {
   position: fixed;
-  bottom: var(--space-xl);
+  bottom: calc(var(--space-xl) + env(safe-area-inset-bottom, 0px));
   right: var(--space-xl);
   z-index: 999;
 }
@@ -30,8 +30,7 @@
   right: 0;
   width: 360px;
   max-width: calc(100vw - 2 * var(--space-lg));
-  height: 520px;
-  max-height: calc(100vh - 140px);
+  height: min(520px, calc(100dvh - 140px));
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -310,21 +309,58 @@
   transform: scale(1.08);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .chatbot {
-    bottom: var(--space-lg);
     right: var(--space-lg);
   }
 
   .chatbot-window {
+    width: min(360px, calc(100vw - 2 * var(--space-lg)));
+  }
+}
+
+/* Small phones and landscape devices: near-fullscreen sheet */
+@media (max-width: 480px), (max-height: 500px) {
+  .chatbot {
+    right: var(--space-md);
+    bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .chatbot-toggle {
+    width: 52px;
+    height: 52px;
+  }
+
+  .chatbot-toggle svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .chatbot-window {
     position: fixed;
-    top: var(--space-sm);
+    top: auto;
     left: var(--space-sm);
     right: var(--space-sm);
-    bottom: 84px;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
     width: auto;
     max-width: none;
-    max-height: none;
+    height: auto;
+    max-height: calc(100dvh - 110px - env(safe-area-inset-bottom, 0px));
+  }
+
+  .chatbot-messages {
+    padding: var(--space-sm);
+  }
+
+  .message {
+    max-width: 92%;
+  }
+}
+
+/* Prevent iOS auto-zoom when focusing the input */
+@media (pointer: coarse) {
+  .chatbot-input {
+    font-size: 16px;
   }
 }
 

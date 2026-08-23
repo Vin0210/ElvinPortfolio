@@ -15,16 +15,7 @@ const ThemeToggle = () => {
       whileTap={{ scale: 0.85 }}
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
     >
-      <motion.div
-        className="theme-toggle-bg"
-        initial={false}
-        animate={{
-          background: isDark
-            ? 'linear-gradient(135deg, #6C63FF, #00D4FF)'
-            : 'linear-gradient(135deg, #FF6B9D, #FFB347)',
-        }}
-        transition={{ duration: 0.5 }}
-      />
+      <span className={`theme-toggle-bg ${isDark ? 'is-dark' : 'is-light'}`} />
 
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
