@@ -8,6 +8,7 @@ import {
   QUICK_REPLIES,
   findResponse
 } from './chatbotData';
+import { generateResponse, isApiKeyConfigured } from './geminiService';
 import './Chatbot.css';
 
 let messageId = 0;
@@ -91,24 +92,54 @@ const Chatbot = () => {
   };
 
   const sendMessage = useCallback(
-    (rawText) => {
+    async (rawText) => {
       const text = rawText.trim();
       if (!text || isTyping) return;
 
-      setMessages((prev) => [...prev, createMessage(text, 'user')]);
+      const userMessage = createMessage(text, 'user');
+      setMessages((prev) => [...prev, userMessage]);
       setInputValue('');
       setIsTyping(true);
 
-      typingTimeoutRef.current = setTimeout(
-        () => {
-          const reply = findResponse(text);
-          setIsTyping(false);
-          setMessages((prev) => [...prev, createMessage(reply, 'bot')]);
-        },
-        800 + Math.random() * 700
-      );
+      try {
+        let reply;
+
+        if (isApiKeyConfigured()) {
+          // Use Gemini API for real AI responses with timeout
+          const conversationHistory = [...messages, userMessage];
+          
+          // Race between API call and timeout (5 seconds)
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('timeout')), 5000)
+          );
+          
+          try {
+            reply = await Promise.race([
+              generateResponse(text, conversationHistory),
+              timeoutPromise
+            ]);
+          } catch (timeoutError) {
+            // API too slow, fall back to predefined responses
+            console.log('API timeout, using fallback response');
+            reply = findResponse(text);
+          }
+        } else {
+          // Fallback to predefined responses
+          await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 700));
+          reply = findResponse(text);
+        }
+
+        setIsTyping(false);
+        setMessages((prev) => [...prev, createMessage(reply, 'bot')]);
+      } catch (error) {
+        console.error('Chat error:', error);
+        setIsTyping(false);
+        // Fallback to predefined responses on error
+        const reply = findResponse(text);
+        setMessages((prev) => [...prev, createMessage(reply, 'bot')]);
+      }
     },
-    [isTyping]
+    [isTyping, messages]
   );
 
   const handleSubmit = (e) => {
