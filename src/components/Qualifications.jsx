@@ -77,6 +77,16 @@ const Qualifications = () => {
       github: 'https://github.com/Vin0210/SmashPoint',
       demo: 'https://smashpoint.whf.bz/',
       fullDescription: 'A full-stack pickleball booking management system that lets users browse courts, schedule reservations, and manage bookings in real time. Built with a Laravel REST API and MySQL database on the backend, paired with a dynamic React frontend for a fast and responsive booking experience.'
+    },
+    {
+      id: 7,
+      title: 'Resort Booking',
+      description: 'Full-stack resort reservation and management system',
+      image: '/images/resort.png',
+      tech: ['React', 'Node.js', 'MongoDB', 'Express'],
+      github: 'https://github.com/Vin0210/ResortBooking',
+      demo: 'https://resort-booking-sand.vercel.app/',
+      fullDescription: 'A comprehensive resort booking platform that allows users to browse available rooms, make reservations, and manage their bookings. Features include real-time availability, secure payment processing, user authentication, and an admin dashboard for managing rooms and reservations.'
     }
   ], []);
 
