@@ -16,10 +16,46 @@ let messageId = 0;
 const createMessage = (text, sender) => ({
   id: ++messageId,
   text,
-  sender
+  sender,
+  time: new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }),
 });
 
 const URL_REGEX = /(https?:\/\/[^\s]+)/g;
+
+/* Rotating teaser hints shown in the attention bubble */
+const HINTS = ['Ask me anything', 'Ask about my projects', 'Ask about my skills'];
+
+/* Window pops out of the toggle button; inner sections cascade in */
+const windowVariants = {
+  hidden: { opacity: 0, scale: 0.5, y: 80 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 280,
+      damping: 24,
+      staggerChildren: 0.07,
+      delayChildren: 0.08,
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.7,
+    y: 50,
+    transition: { duration: 0.2, ease: 'easeIn' },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 18 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 320, damping: 26 },
+  },
+};
 
 const linkifyText = (text) =>
   text.split(URL_REGEX).map((part, index) =>
@@ -39,6 +75,7 @@ const Chatbot = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [hintIndex, setHintIndex] = useState(0);
   const reduced = usePrefersReducedMotion();
 
   const messagesEndRef = useRef(null);
@@ -46,7 +83,8 @@ const Chatbot = () => {
   const typingTimeoutRef = useRef(null);
 
   /* One-time attention grab on first load: ping ring + tooltip bubble.
-     Auto-dismisses after ~10s (or on first open). Skipped for reduced motion. */
+     A typewriter teasers the hints. Auto-dismisses after ~14s (or on
+     first open). Skipped for reduced motion. */
   useEffect(() => {
     if (reduced) return;
     setShowIntro(true);
@@ -54,12 +92,28 @@ const Chatbot = () => {
     const dismissTimer = setTimeout(() => {
       setShowTooltip(false);
       setShowIntro(false);
-    }, 10000);
+    }, 14000);
     return () => {
       clearTimeout(tooltipTimer);
       clearTimeout(dismissTimer);
     };
   }, [reduced]);
+
+  /* Typewriter: types each hint char-by-char, holds, then moves on */
+  const [typed, setTyped] = useState('');
+  useEffect(() => {
+    if (!showTooltip || reduced) return;
+    const full = HINTS[hintIndex];
+    if (typed.length < full.length) {
+      const t = setTimeout(() => setTyped(full.slice(0, typed.length + 1)), 45);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setTyped('');
+      setHintIndex((i) => (i + 1) % HINTS.length);
+    }, 1800);
+    return () => clearTimeout(t);
+  }, [typed, hintIndex, showTooltip, reduced]);
 
   const dismissIntro = () => {
     setShowIntro(false);
@@ -183,12 +237,13 @@ const Chatbot = () => {
         {isOpen && (
           <motion.div
             className="chatbot-window"
-            initial={{ opacity: 0, y: 40, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 40, scale: 0.9 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
+            style={{ transformOrigin: 'bottom right' }}
+            variants={windowVariants}
+            initial="hidden"
+            animate="show"
+            exit="exit"
           >
-            <div className="chatbot-header">
+            <motion.div className="chatbot-header" variants={itemVariants}>
               <div className="chatbot-avatar">
                 <Bot size={22} />
                 <span className="chatbot-status-dot" />
@@ -204,36 +259,49 @@ const Chatbot = () => {
               >
                 <X size={18} />
               </button>
-            </div>
+            </motion.div>
 
-            <div className="chatbot-messages">
+            <motion.div className="chatbot-messages" variants={itemVariants}>
               {messages.map((message) => (
                 <div key={message.id} className={`message ${message.sender}`}>
-                  <div className="message-bubble">{linkifyText(message.text)}</div>
+                  {message.sender === 'bot' && (
+                    <span className="message-avatar" aria-hidden="true">
+                      <Bot size={14} />
+                    </span>
+                  )}
+                  <div className="message-body">
+                    <div className="message-bubble">{linkifyText(message.text)}</div>
+                    <span className="message-time">{message.time}</span>
+                  </div>
                 </div>
               ))}
 
               {isTyping && (
                 <div className="message bot">
-                  <div className="message-bubble typing-indicator">
-                    <span />
-                    <span />
-                    <span />
+                  <span className="message-avatar" aria-hidden="true">
+                    <Bot size={14} />
+                  </span>
+                  <div className="message-body">
+                    <div className="message-bubble typing-indicator">
+                      <span />
+                      <span />
+                      <span />
+                    </div>
                   </div>
                 </div>
               )}
               <div ref={messagesEndRef} />
-            </div>
+            </motion.div>
 
-            <div className="chatbot-quick-replies">
+            <motion.div className="chatbot-quick-replies" variants={itemVariants}>
               {QUICK_REPLIES.map((reply) => (
                 <button key={reply} className="quick-reply" onClick={handleQuickReply}>
                   {reply}
                 </button>
               ))}
-            </div>
+            </motion.div>
 
-            <form className="chatbot-input-area" onSubmit={handleSubmit}>
+            <motion.form className="chatbot-input-area" onSubmit={handleSubmit} variants={itemVariants}>
               <input
                 ref={inputRef}
                 type="text"
@@ -252,7 +320,7 @@ const Chatbot = () => {
               >
                 <Send size={16} />
               </button>
-            </form>
+            </motion.form>
           </motion.div>
         )}
       </AnimatePresence>
@@ -264,12 +332,23 @@ const Chatbot = () => {
             {showTooltip && (
               <motion.div
                 className="chatbot-tooltip"
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 8 }}
+                role="button"
+                tabIndex={0}
+                aria-label="Open chat"
+                onClick={openChat}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') openChat();
+                }}
+                initial={{ opacity: 0, x: 8, y: '-50%' }}
+                animate={{ opacity: 1, x: 0, y: '-50%' }}
+                exit={{ opacity: 0, x: 8, y: '-50%' }}
                 transition={{ duration: 0.3 }}
               >
-                Ask me anything <span className="tooltip-arrow">→</span>
+                <span className="tooltip-hint">
+                  {typed}
+                  <span className="tooltip-caret" aria-hidden="true" />
+                </span>
+                <span className="tooltip-arrow">→</span>
               </motion.div>
             )}
           </AnimatePresence>
@@ -277,7 +356,7 @@ const Chatbot = () => {
       )}
 
       <motion.button
-        className="chatbot-toggle"
+        className={`chatbot-toggle${showIntro && !isOpen ? ' chatbot-attention' : ''}`}
         onClick={() => (isOpen ? setIsOpen(false) : openChat())}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}

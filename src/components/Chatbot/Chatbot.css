@@ -25,6 +25,27 @@
   box-shadow: 0 10px 35px rgba(252, 0, 255, 0.45);
 }
 
+/* Pulsing glow + playful wiggle while the intro teaser is showing.
+   Wiggle uses the independent `rotate` property so it composes with
+   framer-motion's inline transform instead of fighting it. */
+.chatbot-toggle.chatbot-attention {
+  animation: toggleGlow 2s ease-in-out infinite, toggleWiggle 3.2s ease-in-out infinite;
+}
+
+@keyframes toggleGlow {
+  0%, 100% { box-shadow: 0 8px 25px rgba(0, 219, 222, 0.4); }
+  50% { box-shadow: 0 8px 40px rgba(252, 0, 255, 0.65); }
+}
+
+@keyframes toggleWiggle {
+  0%, 88%, 100% { rotate: 0deg; }
+  90% { rotate: -10deg; }
+  92% { rotate: 8deg; }
+  94% { rotate: -6deg; }
+  96% { rotate: 4deg; }
+  98% { rotate: 0deg; }
+}
+
 /* One-time attention ping on first page load */
 .chatbot-ping {
   position: absolute;
@@ -47,7 +68,9 @@
   }
 }
 
-/* "Ask me anything" tooltip bubble */
+/* "Ask me anything" tooltip bubble — clickable teaser that opens the chat.
+   NOTE: vertical centering is driven by framer-motion (y: '-50%'); the bob
+   uses margin-top so it never fights the inline transform. */
 .chatbot-tooltip {
   position: absolute;
   right: calc(100% + 14px);
@@ -63,8 +86,57 @@
   font-size: 0.85rem;
   font-weight: 500;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-  pointer-events: none;
   z-index: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: tooltipBob 2.4s ease-in-out infinite;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chatbot-tooltip:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 30px rgba(0, 219, 222, 0.35);
+}
+
+.chatbot-tooltip .tooltip-hint {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Blinking typewriter caret */
+.chatbot-tooltip .tooltip-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background: var(--color-primary);
+  animation: caretBlink 0.9s steps(1) infinite;
+}
+
+@keyframes caretBlink {
+  0%, 55% { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
+/* Little speech tail pointing at the bot button */
+.chatbot-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: inherit;
+  transform: translateY(-50%) rotate(45deg);
+  border-top: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+@keyframes tooltipBob {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -6px; }
 }
 
 .chatbot-tooltip .tooltip-arrow {
@@ -80,7 +152,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   .chatbot-ping,
-  .chatbot-tooltip .tooltip-arrow {
+  .chatbot-tooltip,
+  .chatbot-toggle.chatbot-attention,
+  .chatbot-tooltip .tooltip-arrow,
+  .chatbot-tooltip .tooltip-caret {
     animation: none;
   }
 }
@@ -186,7 +261,9 @@
 
 .message {
   display: flex;
-  max-width: 85%;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 88%;
 }
 
 .message.user {
@@ -198,6 +275,40 @@
   align-self: flex-start;
 }
 
+/* Mini bot avatar beside bot bubbles */
+.message-avatar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: white;
+  box-shadow: 0 3px 10px rgba(0, 219, 222, 0.35);
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.message.user .message-body {
+  align-items: flex-end;
+}
+
+.message-time {
+  font-size: 0.65rem;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1;
+}
+
+[data-theme='light'] .message-time {
+  color: rgba(26, 26, 46, 0.5);
+}
+
 .message-bubble {
   padding: var(--space-sm) var(--space-md);
   border-radius: var(--radius-lg);
@@ -205,19 +316,23 @@
   line-height: 1.5;
   white-space: pre-line;
   word-break: break-word;
-  animation: messageIn 0.3s ease forwards;
 }
 
 .message.bot .message-bubble {
   background: rgba(255, 255, 255, 0.08);
   color: white;
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-bottom-left-radius: var(--radius-sm);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  animation: messageInLeft 0.35s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .message.user .message-bubble {
   background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: white;
   border-bottom-right-radius: var(--radius-sm);
+  box-shadow: 0 4px 16px rgba(0, 219, 222, 0.3);
+  animation: messageInRight 0.35s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 .message-bubble a {
@@ -236,14 +351,25 @@
   color: white;
 }
 
-@keyframes messageIn {
+@keyframes messageInLeft {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(-14px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes messageInRight {
+  from {
+    opacity: 0;
+    transform: translateX(14px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
   }
 }
 
@@ -259,6 +385,7 @@
   height: 7px;
   border-radius: var(--radius-full);
   background: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary);
   animation: typingBounce 1.2s infinite ease-in-out;
 }
 
@@ -274,11 +401,11 @@
   0%,
   60%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.85);
     opacity: 0.4;
   }
   30% {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.1);
     opacity: 1;
   }
 }
@@ -445,6 +572,10 @@
   color: #1a1a2e;
 }
 
+[data-theme='light'] .chatbot-role {
+  color: rgba(26, 26, 46, 0.6);
+}
+
 [data-theme='light'] .chatbot-status-dot {
   border-color: #ffffff;
 }
@@ -461,6 +592,8 @@
 [data-theme='light'] .message.bot .message-bubble {
   background: rgba(26, 26, 46, 0.07);
   color: #1a1a2e;
+  border-color: rgba(26, 26, 46, 0.1);
+  box-shadow: 0 4px 14px rgba(26, 26, 46, 0.1);
 }
 
 [data-theme='light'] .message.bot .message-bubble a {
