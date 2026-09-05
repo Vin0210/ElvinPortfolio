@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Briefcase, GraduationCap, Award, Code, ExternalLink, X, Maximize2 } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
+import { headerContainer, headerItem } from '../utils/animationVariants';
 import './Qualifications.css';
 
 const Qualifications = () => {
@@ -200,7 +201,7 @@ const Qualifications = () => {
       return (
         <motion.div
           className="project-card"
-          whileHover={{ y: -8 }}
+          whileHover={{ y: -6 }}
         >
           <div 
             className="project-image"
@@ -226,7 +227,7 @@ const Qualifications = () => {
               className="project-details-btn"
               onClick={() => setSelectedProject(item)}
             >
-              View Details →
+              View Details <span className="details-arrow">→</span>
             </button>
           </div>
         </motion.div>
@@ -272,13 +273,13 @@ const Qualifications = () => {
       <div className="qualifications-container">
         <motion.div
           className="qualifications-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={headerContainer}
+          initial="hidden"
+          whileInView="show"
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
         >
-          <span className="section-tag">Portfolio</span>
-          <h2 className="section-title">My Work & Qualifications</h2>
+          <motion.span variants={headerItem} className="section-tag">Portfolio</motion.span>
+          <motion.h2 variants={headerItem} className="section-title">My Work &amp; Qualifications</motion.h2>
         </motion.div>
 
         <div className="qualifications-tabs">

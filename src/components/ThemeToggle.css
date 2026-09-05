@@ -70,3 +70,56 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Freeze element color transitions while the wipe is running so the
+   new theme applies instantly beneath the circle (no crossfade/gradient lerp) */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
+}
+
+/* Clone-reveal transition: the overlay holds a new-theme snapshot of
+   the page, clipped to a circle growing from the toggle. The real page
+   stays fully visible in the old theme until the circle passes over it,
+   so nothing disappears or crossfades midway. */
+.theme-reveal-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.theme-reveal-scroll {
+  position: absolute;
+}
+
+/* Scope the snapshot to its own theme regardless of the <html> attribute,
+   so the clone keeps showing the intended theme after the real page flips */
+.theme-reveal-wrap[data-theme="light"] {
+  --bg-primary: #F8F9FA;
+  --bg-secondary: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-elevated: #FFFFFF;
+  --text-primary: #1A1A2E;
+  --text-secondary: #4A4A6A;
+  --text-muted: #8A8AA8;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 20px 60px rgba(108, 99, 255, 0.15);
+}
+
+.theme-reveal-wrap[data-theme="dark"] {
+  --bg-primary: #0A0A1A;
+  --bg-secondary: #12122A;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-elevated: #1A1A3A;
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.4);
+  --border-color: rgba(255, 255, 255, 0.06);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 20px 60px rgba(108, 99, 255, 0.2);
+}

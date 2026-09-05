@@ -29,10 +29,20 @@ export default [
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react/jsx-no-target-blank': 'off',
+      // Project convention: function components take destructured props
+      // (no PropTypes / TypeScript), so these are false positives here.
+      'react/prop-types': 'off',
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
+    },
+  },
+  {
+    // ThemeContext intentionally exports both the provider and useTheme hook.
+    files: ['src/components/ThemeContext.jsx'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
     },
   },
 ]

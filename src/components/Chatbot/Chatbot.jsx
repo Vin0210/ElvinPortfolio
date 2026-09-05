@@ -9,6 +9,7 @@ import {
   findResponse
 } from './chatbotData';
 import { generateResponse, isApiKeyConfigured } from './geminiService';
+import { usePrefersReducedMotion } from '../../hooks/useMotionPrefs';
 import './Chatbot.css';
 
 let messageId = 0;
@@ -36,10 +37,34 @@ const Chatbot = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const reduced = usePrefersReducedMotion();
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+
+  /* One-time attention grab on first load: ping ring + tooltip bubble.
+     Auto-dismisses after ~10s (or on first open). Skipped for reduced motion. */
+  useEffect(() => {
+    if (reduced) return;
+    setShowIntro(true);
+    const tooltipTimer = setTimeout(() => setShowTooltip(true), 2000);
+    const dismissTimer = setTimeout(() => {
+      setShowTooltip(false);
+      setShowIntro(false);
+    }, 10000);
+    return () => {
+      clearTimeout(tooltipTimer);
+      clearTimeout(dismissTimer);
+    };
+  }, [reduced]);
+
+  const dismissIntro = () => {
+    setShowIntro(false);
+    setShowTooltip(false);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -84,6 +109,7 @@ const Chatbot = () => {
   }, [isOpen]);
 
   const openChat = () => {
+    dismissIntro();
     setIsOpen(true);
     setMessages((prev) => {
       if (prev.length > 0) return prev;
@@ -118,7 +144,7 @@ const Chatbot = () => {
               generateResponse(text, conversationHistory),
               timeoutPromise
             ]);
-          } catch (timeoutError) {
+          } catch {
             // API too slow, fall back to predefined responses
             console.log('API timeout, using fallback response');
             reply = findResponse(text);
@@ -230,6 +256,25 @@ const Chatbot = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {showIntro && !isOpen && (
+        <>
+          <span className="chatbot-ping" aria-hidden="true" />
+          <AnimatePresence>
+            {showTooltip && (
+              <motion.div
+                className="chatbot-tooltip"
+                initial={{ opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 8 }}
+                transition={{ duration: 0.3 }}
+              >
+                Ask me anything <span className="tooltip-arrow">→</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      )}
 
       <motion.button
         className="chatbot-toggle"

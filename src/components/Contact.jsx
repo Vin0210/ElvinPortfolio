@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle, Mail, User, MessageSquare } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { headerContainer, headerItem } from '../utils/animationVariants';
 import './Contact.css';
 
 const Contact = () => {
@@ -32,16 +33,16 @@ const Contact = () => {
       <div className="contact-container">
         <motion.div
           className="contact-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={headerContainer}
+          initial="hidden"
+          whileInView="show"
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
         >
-          <span className="section-tag">Get In Touch</span>
-          <h2 className="section-title">Let's work together</h2>
-          <p className="contact-subtitle">
-            Have a project in mind? I'd love to hear from you.
-          </p>
+          <motion.span variants={headerItem} className="section-tag">Get In Touch</motion.span>
+          <motion.h2 variants={headerItem} className="section-title">Let&apos;s work together</motion.h2>
+          <motion.p variants={headerItem} className="contact-subtitle">
+            Have a project in mind? I&apos;d love to hear from you.
+          </motion.p>
         </motion.div>
 
         {submitted ? (
@@ -52,7 +53,7 @@ const Contact = () => {
           >
             <CheckCircle size={48} className="success-icon" />
             <h3>Message Sent!</h3>
-            <p>Thanks for reaching out. I'll get back to you soon.</p>
+            <p>Thanks for reaching out. I&apos;ll get back to you soon.</p>
             <button className="btn-primary" onClick={() => setSubmitted(false)}>
               Send Another
             </button>

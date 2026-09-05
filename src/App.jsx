@@ -1,4 +1,3 @@
-import React, { lazy, Suspense } from 'react';
 import { ThemeProvider } from './components/ThemeContext';
 import Header from './components/Header';
 import Hero from './components/Hero';

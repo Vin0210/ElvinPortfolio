@@ -11,8 +11,10 @@
 
 .header.scrolled {
   background: var(--bg-secondary);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Semi-transparent so the blur reads as depth, not a solid slab */
+  background: color-mix(in srgb, var(--bg-secondary) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
   border-bottom: 1px solid var(--border-color);
   padding: 12px 0;
 }
@@ -154,13 +156,13 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(108, 99, 255, 0.4);
+  transform: scale(1.04);
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.5);
 }
 
 .mobile-toggle {

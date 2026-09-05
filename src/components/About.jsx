@@ -7,6 +7,8 @@ const STAT_VALUES = ['10+', '5+', '500+', '8+'];
 
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
+import { headerContainer, headerItem } from '../utils/animationVariants';
+
 const About = () => {
   const statsRef = useRef(null);
   const statsInView = useInView(statsRef, { once: true });
@@ -46,13 +48,13 @@ const About = () => {
       <div className="about-container">
         <motion.div
           className="about-header"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={headerContainer}
+          initial="hidden"
+          whileInView="show"
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
         >
-          <span className="section-tag">About Me</span>
-          <h2 className="section-title">Passionate about creating <br />digital experiences</h2>
+          <motion.span variants={headerItem} className="section-tag">About Me</motion.span>
+          <motion.h2 variants={headerItem} className="section-title">Passionate about creating <br />digital experiences</motion.h2>
         </motion.div>
 
         <div className="about-grid">

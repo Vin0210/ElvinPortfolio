@@ -6,6 +6,7 @@
 }
 
 .chatbot-toggle {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,6 +23,66 @@
 
 .chatbot-toggle:hover {
   box-shadow: 0 10px 35px rgba(252, 0, 255, 0.45);
+}
+
+/* One-time attention ping on first page load */
+.chatbot-ping {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-primary);
+  animation: chatbotPing 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes chatbotPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* "Ask me anything" tooltip bubble */
+.chatbot-tooltip {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(12px);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.chatbot-tooltip .tooltip-arrow {
+  color: var(--color-primary);
+  display: inline-block;
+  animation: tooltipArrow 1.2s ease-in-out infinite;
+}
+
+@keyframes tooltipArrow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-ping,
+  .chatbot-tooltip .tooltip-arrow {
+    animation: none;
+  }
 }
 
 .chatbot-window {
