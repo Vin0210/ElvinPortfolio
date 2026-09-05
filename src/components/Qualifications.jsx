@@ -20,46 +20,26 @@ const Qualifications = () => {
   const projects = useMemo(() => [
     {
       id: 1,
-      title: 'Snake Identification App',
-      description: 'Machine learning app for identifying Philippine snake species',
-      image: '/images/Snake.jpg',
-      tech: ['Flutter', 'TensorFlow'],
-      github: '#',
-      demo: '#',
-      fullDescription: 'This app helps users identify Philippine snake species through image recognition. Built with Flutter for cross-platform compatibility and TensorFlow for machine learning capabilities.'
+      title: 'Resort Booking',
+      description: 'Full-stack resort reservation and management system',
+      image: '/images/resort.png',
+      tech: ['React', 'Node.js', 'MongoDB', 'Express'],
+      github: 'https://github.com/Vin0210/ResortBooking',
+      demo: 'https://resort-booking-sand.vercel.app/',
+      fullDescription: 'A comprehensive resort booking platform that allows users to browse available rooms, make reservations, and manage their bookings. Features include real-time availability, secure payment processing, user authentication, and an admin dashboard for managing rooms and reservations.'
     },
     {
       id: 2,
-      title: 'Pokémon Web',
-      description: 'Comprehensive Pokémon encyclopedia with team building',
-      image: '/images/project2.jpg',
-      tech: ['React', 'CSS', 'JSON Server'],
-      github: 'https://github.com/Vin0210/Pokemon',
-      demo: 'https://pokemonhehe.netlify.app/',
-      fullDescription: 'A feature-rich Pokémon web app that allows users to explore detailed Pokémon information, build custom teams, simulate battles, and track battle history.'
+      title: 'DriveRent - Car Rental',
+      description: 'Car rental & fleet management platform (Under Development)',
+      image: '/images/CarRental.png',
+      tech: ['Laravel', 'React', 'MySQL', 'Vite', 'REST API'],
+      github: 'https://github.com/Vin0210/Car-Rental',
+      demo: '#',
+      fullDescription: 'DriveRent — "Your journey. Your car. Your way." A production-quality full-stack car rental & fleet management platform with a customer rental website + staff/admin dashboard. Features vehicle browsing, availability checking, 6-step booking checkout with quotation/pricing, payments, inspections, maintenance, and reports. Currently under development.'
     },
     {
       id: 3,
-      title: 'Todo List',
-      description: 'Productivity app with task management features',
-      image: '/images/project3.jpg',
-      tech: ['React', 'CSS'],
-      github: 'https://github.com/Vin0210/todo-app',
-      demo: 'https://todotodo1222.netlify.app/',
-      fullDescription: 'A clean, intuitive to-do list application with task prioritization, completion tracking, and responsive design.'
-    },
-    {
-      id: 4,
-      title: 'Fast Food E-Commerce',
-      description: 'Online ordering platform for food delivery',
-      image: '/images/project5.jpg',
-      tech: ['PHP', 'phpMyAdmin', 'XAMPP'],
-      github: 'https://github.com/Annur12/e-commerce',
-      demo: 'https://cat-bounce.com/',
-      fullDescription: 'A full-featured fast food ordering system with menu browsing, cart functionality, and order tracking.'
-    },
-    {
-      id: 5,
       title: 'RMMC System',
       description: 'Comprehensive School Management System for academic and administrative operations.',
       image: '/images/rmmc.webp',
@@ -69,7 +49,17 @@ const Qualifications = () => {
       fullDescription: 'Designed, developed and maintained a comprehensive School Management System for RMMC that digitizes and streamlines institutional processes. The platform features integrated modules for Admissions, Enrollment, Registrar, Finance, Cashier, Student and Teacher Portals, grading, scheduling, and analytics, enabling efficient management of academic and administrative workflows through a centralized system.'
     },
     {
-      id: 6,
+      id: 4,
+      title: 'Pokémon Web',
+      description: 'Comprehensive Pokémon encyclopedia with team building',
+      image: '/images/project2.jpg',
+      tech: ['React', 'CSS', 'JSON Server'],
+      github: 'https://github.com/Vin0210/Pokemon',
+      demo: 'https://pokemonhehe.netlify.app/',
+      fullDescription: 'A feature-rich Pokémon web app that allows users to explore detailed Pokémon information, build custom teams, simulate battles, and track battle history.'
+    },
+    {
+      id: 5,
       title: 'SmashPoint',
       description: 'Pickleball court booking management system',
       image: '/images/smashpoint1.webp',
@@ -80,14 +70,34 @@ const Qualifications = () => {
       fullDescription: 'A full-stack pickleball booking management system that lets users browse courts, schedule reservations, and manage bookings in real time. Built with a Laravel REST API and MySQL database on the backend, paired with a dynamic React frontend for a fast and responsive booking experience.'
     },
     {
+      id: 6,
+      title: 'Todo List',
+      description: 'Productivity app with task management features',
+      image: '/images/project3.jpg',
+      tech: ['React', 'CSS'],
+      github: 'https://github.com/Vin0210/todo-app',
+      demo: 'https://todotodo1222.netlify.app/',
+      fullDescription: 'A clean, intuitive to-do list application with task prioritization, completion tracking, and responsive design.'
+    },
+    {
       id: 7,
-      title: 'Resort Booking',
-      description: 'Full-stack resort reservation and management system',
-      image: '/images/resort.png',
-      tech: ['React', 'Node.js', 'MongoDB', 'Express'],
-      github: 'https://github.com/Vin0210/ResortBooking',
-      demo: 'https://resort-booking-sand.vercel.app/',
-      fullDescription: 'A comprehensive resort booking platform that allows users to browse available rooms, make reservations, and manage their bookings. Features include real-time availability, secure payment processing, user authentication, and an admin dashboard for managing rooms and reservations.'
+      title: 'Fast Food E-Commerce',
+      description: 'Online ordering platform for food delivery',
+      image: '/images/project5.jpg',
+      tech: ['PHP', 'phpMyAdmin', 'XAMPP'],
+      github: 'https://github.com/Annur12/e-commerce',
+      demo: 'https://cat-bounce.com/',
+      fullDescription: 'A full-featured fast food ordering system with menu browsing, cart functionality, and order tracking.'
+    },
+    {
+      id: 8,
+      title: 'Snake Identification App',
+      description: 'Machine learning app for identifying Philippine snake species',
+      image: '/images/Snake.jpg',
+      tech: ['Flutter', 'TensorFlow'],
+      github: '#',
+      demo: '#',
+      fullDescription: 'This app helps users identify Philippine snake species through image recognition. Built with Flutter for cross-platform compatibility and TensorFlow for machine learning capabilities.'
     }
   ], []);
 

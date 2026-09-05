@@ -35,6 +35,7 @@ PROJECTS:
 5. Pokémon Web - Pokémon encyclopedia with team building (React, CSS, JSON Server) - Live: https://pokemonhehe.netlify.app/
 6. Todo List - Productivity app (React, CSS) - Live: https://todotodo1222.netlify.app/
 7. Fast Food E-Commerce - Online ordering platform (PHP, MySQL)
+8. DriveRent - Car Rental & Fleet Management Platform (Laravel, React, MySQL) - Currently under development - GitHub: https://github.com/Vin0210/Car-Rental
 
 CONTACT:
 - Email: elvinramos0210@gmail.com
