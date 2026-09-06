@@ -19,6 +19,17 @@ const Qualifications = () => {
 
   const projects = useMemo(() => [
     {
+      id: 9,
+      title: 'DentalOS',
+      description: 'Modern software for modern dental clinics — patients, appointments, charting, billing & inventory',
+      image: '/images/DentalOS.png',
+      images: ['/images/DentalOS.png', '/images/DentalOSDash.png', '/images/DentalOSMobile.png'],
+      tech: ['React', 'Vite', 'Laravel', 'MySQL', 'REST API', 'Recharts'],
+      github: 'https://github.com/Vin0210/DentalOS',
+      demo: 'https://dentalos-frontend.vercel.app/',
+      fullDescription: 'DentalOS — The operating system for modern dental clinics. Unifies patients, appointments, clinical records, billing, inventory and reporting in one calm, fast workspace. Features rich patient profiles with timelines, smart appointments with dentist & room conflict prevention, interactive dental chart (Odontogram with FDI numbering), treatment planning, invoices & payments, stock with low-stock/expiry alerts, lab workspace, patient portal, 5 role-based user roles with audit logs, and an interactive landing page. Built with React 19 + Vite frontend and Laravel 13 + Sanctum API.'
+    },
+    {
       id: 1,
       title: 'Resort Booking',
       description: 'Full-stack resort reservation and management system',

@@ -92,8 +92,8 @@ export const intents = [
     id: 'projects',
     keywords: ['project', 'projects', 'portfolio', 'work', 'built', 'build', 'showcase', 'apps', 'applications', 'made'],
     responses: [
-      "At iTECH-RAR Solutions, Elvin has built modules for Enrollment, Registrar, Finance, Cashier, Student Portal, Teacher Portal, Attendance Monitoring, Peer Evaluation, and Reports. Basically, if a school needs it, he's coded it. Plus 10+ projects with 5+ clients!",
-      "His systems are so stable, even his legacy code has job security. Highlights: enterprise school management systems (enrollment, finance, portals, attendance), interactive React apps, a resort booking platform, DriveRent car rental platform (currently under development), and various client projects."
+      "At iTECH-RAR Solutions, Elvin has built modules for Enrollment, Registrar, Finance, Cashier, Student Portal, Teacher Portal, Attendance Monitoring, Peer Evaluation, and Reports. Basically, if a school needs it, he's coded it. Plus 10+ projects with 5+ clients! Latest build: DentalOS — a full dental clinic OS (React + Laravel) with patients, appointments, odontogram charting, billing & inventory. Live at https://dentalos-frontend.vercel.app/",
+      "His systems are so stable, even his legacy code has job security. Highlights: DentalOS dental clinic system (patients, appointments, dental chart, billing, inventory — React, Laravel, MySQL), enterprise school management systems (enrollment, finance, portals, attendance), interactive React apps, a resort booking platform, DriveRent car rental platform (currently under development), and various client projects."
     ]
   },
   {
