@@ -1,12 +1,37 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, FolderGit2, Briefcase, ChevronDown } from 'lucide-react';
-import { FaGithub, FaLinkedin, FaFacebook, FaInstagram } from "react-icons/fa";
+import React, { useEffect, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/useMotionPrefs';
 import { scrollToSection } from '../utils/smoothScroll';
 import './Hero.css';
 
-const ROLES = ['Web Developer', 'Laravel Developer', 'React Enthusiast'];
+const PROMPT = '~ $ whoami';
+
+const ROLES = ['web developer', 'laravel developer', 'react enthusiast'];
+
+/**
+ * Executes once on load: types the prompt, then goes solid.
+ * Static text when reduced motion is preferred.
+ */
+const ExecPrompt = () => {
+  const reduced = usePrefersReducedMotion();
+  const [n, setN] = useState(reduced ? PROMPT.length : 0);
+
+  useEffect(() => {
+    if (reduced) {
+      setN(PROMPT.length);
+      return;
+    }
+    if (n >= PROMPT.length) return;
+    const t = setTimeout(() => setN((v) => v + 1), 45);
+    return () => clearTimeout(t);
+  }, [n, reduced]);
+
+  return (
+    <p className="hero-prompt" aria-hidden="true">
+      <span>{PROMPT.slice(0, n)}</span>
+      <span className="type-caret" aria-hidden="true" />
+    </p>
+  );
+};
 
 /**
  * Typewriter role text: types out each role on load and on every swap.
@@ -39,11 +64,15 @@ const TypeRole = ({ text }) => {
   );
 };
 
+const SOCIALS = [
+  { label: 'github', href: 'https://github.com/Vin0210' },
+  { label: 'linkedin', href: 'https://www.linkedin.com/in/elvin-ramos-a347b2339' },
+  { label: 'instagram', href: 'https://www.instagram.com/vin.viinn/' },
+  { label: 'facebook', href: 'https://www.facebook.com/elvinramos.meme' },
+];
+
 const Hero = () => {
   const [roleIndex, setRoleIndex] = useState(0);
-  const reduced = usePrefersReducedMotion();
-  const heroRef = useRef(null);
-  const rafRef = useRef(null);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -52,165 +81,78 @@ const Hero = () => {
     return () => clearInterval(id);
   }, []);
 
-  /* Mouse parallax: normalised cursor position is written to CSS vars on
-     the section (rAF-throttled). CSS moves the photo, stat cards and
-     background blobs a few px opposite to the cursor via the `translate`
-     property, which composes cleanly with existing transform animations. */
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el || reduced) return;
-
-    const onMove = (e) => {
-      if (rafRef.current) return;
-      rafRef.current = requestAnimationFrame(() => {
-        rafRef.current = null;
-        const rect = el.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-        el.style.setProperty('--par-x', x.toFixed(3));
-        el.style.setProperty('--par-y', y.toFixed(3));
-      });
-    };
-    const onLeave = () => {
-      el.style.setProperty('--par-x', '0');
-      el.style.setProperty('--par-y', '0');
-    };
-
-    el.addEventListener('mousemove', onMove);
-    el.addEventListener('mouseleave', onLeave);
-    return () => {
-      el.removeEventListener('mousemove', onMove);
-      el.removeEventListener('mouseleave', onLeave);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [reduced]);
-
-  const scrollTo = (id) => scrollToSection(id);
-
   return (
-    <section id="home" className="hero" ref={heroRef}>
-      <div className="hero-container">
-        <div className="hero-content">
-          <motion.div
-            className="hero-badge"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 120, damping: 18 }}
-          >
-            <span className="badge-dot" />
-            Open to opportunities
-          </motion.div>
+    <section id="home" className="hero">
+      <div className="hero-inner">
+        <div className="hero-copy">
+          <ExecPrompt />
 
-          <motion.h1
-            className="hero-title"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 90, damping: 18, delay: 0.08 }}
-          >
-            Hi, I&apos;m{' '}
-            <span className="gradient-text">Elvin</span>
-            <br />
-            <span className="role-rotator">
-              <span className="role-sizer" aria-hidden="true">
-                {ROLES.reduce((a, b) => (b.length > a.length ? b : a))}
-              </span>
-              <TypeRole text={ROLES[roleIndex]} />
-            </span>
-          </motion.h1>
+          <h1 className="hero-name">
+            Elvin <em>Ramos</em>
+          </h1>
 
-          <motion.p
-            className="hero-description"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 90, damping: 18, delay: 0.16 }}
-          >
-            Crafting modern, responsive, and user-centric web experiences
-            with clean code and creative solutions.
-          </motion.p>
+          <p className="hero-role">
+            <span className="role-prompt" aria-hidden="true">&gt;</span>{' '}
+            <TypeRole text={ROLES[roleIndex]} />
+          </p>
 
-          <motion.div
-            className="hero-actions"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ type: 'spring', stiffness: 90, damping: 18, delay: 0.24 }}
-          >
-            <button className="btn-primary btn-large" onClick={() => scrollTo('contact')}>
-              Get in Touch
-              <ArrowRight size={18} className="btn-arrow" />
+          <p className="hero-desc">
+            I build and maintain web systems people rely on every day — school
+            management platforms, booking sites, and internal tools. Mostly
+            Laravel, React, and MySQL. Currently a web developer at
+            Itech&nbsp;Rar,&nbsp;Inc.
+          </p>
+
+          <div className="hero-actions">
+            <button className="btn-primary" onClick={() => scrollToSection('work')}>
+              see my work
             </button>
-            <button className="btn-secondary" onClick={() => scrollTo('qualifications')}>
-              View My Work
+            <button className="btn-secondary" onClick={() => scrollToSection('contact')}>
+              get in touch
             </button>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="hero-social"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <a href="https://github.com/Vin0210" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="GitHub">
-              <FaGithub size={20} />
-            </a>
-            <a href="https://www.linkedin.com/in/elvin-ramos-a347b2339" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
-              <FaLinkedin size={20} />
-            </a>
-            <a href="https://www.instagram.com/vin.viinn/" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram">
-              <FaInstagram size={20} />
-            </a>
-            <a href="https://www.facebook.com/elvinramos.meme" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Facebook">
-              <FaFacebook size={20} />
-            </a>
-          </motion.div>
+          <ul className="hero-socials">
+            {SOCIALS.map(({ label, href }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mono-link"
+                >
+                  {label}
+                  <span className="arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <motion.div
-          className="hero-visual"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="hero-image-wrapper">
+        <div className="hero-visual">
+          <figure className="hero-photo">
             <img
               src="/images/elvin.jpg"
-              alt="Elvin - Web Developer"
-              className="hero-image"
+              alt="Elvin Ramos"
               loading="eager"
             />
-            <div className="hero-ring ring-1" aria-hidden="true" />
-            <div className="hero-ring ring-2" aria-hidden="true" />
-            <div className="hero-ring ring-3" aria-hidden="true" />
-
-            {/* Stat cards live inside the circle container so their
-                percentage offsets sit flush against the circle edge */}
-            <div className="floating-card card-1">
-              <div className="card-icon"><FolderGit2 size={22} /></div>
-              <div>
-                <div className="card-label">Projects</div>
-                <div className="card-value">10+</div>
-              </div>
-            </div>
-
-            <div className="floating-card card-2">
-              <div className="card-icon"><Briefcase size={22} /></div>
-              <div>
-                <div className="card-label">Experience</div>
-                <div className="card-value">2+ Years</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+            <figcaption className="hero-photo-caption">
+              elvin ramos — zamboanga city, 2025
+            </figcaption>
+          </figure>
+          <p className="hero-note" aria-hidden="true">
+            {'// probably in VS Code right now'}
+          </p>
+        </div>
       </div>
 
-      <button className="hero-scroll-cue" onClick={() => scrollTo('about')} aria-label="Scroll to About section">
-        <ChevronDown size={18} />
+      <button
+        className="hero-scroll-cue"
+        onClick={() => scrollToSection('about')}
+        aria-label="Scroll to about section"
+      >
+        scroll <span aria-hidden="true">↓</span>
       </button>
-
-      <div className="hero-background">
-        <div className="bg-blob blob-1" />
-        <div className="bg-blob blob-2" />
-        <div className="bg-blob blob-3" />
-      </div>
     </section>
   );
 };

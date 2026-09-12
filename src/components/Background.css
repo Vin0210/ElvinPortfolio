@@ -1,0 +1,235 @@
+.background {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.background-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 72px;
+  margin-top: 48px;
+  align-items: start;
+}
+
+.bg-column-title {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.bg-certs-title {
+  margin-top: 44px;
+}
+
+/* Timeline: a single rule line with markers, no cards */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--border-strong);
+}
+
+.timeline-quiet {
+  border-color: var(--border-color);
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 32px 28px;
+  transition: transform 0.25s var(--spring);
+}
+
+.timeline-item:hover {
+  transform: translateX(4px);
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 2px solid var(--primary);
+  transition: transform 0.25s var(--spring), box-shadow 0.25s ease;
+}
+
+.timeline-item:hover::before {
+  transform: scale(1.3);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.timeline-quiet .timeline-item::before {
+  border-color: var(--text-muted);
+}
+
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.timeline-quiet .timeline-year {
+  color: var(--text-muted);
+}
+
+.timeline-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.timeline-place {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 2px 0 8px;
+}
+
+.timeline-desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  max-width: 52ch;
+}
+
+/* Certifications: document rows with thumbnails */
+.certs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.cert-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 12px 4px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  cursor: zoom-in;
+  text-align: left;
+  transition: padding 0.2s ease;
+}
+
+.cert-row:hover {
+  padding-left: 10px;
+}
+
+.cert-thumb {
+  width: 64px;
+  height: 44px;
+  object-fit: cover;
+  object-position: top center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.cert-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cert-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cert-from {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.cert-expand {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.cert-row:hover .cert-expand {
+  color: var(--primary);
+}
+
+/* Lightbox shared with work section */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.88);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -52px;
+  right: 0;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+}
+
+.lightbox-close:hover {
+  color: #fff;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.lightbox-hint {
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 900px) {
+  .background-grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lightbox-overlay {
+    padding: 20px;
+  }
+
+  .lightbox-content img {
+    max-height: 65vh;
+  }
+}

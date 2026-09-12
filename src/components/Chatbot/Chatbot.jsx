@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Bot } from 'lucide-react';
+import { X, Send } from 'lucide-react';
 import {
-  BOT_NAME,
-  BOT_ROLE,
   WELCOME_MESSAGE,
   QUICK_REPLIES,
+  HELP_TEXT,
+  WHOAMI_TEXT,
+  LS_TEXT,
   findResponse
 } from './chatbotData';
 import { generateResponse, isApiKeyConfigured } from './geminiService';
@@ -81,6 +82,9 @@ const Chatbot = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const greetedRef = useRef(false);
+  const historyRef = useRef([]);
+  const histIdxRef = useRef(-1);
 
   /* One-time attention grab on first load: ping ring + tooltip bubble.
      A typewriter teasers the hints. Auto-dismisses after ~14s (or on
@@ -165,10 +169,22 @@ const Chatbot = () => {
   const openChat = () => {
     dismissIntro();
     setIsOpen(true);
-    setMessages((prev) => {
-      if (prev.length > 0) return prev;
-      return [createMessage(WELCOME_MESSAGE, 'bot')];
-    });
+    if (messages.length > 0 || greetedRef.current) return;
+    greetedRef.current = true;
+    // One honest beat: the bot visibly "thinks" a little too long exactly
+    // once, before its first line. Every reply after is normal speed.
+    if (reduced) {
+      setMessages([createMessage(WELCOME_MESSAGE, 'bot')]);
+      return;
+    }
+    setIsTyping(true);
+    clearTimeout(typingTimeoutRef.current);
+    typingTimeoutRef.current = setTimeout(() => {
+      setIsTyping(false);
+      setMessages((prev) =>
+        prev.length > 0 ? prev : [createMessage(WELCOME_MESSAGE, 'bot')]
+      );
+    }, 900);
   };
 
   const sendMessage = useCallback(
@@ -179,6 +195,35 @@ const Chatbot = () => {
       const userMessage = createMessage(text, 'user');
       setMessages((prev) => [...prev, userMessage]);
       setInputValue('');
+      historyRef.current.push(text);
+      histIdxRef.current = -1;
+
+      // Shell builtins — handled locally, everything else falls
+      // through to the normal responder below.
+      const cmd = text.toLowerCase();
+      if (cmd === 'clear') {
+        setMessages([]);
+        return;
+      }
+      if (cmd === 'exit' || cmd === 'quit') {
+        setIsOpen(false);
+        return;
+      }
+      const builtin =
+        cmd === 'help' ? HELP_TEXT :
+        cmd === 'whoami' ? WHOAMI_TEXT :
+        cmd === 'ls' ? LS_TEXT :
+        null;
+      if (builtin) {
+        setIsTyping(true);
+        clearTimeout(typingTimeoutRef.current);
+        typingTimeoutRef.current = setTimeout(() => {
+          setIsTyping(false);
+          setMessages((prev) => [...prev, createMessage(builtin, 'bot')]);
+        }, 350);
+        return;
+      }
+
       setIsTyping(true);
 
       try {
@@ -227,6 +272,30 @@ const Chatbot = () => {
     sendMessage(inputValue);
   };
 
+  // Shell history: ↑ recalls older commands, ↓ moves back toward a blank line
+  const handleKeyDown = (e) => {
+    const h = historyRef.current;
+    if (!h.length) return;
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const next =
+        histIdxRef.current === -1 ? h.length - 1 : Math.max(0, histIdxRef.current - 1);
+      histIdxRef.current = next;
+      setInputValue(h[next]);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (histIdxRef.current === -1) return;
+      const next = histIdxRef.current + 1;
+      if (next >= h.length) {
+        histIdxRef.current = -1;
+        setInputValue('');
+      } else {
+        histIdxRef.current = next;
+        setInputValue(h[next]);
+      }
+    }
+  };
+
   const handleQuickReply = (e) => {
     sendMessage(e.currentTarget.textContent);
   };
@@ -244,13 +313,9 @@ const Chatbot = () => {
             exit="exit"
           >
             <motion.div className="chatbot-header" variants={itemVariants}>
-              <div className="chatbot-avatar">
-                <Bot size={22} />
-                <span className="chatbot-status-dot" />
-              </div>
               <div className="chatbot-header-info">
-                <span className="chatbot-name">{BOT_NAME}</span>
-                <span className="chatbot-role">{BOT_ROLE}</span>
+                <span className="chatbot-name">vinbyte@portfolio</span>
+                <span className="chatbot-role">~</span>
               </div>
               <button
                 className="chatbot-close"
@@ -264,11 +329,6 @@ const Chatbot = () => {
             <motion.div className="chatbot-messages" variants={itemVariants}>
               {messages.map((message) => (
                 <div key={message.id} className={`message ${message.sender}`}>
-                  {message.sender === 'bot' && (
-                    <span className="message-avatar" aria-hidden="true">
-                      <Bot size={14} />
-                    </span>
-                  )}
                   <div className="message-body">
                     <div className="message-bubble">{linkifyText(message.text)}</div>
                     <span className="message-time">{message.time}</span>
@@ -278,9 +338,6 @@ const Chatbot = () => {
 
               {isTyping && (
                 <div className="message bot">
-                  <span className="message-avatar" aria-hidden="true">
-                    <Bot size={14} />
-                  </span>
                   <div className="message-body">
                     <div className="message-bubble typing-indicator">
                       <span />
@@ -302,13 +359,15 @@ const Chatbot = () => {
             </motion.div>
 
             <motion.form className="chatbot-input-area" onSubmit={handleSubmit} variants={itemVariants}>
+              <span className="chatbot-prompt" aria-hidden="true">$</span>
               <input
                 ref={inputRef}
                 type="text"
                 className="chatbot-input"
-                placeholder="Type a message..."
+                placeholder="type a command…"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={handleKeyDown}
                 maxLength={300}
                 aria-label="Chat message"
               />
@@ -370,7 +429,11 @@ const Chatbot = () => {
             exit={{ rotate: 90, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+            {isOpen ? (
+              <X size={24} />
+            ) : (
+              <span className="toggle-glyph" aria-hidden="true">&gt;_</span>
+            )}
           </motion.span>
         </AnimatePresence>
       </motion.button>

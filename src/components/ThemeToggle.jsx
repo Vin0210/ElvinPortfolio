@@ -8,8 +8,8 @@ import './ThemeToggle.css';
 const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 const THEME_BGS = {
-  dark: '#0A0A1A',
-  light: '#F8F9FA',
+  dark: '#14110E',
+  light: '#FAF7F2',
 };
 
 const ThemeToggle = () => {

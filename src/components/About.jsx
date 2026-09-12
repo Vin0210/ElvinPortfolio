@@ -1,111 +1,77 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Code, Globe, Zap, Users } from 'lucide-react';
+import React from 'react';
+import Kicker from './Kicker';
+import { useInViewOnce } from '../hooks/useInViewOnce';
+import { usePrefersReducedMotion } from '../hooks/useMotionPrefs';
 import './About.css';
 
-const STAT_VALUES = ['10+', '5+', '500+', '8+'];
-
-const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-import { headerContainer, headerItem } from '../utils/animationVariants';
+const NOW_LINES = [
+  ['role', 'web developer @ itech rar, inc.'],
+  ['degree', 'bs information technology, wmsu (2020–2025)'],
+  ['building', 'school systems, booking platforms, ml capstone'],
+  ['learning', 'machine learning · tensorflow · flutter'],
+];
 
 const About = () => {
-  const statsRef = useRef(null);
-  const statsInView = useInView(statsRef, { once: true });
-  const [counts, setCounts] = useState(['0', '0', '0', '0']);
-
-  useEffect(() => {
-    if (!statsInView) return;
-    const duration = 1400;
-    let start;
-    let raf;
-    const step = (ts) => {
-      if (!start) start = ts;
-      const progress = Math.min((ts - start) / duration, 1);
-      setCounts(
-        STAT_VALUES.map((value) => {
-          const match = value.match(/(\d+)(.*)/);
-          const target = parseInt(match[1], 10);
-          const suffix = match[2] || '';
-          return Math.round(target * easeOutCubic(progress)) + suffix;
-        })
-      );
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [statsInView]);
-
-  const stats = [
-    { icon: <Code size={24} />, label: 'Projects' },
-    { icon: <Globe size={24} />, label: 'Clients' },
-    { icon: <Zap size={24} />, label: 'Hours Coded' },
-    { icon: <Users size={24} />, label: 'Collaborations' }
-  ];
+  const [termRef, termInView] = useInViewOnce();
+  const reduced = usePrefersReducedMotion();
+  const show = termInView || reduced;
 
   return (
     <section id="about" className="about section-padding">
-      <div className="about-container">
-        <motion.div
-          className="about-header"
-          variants={headerContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-        >
-          <motion.span variants={headerItem} className="section-tag">About Me</motion.span>
-          <motion.h2 variants={headerItem} className="section-title">Passionate about creating <br />digital experiences</motion.h2>
-        </motion.div>
+      <div className="section-inner">
+        <Kicker index="01" label="about" />
+        <h2 className="section-title">
+          The short <em>version.</em>
+        </h2>
 
         <div className="about-grid">
-          <motion.div
-            className="about-content"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <p className="about-text">
-              I&apos;m a Web Developer with a strong passion for building modern, scalable, and user-centric web applications. With hands-on experience developing enterprise school management systems, I specialize in PHP, Laravel, React, JavaScript, and MySQL.
+          <div className="about-prose">
+            <p>
+              I got into web development at Western Mindanao State University,
+              where I finished an IT degree in 2025. Since mid-2025 I&apos;ve been
+              working at Itech Rar, Inc., building and maintaining a school
+              management system that students, teachers, and administrators
+              actually use every day.
             </p>
-            <p className="about-text">
-              I enjoy transforming complex requirements into reliable, efficient, and intuitive digital solutions.
+            <p>
+              Most of that work is Laravel, React, and MySQL — new features,
+              bug fixes, performance, and the occasional migration nobody wants
+              to touch. Before the job: a document archiving system for WMSU,
+              a machine-learning capstone, and the usual pile of side projects
+              that taught me the most.
             </p>
+            <p>
+              I like problems where correctness matters — enrollment logic,
+              billing, scheduling. The boring-sounding parts that have to be
+              right, because people depend on them.
+            </p>
+          </div>
 
-            <div className="about-stats" ref={statsRef}>
-              {stats.map((stat, index) => (
-                <div key={index} className="stat-item">
-                  <div className="stat-icon">{stat.icon}</div>
-                  <div className="stat-value">{counts[index]}</div>
-                  <div className="stat-label">{stat.label}</div>
+          <aside
+            ref={termRef}
+            className={`about-now term${show ? ' is-in' : ''}`}
+            aria-label="What I'm doing now"
+          >
+            <p className="now-title">
+              $ cat now.txt
+              {!show && <span className="term-caret" aria-hidden="true" />}
+            </p>
+            <dl className="now-list">
+              {NOW_LINES.map(([key, value], i) => (
+                <div
+                  className={`now-row term-row${show ? ' is-shown' : ''}`}
+                  style={{ transitionDelay: `${150 + i * 70}ms` }}
+                  key={key}
+                >
+                  <dt>{key}</dt>
+                  <dd>{value}</dd>
                 </div>
               ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="about-skills"
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="skill-tags">
-              {['Laravel', 'JavaScript', 'Jquery', 'MySQL', 'Node.js', 'CSS', 'HTML', 'Bootstrap', 'React', 'PHP'].map((skill, index) => (
-                <motion.span
-                  key={skill}
-                  className="skill-tag"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * index }}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  {skill}
-                </motion.span>
-              ))}
-            </div>
-          </motion.div>
+            </dl>
+            <p className="now-note">
+              {'// updated whenever something changes'}
+            </p>
+          </aside>
         </div>
       </div>
     </section>

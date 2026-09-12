@@ -1,52 +1,42 @@
 import React from 'react';
-import { ArrowUp } from "lucide-react";
-import { FaFacebook, FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { ArrowUp } from 'lucide-react';
 import { scrollToTop } from '../utils/smoothScroll';
 import './Footer.css';
 
-const Footer = () => {
-  const handleScrollToTop = () => scrollToTop();
+const LINKS = [
+  { label: 'github', href: 'https://github.com/Vin0210' },
+  { label: 'linkedin', href: 'https://www.linkedin.com/in/elvin-ramos-a347b2339' },
+  { label: 'instagram', href: 'https://www.instagram.com/vin.viinn/' },
+  { label: 'facebook', href: 'https://www.facebook.com/elvinramos.meme' },
+];
 
-  return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-content">
-          <div className="footer-brand">
-            <span className="footer-logo">ELvin.</span>
-            <p className="footer-description">
-              Crafting modern web experiences with clean code and creative design.
-            </p>
-          </div>
-
-          <div className="footer-social">
-            <a href="https://github.com/Vin0210" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-              <FaGithub size={20} />
-            </a>
-            <a href="https://www.linkedin.com/in/elvin-ramos-a347b2339" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-              <FaLinkedin size={20} />
-            </a>
-           
-            <a href="https://www.instagram.com/vin.viinn/" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-              <FaInstagram size={20} />
-            </a>
-            <a href="https://www.facebook.com/elvinramos.meme" target="_blank" rel="noopener noreferrer" className="footer-social-link">
-              <FaFacebook size={20} />
-            </a>
-
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p className="footer-copyright">
-            &copy; {new Date().getFullYear()} Elvin Ramos. All rights reserved.
-          </p>
-          <button className="footer-back-top" onClick={handleScrollToTop} aria-label="Back to top">
-            <ArrowUp size={18} />
-          </button>
-        </div>
+const Footer = () => (
+  <footer className="footer">
+    <div className="section-inner footer-inner">
+      <div className="footer-top">
+        <button className="footer-logo" onClick={scrollToTop} aria-label="Back to top">
+          <span className="logo-text">elvin</span>
+          <span className="logo-cursor" aria-hidden="true" />
+        </button>
+        <ul className="footer-links">
+          {LINKS.map(({ label, href }) => (
+            <li key={label}>
+              <a href={href} target="_blank" rel="noopener noreferrer" className="mono-link">
+                {label} <span className="arrow">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
-    </footer>
-  );
-};
+      <div className="footer-bottom">
+        <p>© {new Date().getFullYear()} Elvin Ramos · Zamboanga City, PH</p>
+        <p className="footer-built">Built with React · Sept 2026 build · v2.1</p>
+        <button className="footer-top-btn" onClick={scrollToTop} aria-label="Back to top">
+          <ArrowUp size={16} /> top
+        </button>
+      </div>
+    </div>
+  </footer>
+);
 
 export default React.memo(Footer);

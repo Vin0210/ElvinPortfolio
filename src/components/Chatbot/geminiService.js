@@ -38,7 +38,7 @@ PROJECTS:
 8. DriveRent - Car Rental & Fleet Management Platform (Laravel, React, MySQL) - Currently under development - GitHub: https://github.com/Vin0210/Car-Rental
 
 CONTACT:
-- Email: elvinramos0210@gmail.com
+- Email: elvinramos454@gmail.com
 - GitHub: https://github.com/Vin0210
 - LinkedIn: https://www.linkedin.com/in/elvin-ramos-a347b2339
 - Instagram: https://www.instagram.com/vin.viinn/

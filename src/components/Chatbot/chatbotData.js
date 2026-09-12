@@ -13,9 +13,17 @@ export const CONTACT_EMAILS = ['elvinramos454@gmail.com'];
 const socialList = SOCIAL_LINKS.map((link) => `${link.platform}: ${link.url}`).join('\n');
 
 export const WELCOME_MESSAGE =
-  "Hi there! I'm VinByte, Elvin's virtual assistant. I run on pure JavaScript and zero coffee, which makes me the cheapest employee he has. Ask me anything about Elvin — his skills, projects, or how to reach him!";
+  "vinbyte v2.1 — portfolio shell.\ntype 'help' if you're lost.";
 
-export const QUICK_REPLIES = ['About Elvin', 'Skills', 'Projects', 'Experience', 'Contact', 'Tell me a joke'];
+export const QUICK_REPLIES = ['help', 'whoami', 'projects', 'skills', 'contact'];
+
+export const HELP_TEXT =
+  "available commands:\n  help      this list. thrilling.\n  whoami    who elvin is\n  projects  what he's built\n  skills    what he uses daily\n  contact   how to reach him\n  clear     wipe this screen\n  exit      close this terminal";
+
+export const WHOAMI_TEXT =
+  'elvin ramos — web developer @ itech rar, inc. laravel, react, mysql.';
+
+export const LS_TEXT = 'about  work  skills  background  contact';
 
 export const intents = [
   {

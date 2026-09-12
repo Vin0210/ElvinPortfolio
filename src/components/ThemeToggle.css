@@ -1,66 +1,29 @@
 .theme-toggle {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--border-color);
-  border-radius: 50%;
+  border-radius: var(--radius);
   background: var(--bg-card);
-  backdrop-filter: blur(10px);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-primary);
-  transition: var(--transition);
+  transition: border-color 0.2s ease, color 0.2s ease;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .theme-toggle:hover {
   border-color: var(--primary);
-  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.15);
+  color: var(--primary);
 }
 
 .theme-toggle-bg {
   position: absolute;
   inset: 0;
-  opacity: 0.18;
-  transition: opacity var(--transition);
-}
-
-.theme-toggle:hover .theme-toggle-bg {
-  opacity: 0.3;
-}
-
-.theme-toggle-bg::before,
-.theme-toggle-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.theme-toggle-bg::before {
-  background: linear-gradient(135deg, #6C63FF, #00D4FF);
-}
-
-.theme-toggle-bg::after {
-  background: linear-gradient(135deg, #FF6B9D, #FFB347);
-}
-
-.theme-toggle-bg.is-dark::before {
-  opacity: 1;
-}
-
-.theme-toggle-bg.is-dark::after {
   opacity: 0;
-}
-
-.theme-toggle-bg.is-light::before {
-  opacity: 0;
-}
-
-.theme-toggle-bg.is-light::after {
-  opacity: 1;
 }
 
 .theme-toggle-icon {
@@ -71,18 +34,14 @@
   justify-content: center;
 }
 
-/* Freeze element color transitions while the wipe is running so the
-   new theme applies instantly beneath the circle (no crossfade/gradient lerp) */
+/* Freeze transitions while the wipe runs so the new theme
+   applies instantly beneath the circle */
 html.theme-switching *,
 html.theme-switching *::before,
 html.theme-switching *::after {
   transition: none !important;
 }
 
-/* Clone-reveal transition: the overlay holds a new-theme snapshot of
-   the page, clipped to a circle growing from the toggle. The real page
-   stays fully visible in the old theme until the circle passes over it,
-   so nothing disappears or crossfades midway. */
 .theme-reveal-wrap {
   position: fixed;
   inset: 0;
@@ -96,30 +55,33 @@ html.theme-switching *::after {
   position: absolute;
 }
 
-/* Scope the snapshot to its own theme regardless of the <html> attribute,
-   so the clone keeps showing the intended theme after the real page flips */
+/* Scope the snapshot to its own theme regardless of the
+   <html> attribute, so the clone keeps the intended theme
+   after the real page flips */
 .theme-reveal-wrap[data-theme="light"] {
-  --bg-primary: #F8F9FA;
-  --bg-secondary: #FFFFFF;
-  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-primary: #FAF7F2;
+  --bg-secondary: #F1EBE1;
+  --bg-card: #FFFDF9;
   --bg-elevated: #FFFFFF;
-  --text-primary: #1A1A2E;
-  --text-secondary: #4A4A6A;
-  --text-muted: #8A8AA8;
-  --border-color: rgba(0, 0, 0, 0.08);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 20px 60px rgba(108, 99, 255, 0.15);
+  --text-primary: #221D18;
+  --text-secondary: #57514A;
+  --text-muted: #8B847A;
+  --border-color: rgba(34, 29, 24, 0.16);
+  --border-strong: rgba(34, 29, 24, 0.34);
+  --primary: #C2410C;
+  --code-bg: rgba(34, 29, 24, 0.055);
 }
 
 .theme-reveal-wrap[data-theme="dark"] {
-  --bg-primary: #0A0A1A;
-  --bg-secondary: #12122A;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-elevated: #1A1A3A;
-  --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.4);
-  --border-color: rgba(255, 255, 255, 0.06);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  --shadow-hover: 0 20px 60px rgba(108, 99, 255, 0.2);
+  --bg-primary: #14110E;
+  --bg-secondary: #1B1712;
+  --bg-card: #211C16;
+  --bg-elevated: #282218;
+  --text-primary: #EDE7DE;
+  --text-secondary: #A79F93;
+  --text-muted: #7A7267;
+  --border-color: rgba(237, 231, 222, 0.14);
+  --border-strong: rgba(237, 231, 222, 0.32);
+  --primary: #FF7A3D;
+  --code-bg: rgba(237, 231, 222, 0.06);
 }
