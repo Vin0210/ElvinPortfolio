@@ -361,7 +361,6 @@
 .hero-scroll-cue:hover {
   color: var(--primary);
 }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .hero-scroll-cue span {
