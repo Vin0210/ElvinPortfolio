@@ -6,6 +6,25 @@
 
 export const featuredProjects = [
   {
+    id: 'coffee',
+    title: 'Alegre × Good Habits',
+    tagline: 'Editorial e-commerce for a coffee + thrift shop',
+    year: '2026',
+    role: 'Solo build — full stack',
+    status: 'live demo',
+    image: '/images/coffee.png',
+    gallery: [],
+    stack: ['React 19', 'Vite', 'Supabase', 'Framer Motion'],
+    why: 'A shop site for a specialty coffee shop and a thrift store sharing one space. Built to run entirely on free infra, with a demo mode so it works with no backend connected.',
+    points: [
+      'Coffee menu plus one-of-one thrift pieces in a single unified cart',
+      'Checkout with cash or PayMongo (GCash, GrabPay, cards)',
+      'Order tracking, table reservations and a full admin dashboard',
+    ],
+    demo: 'https://alegrexgoodhabits.pages.dev/',
+    github: 'https://github.com/Vin0210/Coffee',
+  },
+  {
     id: 'dentalos',
     title: 'DentalOS',
     tagline: 'Practice management software for dental clinics',

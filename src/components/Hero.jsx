@@ -67,8 +67,6 @@ const TypeRole = ({ text }) => {
 const SOCIALS = [
   { label: 'github', href: 'https://github.com/Vin0210' },
   { label: 'linkedin', href: 'https://www.linkedin.com/in/elvin-ramos-a347b2339' },
-  { label: 'instagram', href: 'https://www.instagram.com/vin.viinn/' },
-  { label: 'facebook', href: 'https://www.facebook.com/elvinramos.meme' },
 ];
 
 const Hero = () => {

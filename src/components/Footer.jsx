@@ -30,7 +30,6 @@ const Footer = () => (
       </div>
       <div className="footer-bottom">
         <p>© {new Date().getFullYear()} Elvin Ramos · Zamboanga City, PH</p>
-        <p className="footer-built">Built with React · Sept 2026 build · v2.1</p>
         <button className="footer-top-btn" onClick={scrollToTop} aria-label="Back to top">
           <ArrowUp size={16} /> top
         </button>
