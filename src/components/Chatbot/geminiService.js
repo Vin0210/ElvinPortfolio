@@ -36,6 +36,7 @@ PROJECTS:
 6. Todo List - Productivity app (React, CSS) - Live: https://todotodo1222.netlify.app/
 7. Fast Food E-Commerce - Online ordering platform (PHP, MySQL)
 8. DriveRent - Car Rental & Fleet Management Platform (Laravel, React, MySQL) - Currently under development - GitHub: https://github.com/Vin0210/Car-Rental
+9. Alegre × Good Habits (latest) - Editorial e-commerce for a coffee + thrift shop (React 19, Vite, Supabase, Framer Motion) with unified cart, PayMongo checkout, order tracking, reservations and admin dashboard - Live: https://alegrexgoodhabits.pages.dev/ | GitHub: https://github.com/Vin0210/Coffee
 
 CONTACT:
 - Email: elvinramos454@gmail.com
