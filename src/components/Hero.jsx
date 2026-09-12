@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { usePrefersReducedMotion } from '../hooks/useMotionPrefs';
 import { scrollToSection } from '../utils/smoothScroll';
+import PhotoGag from './PhotoGag';
 import './Hero.css';
 
 const PROMPT = '~ $ whoami';
@@ -127,21 +128,7 @@ const Hero = () => {
           </ul>
         </div>
 
-        <div className="hero-visual">
-          <figure className="hero-photo">
-            <img
-              src="/images/elvin.jpg"
-              alt="Elvin Ramos"
-              loading="eager"
-            />
-            <figcaption className="hero-photo-caption">
-              elvin ramos — zamboanga city, 2025
-            </figcaption>
-          </figure>
-          <p className="hero-note" aria-hidden="true">
-            {'// probably in VS Code right now'}
-          </p>
-        </div>
+        <PhotoGag />
       </div>
 
       <button

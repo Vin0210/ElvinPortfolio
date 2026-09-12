@@ -148,9 +148,8 @@
 }
 
 /* Tape corners: the deliberate imperfection that says a person placed this */
-.hero-photo::before,
-.hero-photo::after {
-  content: '';
+/* Tape strips are real elements so they can detach and fall off-screen */
+.hero-photo .tape {
   position: absolute;
   top: -12px;
   width: 72px;
@@ -159,16 +158,126 @@
   border: 1px solid var(--border-color);
   opacity: 0.9;
   z-index: 2;
+  transition: transform 0.2s ease-out;
 }
 
-.hero-photo::before {
+.hero-photo .tape-l {
   left: 18px;
   transform: rotate(-8deg);
 }
 
-.hero-photo::after {
+.hero-photo .tape-r {
   right: 18px;
   transform: rotate(7deg);
+}
+
+/* Hovering peels a corner — the tape lifts a little each time */
+.hero-photo:hover .tape-l {
+  transform: rotate(-3deg) translateY(-4px);
+}
+
+.hero-photo:hover .tape-r {
+  transform: rotate(12deg) translateY(-4px);
+}
+
+/* Both strips gone: the photo hangs loose and wobbles, telegraphing
+   that one more hover finishes the job */
+.hero-photo img.wobble {
+  animation: photoWobble 0.55s ease-in-out infinite;
+}
+
+@keyframes photoWobble {
+  0%, 100% { transform: rotate(-0.7deg); }
+  50% { transform: rotate(0.7deg) translateY(3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo img.wobble {
+    animation: none;
+  }
+}
+
+/* Hidden originals keep their layout slot while the clone is out */
+.is-gone {
+  visibility: hidden;
+}
+
+/* Fallen pieces live in document coordinates so they stay where they
+   landed no matter which section is on screen. No overflow clipping here:
+   the layer's own box is only viewport-tall, and clipping would cut off
+   every piece resting below the fold. */
+.fallen-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  pointer-events: none;
+}
+
+.fallen-piece {
+  position: absolute;
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.fallen-piece.is-drag {
+  cursor: grabbing;
+  z-index: 501;
+}
+
+.fallen-piece img {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+}
+
+.fallen-piece .tape {
+  position: static;
+  display: block;
+  width: 72px;
+  height: 24px;
+  background: color-mix(in srgb, var(--primary) 22%, var(--bg-card));
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+/* Fallen-state caption becomes the quiet reset button */
+.hero-photo-caption.as-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.hero-photo-caption.as-btn:hover {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Staged peel: each hover works the strip looser, smoothly */
+.hero-photo .tape-l.peel-1 { transform: rotate(-4deg) translateY(-6px); }
+.hero-photo .tape-l.peel-2 { transform: rotate(3deg) translateY(-13px); }
+.hero-photo .tape-r.peel-1 { transform: rotate(10deg) translateY(-6px); }
+.hero-photo .tape-r.peel-2 { transform: rotate(17deg) translateY(-13px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo:hover .tape-l,
+  .hero-photo:hover .tape-r,
+  .hero-photo .tape-l.peel-1,
+  .hero-photo .tape-l.peel-2,
+  .hero-photo .tape-r.peel-1,
+  .hero-photo .tape-r.peel-2 {
+    transform: none;
+  }
 }
 
 .hero-photo img {
