@@ -25,6 +25,13 @@
   gap: 20px;
 }
 
+/* Browser default h1/p margins stack on top of the flex gap and blow
+   out the rhythm (the big hole between the name and the role line) */
+.hero-copy h1,
+.hero-copy p {
+  margin: 0;
+}
+
 /* Terminal-style greeting */
 .hero-prompt {
   font-family: var(--font-mono);
@@ -192,11 +199,12 @@
 
 .hero-note {
   position: absolute;
-  top: -28px;
-  right: 6px;
+  top: -48px;
+  right: 0;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   color: var(--primary);
+  white-space: nowrap;
   /* Stuck on late, like an afterthought — then completely still */
   opacity: 0;
   transform: rotate(-5deg) translateY(6px);
@@ -267,7 +275,7 @@
   }
 
   .hero-note {
-    top: -24px;
+    top: -44px;
   }
 }
 
