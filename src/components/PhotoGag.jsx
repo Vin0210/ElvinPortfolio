@@ -199,21 +199,16 @@ const PhotoGag = () => {
     setHits(0);
   };
 
-  const onPieceDown = (e, id) => {
-    const p = pieces[id];
-    if (!p || p.status !== 'resting') return;
-    e.preventDefault();
-    e.currentTarget.setPointerCapture(e.pointerId);
-    animsRef.current[id]?.cancel();
-    dragRef.current = { id, sx: e.clientX, sy: e.clientY, ox: p.dx, oy: p.dy };
-    setPieces((prev) => ({ ...prev, [id]: { ...prev[id], status: 'dragging' } }));
-  };
-
-  const onPieceMove = (e) => {
+  const onWindowMove = (e) => {
     const d = dragRef.current;
-    if (!d) return;
-    const dx = d.ox + (e.clientX - d.sx);
-    const dy = d.oy + (e.clientY - d.sy);
+    if (!d || e.pointerId !== d.pid) return;
+    // Pieces live in document coordinates but the pointer reports
+    // viewport coordinates — fold scroll drift back in or the piece
+    // slides away whenever the page moves mid-drag.
+    const dx = d.ox + (e.clientX - d.sx) + (window.scrollX - d.bx);
+    const dy = d.oy + (e.clientY - d.sy) + (window.scrollY - d.by);
+    d.lx = dx;
+    d.ly = dy;
     setPieces((prev) => {
       const cur = prev[d.id];
       if (!cur || cur.status !== 'dragging') return prev;
@@ -221,12 +216,13 @@ const PhotoGag = () => {
     });
   };
 
-  const onPieceUp = (e) => {
+  const endDrag = (e) => {
     const d = dragRef.current;
     dragRef.current = null;
+    window.removeEventListener('pointermove', onWindowMove);
     if (!d) return;
-    const dx = d.ox + (e.clientX - d.sx);
-    const dy = d.oy + (e.clientY - d.sy);
+    const dx = e && e.clientX !== undefined ? d.ox + (e.clientX - d.sx) + (window.scrollX - d.bx) : d.lx ?? d.ox;
+    const dy = e && e.clientY !== undefined ? d.oy + (e.clientY - d.sy) + (window.scrollY - d.by) : d.ly ?? d.oy;
     if (Math.hypot(dx, dy) < SNAP_RADIUS) {
       flyHome(d.id, { dx, dy, rot: pieces[d.id]?.rot || 0 }).then(() => attach(d.id));
     } else {
@@ -236,6 +232,44 @@ const PhotoGag = () => {
         return { ...prev, [d.id]: { ...cur, status: 'resting', dx, dy } };
       });
     }
+  };
+
+  const onPieceDown = (e, id) => {
+    const p = pieces[id];
+    if (!p || p.status === 'attached' || !p.home || dragRef.current) return;
+    e.preventDefault();
+    // Measure BEFORE releasing anything: getBoundingClientRect reflects
+    // the live on-screen position (even mid-fall), so the piece is
+    // grabbed exactly where the eye sees it.
+    const r = e.currentTarget.getBoundingClientRect();
+    const m = new DOMMatrixReadOnly(getComputedStyle(e.currentTarget).transform);
+    const dx = r.left + window.scrollX - p.home.x;
+    const dy = r.top + window.scrollY - p.home.y;
+    const rot = Math.round((Math.atan2(m.b, m.a) * 180) / Math.PI);
+    // Cancel EVERYTHING affecting this element — finished fills, stray
+    // duplicates — not just the one animation we tracked. Any leftover
+    // filler overriding the drag transform is what glues a piece down.
+    e.currentTarget.getAnimations().forEach((a) => a.cancel());
+    fallAnimsRef.current[id] = null;
+    animsRef.current[id] = null;
+    dragRef.current = { id, pid: e.pointerId, sx: e.clientX, sy: e.clientY, ox: dx, oy: dy, lx: dx, ly: dy, bx: window.scrollX, by: window.scrollY };
+    setPieces((prev) => {
+      const cur = prev[id];
+      if (!cur || cur.status === 'attached') return prev;
+      return { ...prev, [id]: { ...cur, status: 'dragging', dx, dy, rot } };
+    });
+  // Window-level tracking: works with or without pointer capture,
+    // mouse or touch — the gesture can't get lost. Listeners are added
+    // once per grab and always removed on release.
+    const finish = (ev) => {
+      window.removeEventListener('pointermove', onWindowMove);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+      endDrag(ev);
+    };
+    window.addEventListener('pointermove', onWindowMove);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
   };
 
   const gone = (id) => (pieces[id].status === 'attached' ? '' : ' is-gone');
@@ -303,9 +337,6 @@ const PhotoGag = () => {
                     }deg)`,
                   }}
                   onPointerDown={(e) => onPieceDown(e, id)}
-                  onPointerMove={onPieceMove}
-                  onPointerUp={onPieceUp}
-                  onPointerCancel={onPieceUp}
                 >
                   {id === 'photo' ? (
                     <img src="/images/elvin.jpg" alt="" draggable={false} />
