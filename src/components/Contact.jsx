@@ -7,6 +7,7 @@ import './Contact.css';
 const SOCIALS = [
   { label: 'github', href: 'https://github.com/Vin0210' },
   { label: 'linkedin', href: 'https://www.linkedin.com/in/elvin-ramos-a347b2339' },
+  { label: 'blog', href: 'https://elvinsblog.netlify.app/' },
 ];
 
 const Contact = () => {

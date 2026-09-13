@@ -4,6 +4,7 @@ export const BOT_ROLE = "Elvin's digital sidekick";
 export const SOCIAL_LINKS = [
   { platform: 'GitHub', url: 'https://github.com/Vin0210' },
   { platform: 'LinkedIn', url: 'https://www.linkedin.com/in/elvin-ramos-a347b2339' },
+  { platform: 'Blog', url: 'https://elvinsblog.netlify.app/' },
   { platform: 'Instagram', url: 'https://www.instagram.com/vin.viinn/' },
   { platform: 'Facebook', url: 'https://www.facebook.com/elvinramos.meme' }
 ];
