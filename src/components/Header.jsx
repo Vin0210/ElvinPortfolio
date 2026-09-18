@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { scrollToSection } from '../utils/smoothScroll';
@@ -9,9 +9,6 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState('home');
-
-  const { scrollYProgress } = useScroll();
-  const progressScale = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   const navItems = useMemo(() => [
     { id: 'about', label: 'about' },
@@ -168,8 +165,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-
-      <motion.div className="scroll-progress" style={{ scaleX: progressScale }} />
 
       <AnimatePresence>
         {isOpen && (
