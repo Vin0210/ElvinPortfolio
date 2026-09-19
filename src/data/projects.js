@@ -6,6 +6,26 @@
 
 export const featuredProjects = [
   {
+    id: 'solemania',
+    title: 'SoleMania',
+    tagline: 'Full-stack shoe e-commerce platform',
+    year: '2026',
+    role: 'Solo build — React storefront + Express/MySQL API',
+    status: 'in production',
+    image: '/images/solemania.png',
+    gallery: [],
+    stack: ['React 19', 'Vite', 'Node.js', 'Express', 'MySQL'],
+    why: 'A complete shoe store, not just a catalog. Customer storefront plus a role-protected admin side, with real checkout logic against a MySQL backend.',
+    points: [
+      'Browse, search, filter, and sort with size-level stock states',
+      'Cart and wishlist with JWT auth and synced checkout',
+      'Transaction-safe orders with server-side pricing and coupons',
+      'Admin dashboard for products, orders, inventory, and customers',
+    ],
+    demo: '',
+    github: 'https://github.com/Vin0210/solemania',
+  },
+  {
     id: 'coffee',
     title: 'Alegre × Good Habits',
     tagline: 'Editorial e-commerce for a coffee + thrift shop',
