@@ -5,6 +5,7 @@
    ============================================================ */
 
 :root {
+  color-scheme: light;
   /* Light theme (paper) */
   --bg-primary: #FAF7F2;
   --bg-secondary: #F1EBE1;
@@ -42,6 +43,7 @@
 }
 
 [data-theme='dark'] {
+  color-scheme: dark;
   /* Dark theme (warm charcoal) */
   --bg-primary: #14110E;
   --bg-secondary: #1B1712;
@@ -80,17 +82,44 @@
   }
 }
 
-/* Theme switch: quick crossfade of cheap color properties only.
-   NOTE: do NOT animate registered custom properties (@property) here —
-   interpolating inherited variables forces a full style recalculation
-   of every element on every animation frame, which causes visible lag. */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2147483646;
+}
+
+::view-transition-group(root) {
+  animation-duration: 0.65s;
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
+}
+
+html::view-transition {
+  background: var(--bg-primary);
+}
+
+/* Fallback for browsers without document.startViewTransition: a short
+   crossfade of cheap color properties only. No DOM cloning, no rAF loop,
+   and box-shadow / backdrop-filter are deliberately excluded so this
+   stays at 60fps. */
 .theme-morphing,
 .theme-morphing *,
 .theme-morphing *::before,
 .theme-morphing *::after {
-  transition: background-color 0.35s ease,
-              color 0.35s ease,
-              border-color 0.35s ease !important;
+  transition: background-color 0.28s ease,
+              color 0.28s ease,
+              border-color 0.28s ease !important;
 }
 
 body {

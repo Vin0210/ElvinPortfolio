@@ -2,28 +2,24 @@
   position: relative;
   width: 40px;
   height: 40px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  background: var(--bg-card);
+  border: none;
+  border-radius: 50%;
+  background: transparent;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text-primary);
-  transition: border-color 0.2s ease, color 0.2s ease;
-  overflow: hidden;
+  transition: color 0.2s ease;
+  
+  overflow: visible;
   flex-shrink: 0;
+  will-change: transform;
+  padding: 0;
 }
 
 .theme-toggle:hover {
-  border-color: var(--primary);
   color: var(--primary);
-}
-
-.theme-toggle-bg {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
 }
 
 .theme-toggle-icon {
@@ -32,56 +28,242 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* Freeze transitions while the wipe runs so the new theme
-   applies instantly beneath the circle */
-html.theme-switching *,
-html.theme-switching *::before,
-html.theme-switching *::after {
-  transition: none !important;
-}
-
-.theme-reveal-wrap {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  overflow: hidden;
-  will-change: clip-path;
 }
 
-.theme-reveal-scroll {
+.toggle-scene {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+/* ============ SUN ============ */
+.rays {
   position: absolute;
+  inset: -4px;
+  animation: rays-spin 12s linear infinite;
 }
 
-/* Scope the snapshot to its own theme regardless of the
-   <html> attribute, so the clone keeps the intended theme
-   after the real page flips */
-.theme-reveal-wrap[data-theme="light"] {
-  --bg-primary: #FAF7F2;
-  --bg-secondary: #F1EBE1;
-  --bg-card: #FFFDF9;
-  --bg-elevated: #FFFFFF;
-  --text-primary: #221D18;
-  --text-secondary: #57514A;
-  --text-muted: #8B847A;
-  --border-color: rgba(34, 29, 24, 0.16);
-  --border-strong: rgba(34, 29, 24, 0.34);
-  --primary: #C2410C;
-  --code-bg: rgba(34, 29, 24, 0.055);
+.ray {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 5px;
+  margin-left: -1px;
+  border-radius: 2px;
+  background: var(--primary);
+  transform: rotate(calc(var(--i) * 45deg)) translateY(-14px);
+  transform-origin: 50% 50%;
 }
 
-.theme-reveal-wrap[data-theme="dark"] {
-  --bg-primary: #14110E;
-  --bg-secondary: #1B1712;
-  --bg-card: #211C16;
-  --bg-elevated: #282218;
-  --text-primary: #EDE7DE;
-  --text-secondary: #A79F93;
-  --text-muted: #7A7267;
-  --border-color: rgba(237, 231, 222, 0.14);
-  --border-strong: rgba(237, 231, 222, 0.32);
-  --primary: #FF7A3D;
-  --code-bg: rgba(237, 231, 222, 0.06);
+.sun-body {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--primary-dark), var(--primary) 72%);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 35%, transparent);
+  animation: bob 3s ease-in-out infinite;
+}
+
+.face {
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: 60%;
+  height: 20%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eye {
+  width: 3px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--on-primary);
+}
+
+.smile {
+  position: absolute;
+  left: 50%;
+  top: 78%;
+  width: 8px;
+  height: 5px;
+  transform: translateX(-50%);
+  border: 1.5px solid var(--on-primary);
+  border-top: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-radius: 0 0 8px 8px;
+}
+
+.cheek {
+  position: absolute;
+  top: 58%;
+  width: 4px;
+  height: 3px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--on-primary) 55%, transparent);
+}
+
+.cheek-left { left: 8%; }
+.cheek-right { right: 8%; }
+
+/* ============ MOON ============ */
+.moon-body {
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    var(--text-primary),
+    color-mix(in srgb, var(--text-primary) 72%, var(--text-muted)) 75%
+  );
+
+  -webkit-mask-image: radial-gradient(circle 10px at 95% 0%, transparent 9px, #000 10.5px);
+  mask-image: radial-gradient(circle 10px at 95% 0%, transparent 9px, #000 10.5px);
+  overflow: hidden;
+  animation: bob 3.4s ease-in-out infinite;
+}
+
+
+
+.sleepy-eyes {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  width: 58%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.sleepy-eye {
+  width: 5px;
+  height: 3px;
+  border: 1.5px solid var(--bg-primary);
+  border-bottom: none;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  border-radius: 5px 5px 0 0;
+}
+
+.sleepy-smile {
+  position: absolute;
+  left: 30%;
+  top: 62%;
+  width: 5px;
+  height: 4px;
+  border: 1.5px solid var(--bg-primary);
+  border-top: none;
+  border-right: none;
+  border-radius: 0 0 0 5px;
+  transform: rotate(-10deg);
+  z-index: 1;
+}
+
+.twinkle-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: twinkle 1.8s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+
+.zzz {
+  position: absolute;
+  right: -2px;
+  top: -6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.z {
+  position: absolute;
+  opacity: 0;
+  animation: z-float 2.4s ease-out infinite;
+}
+
+.z2 {
+  animation-delay: 1.2s;
+}
+
+/* ============ CLICK BURST ============ */
+.burst {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.burst-dot {
+  position: absolute;
+  left: -2.5px;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary);
+  animation: burst-fly 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+.burst-dot:nth-child(even) {
+  background: var(--primary-dark);
+}
+
+/* ============ KEYFRAMES (transform + opacity only = GPU, no lag) ============ */
+@keyframes rays-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes z-float {
+  0% { transform: translate(0, 2px) scale(0.6); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translate(6px, -12px) scale(1.15); opacity: 0; }
+}
+
+@keyframes burst-fly {
+  from {
+    transform: rotate(var(--a)) translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--a)) translateY(-26px) scale(0);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rays,
+  .sun-body,
+  .moon-body,
+  .twinkle-star,
+  .z {
+    animation: none !important;
+  }
+  .burst { display: none !important; }
 }
