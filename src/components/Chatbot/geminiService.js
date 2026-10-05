@@ -122,8 +122,13 @@ GUIDELINES:
 // Tries a single model. Throws on any failure so the caller can move
 // on to the next model. Returns the reply text on success, including
 // the safety-filter refusal (that's content-related, not model-related).
-const tryModel = async (model, contents) => {
-  const response = await fetch(`${GEMINI_API_BASE}/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+// Transient errors (429/5xx overload) get one retry after a short wait.
+const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const postToModel = (model, contents) =>
+  fetch(`${GEMINI_API_BASE}/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -139,14 +144,22 @@ const tryModel = async (model, contents) => {
     }),
   });
 
-  console.log(`Gemini [${model}] response status:`, response.status);
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error(`Gemini [${model}] error response:`, errorText);
-    const err = new Error(`API error: ${response.status} - ${errorText}`);
-    err.status = response.status;
-    throw err;
+const tryModel = async (model, contents) => {
+  let response;
+  let attempt = 0;
+  for (;;) {
+    attempt += 1;
+    response = await postToModel(model, contents);
+    console.log(`Gemini [${model}] response status (attempt ${attempt}):`, response.status);
+    if (response.ok) break;
+    if (attempt >= 2 || !RETRYABLE_STATUS.has(response.status)) {
+      const errorText = await response.text();
+      console.error(`Gemini [${model}] error response:`, errorText);
+      const err = new Error(`API error: ${response.status} - ${errorText}`);
+      err.status = response.status;
+      throw err;
+    }
+    await sleep(1000 * attempt);
   }
 
   const data = await response.json();
