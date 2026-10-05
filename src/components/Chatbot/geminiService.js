@@ -1,5 +1,62 @@
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
+const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
+
+
+const PREFERRED_MODELS = (import.meta.env.VITE_GEMINI_MODELS || 'gemini-2.0-flash,gemini-1.5-flash,gemini-1.5-flash-latest')
+  .split(',')
+  .map((m) => m.trim())
+  .filter(Boolean);
+
+const WORKING_MODEL_KEY = 'vinbyte-working-model';
+
+const getCachedModel = () => {
+  try {
+    return localStorage.getItem(WORKING_MODEL_KEY) || '';
+  } catch {
+    return '';
+  }
+};
+
+const setCachedModel = (model) => {
+  try {
+    localStorage.setItem(WORKING_MODEL_KEY, model);
+  } catch {
+   
+  }
+};
+
+const discoverModels = async () => {
+  const res = await fetch(`${GEMINI_API_BASE}/models?key=${GEMINI_API_KEY}`);
+  if (!res.ok) return [];
+  const data = await res.json();
+  const usable = (data.models || [])
+    .filter((m) => (m.supportedGenerationMethods || []).includes('generateContent'))
+    .map((m) => String(m.name || '').replace(/^models\//, ''))
+    .filter(Boolean);
+  
+  const flash = usable.filter((m) => m.includes('flash'));
+  const rest = usable.filter((m) => !m.includes('flash'));
+  return [...flash, ...rest];
+};
+
+const getCandidateModels = async () => {
+  const cached = getCachedModel();
+  const ordered = [...PREFERRED_MODELS];
+  let discovered = [];
+  try {
+    discovered = await discoverModels();
+  } catch {
+   
+  }
+  for (const m of discovered) {
+    if (!ordered.includes(m)) ordered.push(m);
+  }
+ 
+  if (cached && ordered.includes(cached)) {
+    return [cached, ...ordered.filter((m) => m !== cached)];
+  }
+  return ordered;
+};
 
 // Context about Elvin for the AI to provide accurate responses
 const SYSTEM_CONTEXT = `You are VinByte, Elvin's virtual assistant on his portfolio website. You are friendly, helpful, and occasionally humorous.
@@ -59,6 +116,51 @@ GUIDELINES:
 - If asked if you're AI, you can be honest but keep it lighthearted
 - Be helpful and engaging - you're representing Elvin!`;
 
+// Tries a single model. Throws on any failure so the caller can move
+// on to the next model. Returns the reply text on success, including
+// the safety-filter refusal (that's content-related, not model-related).
+const tryModel = async (model, contents) => {
+  const response = await fetch(`${GEMINI_API_BASE}/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      contents,
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 500,
+      },
+    }),
+  });
+
+  console.log(`Gemini [${model}] response status:`, response.status);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error(`Gemini [${model}] error response:`, errorText);
+    const err = new Error(`API error: ${response.status} - ${errorText}`);
+    err.status = response.status;
+    throw err;
+  }
+
+  const data = await response.json();
+
+  if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+    return data.candidates[0].content.parts[0].text;
+  }
+
+  // Check for safety filter blocks
+  if (data.promptFeedback) {
+    console.warn(`Gemini [${model}] prompt feedback:`, data.promptFeedback);
+    return "I'd rather not respond to that. Feel free to ask me about Elvin's skills, projects, or experience!";
+  }
+
+  throw new Error('No response from Gemini');
+};
+
 export const generateResponse = async (userMessage, conversationHistory = []) => {
   try {
     // Build conversation context
@@ -82,53 +184,30 @@ export const generateResponse = async (userMessage, conversationHistory = []) =>
       }
     ];
 
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        contents,
-        generationConfig: {
-          temperature: 0.7,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 500,
-        },
-      }),
-    });
-
-    // Log the response status for debugging
-    console.log('Gemini API response status:', response.status);
-    
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Gemini API error response:', errorText);
-      throw new Error(`API error: ${response.status} - ${errorText}`);
+    // Try each candidate model in order until one works.
+    const candidates = await getCandidateModels();
+    let lastError = null;
+    for (const model of candidates) {
+      try {
+        const text = await tryModel(model, contents);
+        setCachedModel(model);
+        return text;
+      } catch (modelError) {
+        console.warn(`Gemini model ${model} failed, trying next:`, modelError.message);
+        lastError = modelError;
+        // Network-level failure: retrying other models won't help.
+        if (modelError.name === 'TypeError') break;
+      }
     }
-
-    const data = await response.json();
-    console.log('Gemini API response data:', data);
-    
-    if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-      return data.candidates[0].content.parts[0].text;
-    }
-
-    // Check for safety filter blocks
-    if (data.promptFeedback) {
-      console.warn('Gemini prompt feedback:', data.promptFeedback);
-      return "I'd rather not respond to that. Feel free to ask me about Elvin's skills, projects, or experience!";
-    }
-
-    throw new Error('No response from Gemini');
+    throw lastError || new Error('No working Gemini model');
   } catch (error) {
     console.error('Gemini API error:', error);
-    
+
     // More specific error messages
     if (error.name === 'TypeError' && error.message.includes('fetch')) {
       return "I'm having network issues. Please check your connection and try again!";
     }
-    
+
     return "I'm having trouble connecting right now. Please try again later, or you can reach Elvin directly through the contact form or email!";
   }
 };

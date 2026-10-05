@@ -397,11 +397,6 @@ textarea:focus-visible {
   flex-shrink: 0;
 }
 
-.status-badge.live::before {
-  background: var(--ok);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent);
-}
-
 .status-badge.building::before {
   background: var(--primary);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);

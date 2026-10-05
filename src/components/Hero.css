@@ -46,16 +46,6 @@
   gap: 8px;
 }
 
-.hero-prompt::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--ok);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 20%, transparent);
-  flex-shrink: 0;
-}
-
 .hero-name {
   font-family: var(--font-display);
   font-weight: 400;
