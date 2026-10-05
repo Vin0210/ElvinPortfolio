@@ -45,4 +45,11 @@ export default [
       'react-refresh/only-export-components': 'off',
     },
   },
+  {
+    // Netlify Functions run on Node, not in the browser.
+    files: ['netlify/functions/*.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ]

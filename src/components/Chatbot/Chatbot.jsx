@@ -233,9 +233,10 @@ const Chatbot = () => {
           // Use Gemini API for real AI responses with timeout
           const conversationHistory = [...messages, userMessage];
           
-          // Race between API call and timeout (5 seconds)
+          // Race between API call and timeout (10 seconds — the function
+          // retries overloaded models server-side before giving up)
           const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('timeout')), 5000)
+            setTimeout(() => reject(new Error('timeout')), 10000)
           );
           
           try {

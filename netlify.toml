@@ -1,0 +1,5 @@
+# Netlify Functions (chat proxy keeps the Gemini key server-side).
+# Build settings stay in the Netlify dashboard — only the functions
+# directory is pinned here so deploys pick up netlify/functions/*.
+[functions]
+  directory = "netlify/functions"
