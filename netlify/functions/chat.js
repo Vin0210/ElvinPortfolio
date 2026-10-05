@@ -169,13 +169,22 @@ const json = (statusCode, body) => ({
 });
 
 export const handler = async (event) => {
-  if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' });
-  if (!GEMINI_API_KEY) return json(500, { error: 'Chat is not configured' });
+  if (event.httpMethod !== 'POST') {
+    console.log('chat reject: method', event.httpMethod);
+    return json(405, { error: 'Method not allowed' });
+  }
+  if (!GEMINI_API_KEY) {
+    console.log('chat reject: no key configured');
+    return json(500, { error: 'Chat is not configured' });
+  }
 
   // Same-site only: block cross-site callers trying to burn quota.
   const origin = event.headers.origin || event.headers.referer || '';
   const host = event.headers.host || '';
-  if (origin && host && !origin.includes(host)) return json(403, { error: 'Forbidden' });
+  if (origin && host && !origin.includes(host)) {
+    console.log('chat reject: origin', JSON.stringify(origin), 'host', JSON.stringify(host));
+    return json(403, { error: 'Forbidden' });
+  }
 
   // Per-IP rate limit.
   const ip = event.headers['x-nf-client-connection-ip']
@@ -184,8 +193,10 @@ export const handler = async (event) => {
   const now = Date.now();
   const entry = hits.get(ip);
   if (!entry || now - entry.start > RATE_WINDOW_MS) hits.set(ip, { count: 1, start: now });
-  else if (entry.count >= RATE_LIMIT) return json(429, { error: 'Too many requests, slow down!' });
-  else entry.count += 1;
+  else if (entry.count >= RATE_LIMIT) {
+    console.log('chat reject: rate limit for ip', ip);
+    return json(429, { error: 'Too many requests, slow down!' });
+  } else entry.count += 1;
 
   let payload;
   try {

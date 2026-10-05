@@ -19,16 +19,22 @@ export const generateResponse = async (userMessage, conversationHistory = []) =>
       body: JSON.stringify({ message: userMessage, history }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Chat function error: ${response.status}`);
+    // Surface the server's own error text when present (e.g. rate limit)
+    // so the cause is visible instead of a generic failure message.
+    let data = null;
+    try {
+      data = await response.json();
+    } catch {
+      data = null;
     }
-
-    const data = await response.json();
     if (data && typeof data.reply === 'string' && data.reply.trim()) {
       return data.reply;
     }
     if (data && typeof data.error === 'string' && data.error.trim()) {
       return data.error;
+    }
+    if (!response.ok) {
+      throw new Error(`Chat function error: ${response.status}`);
     }
 
     throw new Error('Empty reply from chat function');
