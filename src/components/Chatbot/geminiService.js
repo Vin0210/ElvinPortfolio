@@ -2,7 +2,7 @@ const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 
-const PREFERRED_MODELS = (import.meta.env.VITE_GEMINI_MODELS || 'gemini-2.0-flash,gemini-1.5-flash,gemini-1.5-flash-latest')
+const PREFERRED_MODELS = (import.meta.env.VITE_GEMINI_MODELS || 'gemini-3.8-flash,gemini-2.0-flash,gemini-1.5-flash,gemini-1.5-flash-latest')
   .split(',')
   .map((m) => m.trim())
   .filter(Boolean);
@@ -21,7 +21,7 @@ const setCachedModel = (model) => {
   try {
     localStorage.setItem(WORKING_MODEL_KEY, model);
   } catch {
-   
+    return;
   }
 };
 
@@ -29,10 +29,13 @@ const discoverModels = async () => {
   const res = await fetch(`${GEMINI_API_BASE}/models?key=${GEMINI_API_KEY}`);
   if (!res.ok) return [];
   const data = await res.json();
+  // Skip non-chat models (TTS/image/embeddings can't do multiturn chat —
+  // e.g. gemini-2.5-flash-preview-tts 400s on conversation history).
+  const NON_CHAT = /tts|image|embed|aqa/i;
   const usable = (data.models || [])
     .filter((m) => (m.supportedGenerationMethods || []).includes('generateContent'))
     .map((m) => String(m.name || '').replace(/^models\//, ''))
-    .filter(Boolean);
+    .filter((name) => name && !NON_CHAT.test(name));
   
   const flash = usable.filter((m) => m.includes('flash'));
   const rest = usable.filter((m) => !m.includes('flash'));
@@ -46,7 +49,7 @@ const getCandidateModels = async () => {
   try {
     discovered = await discoverModels();
   } catch {
-   
+    discovered = [];
   }
   for (const m of discovered) {
     if (!ordered.includes(m)) ordered.push(m);
