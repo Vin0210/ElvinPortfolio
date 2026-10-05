@@ -6,7 +6,7 @@ import './Hero.css';
 
 const PROMPT = '~ $ whoami';
 
-const ROLES = ['web developer', 'laravel developer', 'react enthusiast'];
+const ROLES = ['full-stack web developer', 'laravel developer', 'react developer'];
 
 /**
  * Executes once on load: types the prompt, then goes solid.
@@ -81,12 +81,12 @@ const Hero = () => {
   }, []);
 
   return (
-    <section id="home" className="hero">
+    <section id="home" className="hero" aria-labelledby="hero-heading">
       <div className="hero-inner">
         <div className="hero-copy">
           <ExecPrompt />
 
-          <h1 className="hero-name">
+          <h1 id="hero-heading" className="hero-name">
             Elvin <em>Ramos</em>
           </h1>
 
@@ -97,9 +97,10 @@ const Hero = () => {
 
           <p className="hero-desc">
             I build and maintain web systems people rely on every day — school
-            management platforms, booking sites, and internal tools. Mostly
-            Laravel, React, and MySQL. Currently a web developer at
-            Itech&nbsp;Rar,&nbsp;Inc.
+            management systems, booking sites, and internal tools. Mostly PHP
+            and Laravel, with JavaScript, React, Vue.js, REST APIs and MySQL.
+            Currently a full-stack web developer at Itech&nbsp;Rar,&nbsp;Inc.
+            in the Philippines.
           </p>
 
           <div className="hero-actions">

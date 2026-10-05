@@ -296,8 +296,12 @@ const PhotoGag = () => {
             origRefs.current.photo = el;
           }}
           src="/images/elvin.jpg"
-          alt="Elvin Ramos"
+          alt="Elvin Ramos, full-stack web developer from the Philippines"
           loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          width="800"
+          height="1123"
           className={`${loose ? 'wobble' : ''}${gone('photo')}`}
         />
         {fallenIds.length > 0 ? (

@@ -17,10 +17,10 @@ const About = () => {
   const show = termInView || reduced;
 
   return (
-    <section id="about" className="about section-padding">
+    <section id="about" className="about section-padding" aria-labelledby="about-heading">
       <div className="section-inner">
         <Kicker index="01" label="about" />
-        <h2 className="section-title">
+        <h2 id="about-heading" className="section-title">
           The short <em>version.</em>
         </h2>
 
@@ -29,12 +29,13 @@ const About = () => {
             <p>
               I got into web development at Western Mindanao State University,
               where I finished an IT degree in 2025. Since mid-2025 I&apos;ve been
-              working at Itech Rar, Inc., building and maintaining a school
+              working at Itech Rar, Inc. in the Philippines, building and maintaining a school
               management system that students, teachers, and administrators
               actually use every day.
             </p>
             <p>
-              Most of that work is Laravel, React, and MySQL — new features,
+              Most of that work is PHP and Laravel on the backend with JavaScript,
+              React, and MySQL — REST APIs, new features,
               bug fixes, performance, and the occasional migration nobody wants
               to touch. Before the job: a document archiving system for WMSU,
               a machine-learning capstone, and the usual pile of side projects

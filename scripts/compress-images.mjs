@@ -9,6 +9,8 @@ const MAX_WIDTH = 1600;
 const files = await readdir(dir);
 
 for (const file of files) {
+  // Keep the OG cover as PNG: social crawlers handle PNG most reliably
+  if (file === 'og-cover.png') continue;
   const ext = path.extname(file).toLowerCase();
   const filePath = path.join(dir, file);
 

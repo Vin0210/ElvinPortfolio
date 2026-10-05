@@ -39,11 +39,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="contact section-padding">
+    <section id="contact" className="contact section-padding" aria-labelledby="contact-heading">
       <div className="section-inner contact-grid">
         <div>
           <Kicker index="05" label="contact" />
-          <h2 className="section-title">
+          <h2 id="contact-heading" className="section-title">
             Say <em>hello.</em>
           </h2>
           <p className="contact-lede">

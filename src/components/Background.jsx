@@ -73,10 +73,10 @@ const Background = () => {
   const show = termInView || reduced;
 
   return (
-    <section id="background" className="background section-padding">
+    <section id="background" className="background section-padding" aria-labelledby="background-heading">
     <div className="section-inner">
       <Kicker index="04" label="background" />
-      <h2 className="section-title">
+      <h2 id="background-heading" className="section-title">
         Where I&apos;ve <em>been.</em>
       </h2>
 
@@ -95,17 +95,17 @@ const Background = () => {
 
           <h3 className="bg-column-title bg-certs-title">$ ls ./certs</h3>
           <ul className="certs-list">
-            {CERTS.map((cert) => (
-              <li key={cert.name}>
+            {CERTS.map((c) => (
+              <li key={c.name}>
                 <button
                   className="cert-row"
-                  onClick={() => setCert(cert.img)}
-                  aria-label={`View ${cert.name} certificate`}
+                  onClick={() => setCert(c)}
+                  aria-label={`View ${c.name} certificate`}
                 >
-                  <img src={cert.img} alt="" className="cert-thumb" loading="lazy" />
+                  <img src={c.img} alt={`${c.name} certificate — ${c.from}`} className="cert-thumb" loading="lazy" decoding="async" />
                   <span className="cert-text">
-                    <span className="cert-name">{cert.name}</span>
-                    <span className="cert-from">{cert.from}</span>
+                    <span className="cert-name">{c.name}</span>
+                    <span className="cert-from">{c.from}</span>
                   </span>
                   <span className="cert-expand" aria-hidden="true">↗</span>
                 </button>
@@ -136,7 +136,7 @@ const Background = () => {
             <button className="lightbox-close" onClick={() => setCert(null)} aria-label="Close">
               <X size={26} />
             </button>
-            <img src={cert} alt="Certificate full view" decoding="async" />
+            <img src={cert.img} alt={`${cert.name} certificate — ${cert.from}`} decoding="async" />
             <p className="lightbox-hint">click outside to close</p>
           </motion.div>
         </motion.div>

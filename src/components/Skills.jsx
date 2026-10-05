@@ -11,7 +11,7 @@ const GROUPS = [
       { name: 'jQuery', daily: true },
       { name: 'React', daily: true },
       { name: 'Bootstrap', daily: true },
-      { name: 'Vue', daily: false },
+      { name: 'Vue.js', daily: false },
     ],
   },
   {
@@ -19,6 +19,7 @@ const GROUPS = [
     items: [
       { name: 'PHP', daily: true },
       { name: 'Laravel', daily: true },
+      { name: 'REST APIs', daily: true },
       { name: 'MySQL', daily: true },
       { name: 'Node.js', daily: true },
     ],
@@ -35,10 +36,10 @@ const GROUPS = [
 
 const Skills = () => {
   return (
-    <section id="skills" className="skills section-padding">
+    <section id="skills" className="skills section-padding" aria-labelledby="skills-heading">
       <div className="section-inner">
         <Kicker index="03" label="skills" />
-        <h2 className="section-title">
+        <h2 id="skills-heading" className="section-title">
           What I <em>reach for.</em>
         </h2>
         <p className="section-lede">

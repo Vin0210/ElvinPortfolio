@@ -22,7 +22,7 @@ const ProjectCase = ({ project, index, onImageClick }) => {
           onClick={(e) => onImageClick(e, project)}
           aria-label={`View ${project.title} screenshots`}
         >
-          <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" />
+          <img src={project.image} alt={`${project.title} — ${project.tagline}`} loading="lazy" decoding="async" />
           <span className="case-image-hint" aria-hidden="true">
             <Maximize2 size={16} /> full size
           </span>
@@ -139,10 +139,10 @@ const Projects = () => {
   }, [gallery, closeGallery, stepGallery]);
 
   return (
-    <section id="work" className="work section-padding">
+    <section id="work" className="work section-padding" aria-labelledby="work-heading">
       <div className="section-inner">
         <Kicker index="02" label="work" />
-        <h2 className="section-title">
+        <h2 id="work-heading" className="section-title">
           Things I&apos;ve <em>built.</em>
         </h2>
         <p className="section-lede">
@@ -222,6 +222,7 @@ const Projects = () => {
                 src={gallery.images[gallery.index]}
                 alt={`${gallery.title} screenshot ${gallery.index + 1} of ${gallery.images.length}`}
                 decoding="async"
+                loading="eager"
               />
               {gallery.images.length > 1 && (
                 <>

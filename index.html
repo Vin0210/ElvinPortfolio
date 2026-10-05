@@ -5,28 +5,37 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#FAF7F2" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Elvin Ramos — Web Developer</title>
-    <meta name="description" content="Elvin Ramos is a web developer building school management systems, booking platforms and other web apps with Laravel, React and MySQL." />
-    <link rel="canonical" href="https://elvinramos.netlify.app/" />
+    <title>Elvin Ramos | Full-Stack Web Developer Philippines</title>
+    <meta name="description" content="Elvin Ramos is a full-stack web developer from the Philippines building school management systems and web apps with PHP, Laravel, JavaScript, React and MySQL." />
+    <meta name="author" content="Elvin Ramos" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="geo.region" content="PH" />
+    <meta name="geo.placename" content="Zamboanga City, Philippines" />
+    <link rel="canonical" href="https://ramoselvin.netlify.app/" />
 
     <!-- Link previews (Messenger, Facebook, X, LinkedIn, etc.) -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://elvinramos.netlify.app/" />
-    <meta property="og:title" content="Elvin Ramos — Web Developer" />
-    <meta property="og:description" content="I build and maintain web systems people rely on every day — school management platforms, booking sites, and internal tools." />
-    <meta property="og:image" content="https://elvinramos.netlify.app/images/og-cover.png" />
+    <meta property="og:site_name" content="Elvin Ramos — Portfolio" />
+    <meta property="og:locale" content="en_PH" />
+    <meta property="og:url" content="https://ramoselvin.netlify.app/" />
+    <meta property="og:title" content="Elvin Ramos | Full-Stack Web Developer Philippines" />
+    <meta property="og:description" content="Full-stack web developer from the Philippines. I build school management systems, booking platforms and web apps with PHP, Laravel, React and MySQL." />
+    <meta property="og:image" content="https://ramoselvin.netlify.app/images/og-cover.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Elvin Ramos — web developer" />
+    <meta property="og:image:alt" content="Elvin Ramos — full-stack web developer from the Philippines" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Elvin Ramos — Web Developer" />
-    <meta name="twitter:description" content="I build and maintain web systems people rely on every day — school management platforms, booking sites, and internal tools." />
-    <meta name="twitter:image" content="https://elvinramos.netlify.app/images/og-cover.png" />
+    <meta name="twitter:title" content="Elvin Ramos | Full-Stack Web Developer Philippines" />
+    <meta name="twitter:description" content="Full-stack web developer from the Philippines. School management systems, booking platforms and web apps with PHP, Laravel, React and MySQL." />
+    <meta name="twitter:image" content="https://ramoselvin.netlify.app/images/og-cover.png" />
 
     <!-- Inter (body) · JetBrains Mono (labels/code details) · Instrument Serif (display) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+    <!-- LCP hint: hero portrait is the largest above-the-fold image -->
+    <link rel="preload" as="image" href="/images/elvin.jpg" fetchpriority="high" />
 
     <style>
       /* Pre-hydration paint: set the right theme before React loads
@@ -63,6 +72,51 @@
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'light');
       }
+    </script>
+
+    <!-- Structured data: Person + WebSite (no fake info — mirrors visible content) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://ramoselvin.netlify.app/#person",
+          "name": "Elvin Ramos",
+          "url": "https://ramoselvin.netlify.app/",
+          "image": "https://ramoselvin.netlify.app/images/elvin.jpg",
+          "jobTitle": "Full-Stack Web Developer",
+          "description": "Full-stack web developer from the Philippines building school management systems and web apps with PHP, Laravel, JavaScript, React and MySQL.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Zamboanga City",
+            "addressCountry": "PH"
+          },
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Western Mindanao State University"
+          },
+          "worksFor": {
+            "@type": "Organization",
+            "name": "Itech Rar, Inc."
+          },
+          "knowsAbout": ["PHP", "Laravel", "JavaScript", "Vue.js", "React", "REST APIs", "MySQL", "Web Development", "School Management Systems"],
+          "sameAs": [
+            "https://github.com/Vin0210",
+            "https://www.linkedin.com/in/elvin-ramos-a347b2339",
+            "https://elvinsblog.netlify.app/"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://ramoselvin.netlify.app/#website",
+          "url": "https://ramoselvin.netlify.app/",
+          "name": "Elvin Ramos | Full-Stack Web Developer Philippines",
+          "author": { "@id": "https://ramoselvin.netlify.app/#person" },
+          "inLanguage": "en-PH"
+        }
+      ]
+    }
     </script>
   </head>
   <body>
