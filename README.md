@@ -96,24 +96,6 @@ A web-based booking management system designed for managing pickleball courts an
 
 **Technologies:** React, Laravel, MySQL, REST API
 
-## 📸 Preview
-
-Add screenshots of your portfolio here:
-
-```md
-![Portfolio Preview](./screenshots/portfolio.png)
-```
-
-You can also add multiple screenshots:
-
-```md
-![Home](./screenshots/home.png)
-
-![Projects](./screenshots/projects.png)
-
-![Contact](./screenshots/contact.png)
-```
-
 ## 🧠 Skills
 
 ```text
@@ -134,17 +116,6 @@ JavaScript               █████████████████░�
 * API architecture
 * Modern web animations
 
-## 📬 Contact
-
-Interested in working together or discussing a project?
-
-**Email:** [Your email]
-
-**Portfolio:** [Your portfolio]
-
-**GitHub:** [Your GitHub]
-
-**LinkedIn:** [Your LinkedIn]
 
 ## ⭐ Support
 
