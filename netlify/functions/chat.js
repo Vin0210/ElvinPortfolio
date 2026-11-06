@@ -6,7 +6,7 @@
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
-const PREFERRED_MODELS = (process.env.GEMINI_MODELS || 'gemini-3.8-flash,gemini-2.0-flash,gemini-1.5-flash,gemini-1.5-flash-latest')
+const PREFERRED_MODELS = (process.env.GEMINI_MODELS || 'gemini-2.0-flash,gemini-1.5-flash-latest')
   .split(',')
   .map((m) => m.trim())
   .filter(Boolean);
@@ -81,52 +81,51 @@ GUIDELINES:
 - Be helpful and engaging - you're representing Elvin!`;
 
 const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
-const NON_CHAT = /tts|image|embed|aqa/i;
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const discoverModels = async () => {
-  const res = await fetch(`${GEMINI_API_BASE}/models?key=${GEMINI_API_KEY}`);
-  if (!res.ok) return [];
-  const data = await res.json();
-  const usable = (data.models || [])
-    .filter((m) => (m.supportedGenerationMethods || []).includes('generateContent'))
-    .map((m) => String(m.name || '').replace(/^models\//, ''))
-    .filter((name) => name && !NON_CHAT.test(name));
-  const flash = usable.filter((m) => m.includes('flash'));
-  const rest = usable.filter((m) => !m.includes('flash'));
-  return [...flash, ...rest];
-};
-
-const postToModel = (model, contents) =>
-  fetch(`${GEMINI_API_BASE}/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
+const postToModel = (model, contents, timeoutMs = 7000) => {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+  return fetch(`${GEMINI_API_BASE}/models/${model}:generateContent?key=${GEMINI_API_KEY}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents,
-      generationConfig: { temperature: 0.7, topK: 40, topP: 0.95, maxOutputTokens: 500 },
+      generationConfig: { temperature: 0.7, topK: 40, topP: 0.95, maxOutputTokens: 300 },
     }),
-  });
+    signal: ctrl.signal,
+  }).finally(() => clearTimeout(t));
+};
 
 const tryModel = async (model, contents) => {
-  for (let attempt = 1; ; attempt += 1) {
-    const response = await postToModel(model, contents);
-    if (response.ok) {
-      const data = await response.json();
-      if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-        return data.candidates[0].content.parts[0].text;
+  // Single attempt + one quick retry on rate-limit/overload only.
+  // No long sleeps — Netlify kills idle functions (Inactivity Timeout).
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try {
+      const response = await postToModel(model, contents);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+          return data.candidates[0].content.parts[0].text;
+        }
+        if (data.promptFeedback) {
+          return "I'd rather not respond to that. Feel free to ask me about Elvin's skills, projects, or experience!";
+        }
+        throw new Error('No response from Gemini');
       }
-      if (data.promptFeedback) {
-        return "I'd rather not respond to that. Feel free to ask me about Elvin's skills, projects, or experience!";
+      if (!RETRYABLE_STATUS.has(response.status) || attempt === 2) {
+        const err = new Error(`Gemini [${model}] failed: ${response.status}`);
+        err.status = response.status;
+        throw err;
       }
-      throw new Error('No response from Gemini');
+      await sleep(500);
+    } catch (e) {
+      if (e.name === 'AbortError' || e.name === 'TypeError') throw e;
+      if (attempt === 2) throw e;
+      await sleep(500);
     }
-    if (attempt >= 2 || !RETRYABLE_STATUS.has(response.status)) {
-      const err = new Error(`Gemini [${model}] failed: ${response.status}`);
-      err.status = response.status;
-      throw err;
-    }
-    await sleep(1000 * attempt);
   }
+  throw new Error('No working Gemini model');
 };
 
 const getReply = async (message, history) => {
@@ -140,14 +139,9 @@ const getReply = async (message, history) => {
     { role: 'user', parts: [{ text: message }] },
   ];
 
-  const ordered = [...PREFERRED_MODELS];
-  try {
-    for (const m of await discoverModels()) {
-      if (!ordered.includes(m)) ordered.push(m);
-    }
-  } catch {
-    /* discovery failed — preferred list only */
-  }
+  // Max 2 models, no discovery call — discovery + long retry loops
+  // caused Netlify Inactivity Timeout (function idle >10s).
+  const ordered = [...PREFERRED_MODELS].slice(0, 2);
   const candidates = workingModel && ordered.includes(workingModel)
     ? [workingModel, ...ordered.filter((m) => m !== workingModel)]
     : ordered;
@@ -160,7 +154,7 @@ const getReply = async (message, history) => {
       return text;
     } catch (modelError) {
       lastError = modelError;
-      if (modelError.name === 'TypeError') break;
+      if (modelError.name === 'TypeError' || modelError.name === 'AbortError') break;
     }
   }
   throw lastError || new Error('No working Gemini model');
@@ -215,7 +209,12 @@ export const handler = async (event) => {
   if (!message) return json(400, { error: 'Empty message' });
 
   try {
-    const reply = await getReply(message, history);
+    // Hard deadline at 8.5s so Netlify never hits Inactivity Timeout (10s).
+    // Client falls back to offline replies on 502.
+    const deadline = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Function deadline exceeded')), 8500)
+    );
+    const reply = await Promise.race([getReply(message, history), deadline]);
     return json(200, { reply });
   } catch (error) {
     console.error('Chat function error:', error.status || '', error.message || error);
