@@ -18,7 +18,7 @@ const ProjectCase = ({ project, index, onImageClick }) => {
     >
       <div className="case-media">
         <button
-          className="case-image-btn"
+          className={`case-image-btn${project.portrait ? ' portrait' : ''}`}
           onClick={(e) => onImageClick(e, project)}
           aria-label={`View ${project.title} screenshots`}
         >

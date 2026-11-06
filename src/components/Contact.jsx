@@ -42,7 +42,7 @@ const Contact = () => {
     <section id="contact" className="contact section-padding" aria-labelledby="contact-heading">
       <div className="section-inner contact-grid">
         <div>
-          <Kicker index="05" label="contact" />
+          <Kicker index="07" label="contact" />
           <h2 id="contact-heading" className="section-title">
             Say <em>hello.</em>
           </h2>

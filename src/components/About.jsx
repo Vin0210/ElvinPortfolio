@@ -5,10 +5,10 @@ import { usePrefersReducedMotion } from '../hooks/useMotionPrefs';
 import './About.css';
 
 const NOW_LINES = [
-  ['role', 'web developer @ itech rar, inc.'],
+  ['role', 'web dev @ itech rar, inc. → ai & automation'],
   ['degree', 'bs information technology, wmsu (2020–2025)'],
-  ['building', 'school systems, booking platforms, ml capstone'],
-  ['learning', 'machine learning · tensorflow · flutter'],
+  ['building', 'rag chatbots, workflow automations, ml apps'],
+  ['learning', 'llms · langchain · vector dbs · n8n'],
 ];
 
 const About = () => {
@@ -44,7 +44,10 @@ const About = () => {
             <p>
               I like problems where correctness matters — enrollment logic,
               billing, scheduling. The boring-sounding parts that have to be
-              right, because people depend on them.
+              right, because people depend on them. Lately that means adding
+              AI where it pays off: RAG chatbots over real docs, agents that
+              file, tag, and route work, and small automations that kill
+              repetitive clicks.
             </p>
           </div>
 

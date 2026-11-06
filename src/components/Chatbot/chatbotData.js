@@ -16,15 +16,15 @@ const socialList = SOCIAL_LINKS.map((link) => `${link.platform}: ${link.url}`).j
 export const WELCOME_MESSAGE =
   "vinbyte v2.1 — portfolio shell.\ntype 'help' if you're lost.";
 
-export const QUICK_REPLIES = ['help', 'whoami', 'projects', 'skills', 'contact'];
+export const QUICK_REPLIES = ['help', 'whoami', 'ai work', 'automations', 'contact'];
 
 export const HELP_TEXT =
-  "available commands:\n  help      this list. thrilling.\n  whoami    who elvin is\n  projects  what he's built\n  skills    what he uses daily\n  contact   how to reach him\n  clear     wipe this screen\n  exit      close this terminal";
+  "available commands:\n  help         this list. thrilling.\n  whoami       who elvin is\n  projects     what he's built\n  ai work      chatbots, rag, ml\n  automations  workflows that save hours\n  skills       what he uses daily\n  contact      how to reach him\n  clear        wipe this screen\n  exit         close this terminal";
 
 export const WHOAMI_TEXT =
-  'elvin ramos — web developer @ itech rar, inc. laravel, react, mysql.';
+  'elvin ramos — ai & automation engineer (ex full-stack @ itech rar, inc). rag chatbots, workflow automations, laravel + react + mysql.';
 
-export const LS_TEXT = 'about  work  skills  background  contact';
+export const LS_TEXT = 'about  work  automations  skills  background  playground  contact';
 
 export const intents = [
   {
@@ -93,8 +93,24 @@ export const intents = [
     id: 'skills',
     keywords: ['skill', 'skills', 'tech', 'stack', 'technology', 'technologies', 'language', 'languages', 'framework', 'frameworks', 'tools', 'tools do you use', 'what do you use'],
     responses: [
-      "Elvin's arsenal:\n\nFrontend: React, JavaScript, jQuery, HTML, CSS, Bootstrap\nBackend: PHP, Laravel, REST API, OOP\nDatabase: MySQL\nOther: Node.js\n\nHis CSS is so good, even his divs are centered in life.",
-      "Full-stack toolkit incoming:\n\nReact, JavaScript, jQuery, HTML, CSS, Bootstrap on the front\nPHP, Laravel, REST APIs and OOP on the back\nMySQL keeping the data in line\n\nHe speaks fluent PHP and sarcasm."
+      "Elvin's arsenal:\n\nAI & Automation: Python, Gemini/OpenAI APIs, RAG + Vector DBs, LangChain, n8n/Make/webhooks, TensorFlow/scikit-learn\nFrontend: React, JavaScript, HTML, CSS, Bootstrap\nBackend: PHP, Laravel, REST APIs, Node.js\nDatabase: MySQL\n\nHis CSS is so good, even his divs are centered in life.",
+      "AI-first toolkit:\n\nLLM chatbots, RAG assistants, agents (Gemini, LangChain)\nAutomations with n8n, webhooks, REST APIs, Playwright\nPlus the full-stack base: React, Laravel, MySQL\n\nHe speaks fluent Python and sarcasm."
+    ]
+  },
+  {
+    id: 'ai_work',
+    keywords: ['ai work', 'ai', 'artificial intelligence', 'llm', 'rag', 'chatbot', 'agent', 'agents', 'gemini', 'openai', 'langchain', 'machine learning', 'ml', 'tensorflow', 'vector', 'embeddings', 'prompt'],
+    responses: [
+      "Elvin's AI work: VinByte — the RAG chatbot live on this site (React + Netlify Function + Gemini, with offline intents and rate limiting), Snake ID App — on-device TFLite classifier for PH snakes (Flutter + TensorFlow capstone), and the AI playground section below with live summarizer / intent-classifier / rewrite demos.",
+      "He builds LLM apps that ship: RAG over real docs, function-style routing, server-side keys, fallbacks when models flake. Try the playground section or the >_ chat button — that's the demo."
+    ]
+  },
+  {
+    id: 'automations',
+    keywords: ['automation', 'automations', 'automate', 'workflow', 'workflows', 'n8n', 'zapier', 'make', 'webhook', 'playwright', 'pipeline', 'save time', 'hours saved'],
+    responses: [
+      "Automations Elvin runs: inbox triage (form → classify → route), registrar/stock alerts (MySQL cron → email), booking smoke checks (Playwright → alert). See the new automations section: trigger → logic → action, each with hours-saved outcome.",
+      "His rule: automate the boring parts first. Enrollment emails, low-stock/expiry pings, report exports, form-to-inbox pipelines — all with retries and logs. Ask him for one via the contact form."
     ]
   },
   {

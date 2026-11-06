@@ -3,8 +3,10 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
 import Projects from './components/Projects';
+import Automations from './components/Automations';
 import Skills from './components/Skills';
 import Background from './components/Background';
+import Playground from './components/Playground';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot/Chatbot';
@@ -20,8 +22,10 @@ function App() {
           <Hero />
           <About />
           <Projects />
+          <Automations />
           <Skills />
           <Background />
+          <Playground />
           <Contact />
         </main>
         <Footer />

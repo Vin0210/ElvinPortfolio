@@ -25,11 +25,23 @@ const GROUPS = [
     ],
   },
   {
+    label: 'ai & automation',
+    items: [
+      { name: 'Python', daily: true },
+      { name: 'Gemini / OpenAI APIs', daily: true },
+      { name: 'RAG + Vector DBs', daily: true },
+      { name: 'LangChain', daily: false },
+      { name: 'n8n / Make / webhooks', daily: true },
+      { name: 'TensorFlow / scikit-learn', daily: false },
+    ],
+  },
+  {
     label: 'tools & workflow',
     items: [
       { name: 'Git & GitHub', daily: true },
       { name: 'VS Code', daily: true },
       { name: 'phpMyAdmin / XAMPP', daily: true },
+      { name: 'Playwright / automation scripts', daily: false },
     ],
   },
 ];
@@ -38,7 +50,7 @@ const Skills = () => {
   return (
     <section id="skills" className="skills section-padding" aria-labelledby="skills-heading">
       <div className="section-inner">
-        <Kicker index="03" label="skills" />
+        <Kicker index="04" label="skills" />
         <h2 id="skills-heading" className="section-title">
           What I <em>reach for.</em>
         </h2>

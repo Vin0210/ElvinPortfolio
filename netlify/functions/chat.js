@@ -29,10 +29,11 @@ PRIMARY JOB:
 ABOUT ELVIN:
 - Full name: Elvin Ramos
 - Location: Philippines
-- Profession: Web Developer
+- Profession: AI & Automation Engineer (full-stack web developer background @ iTECH-RAR)
 - Education: BS Information Technology from Western Mindanao State University (2020-2025)
 
 SKILLS:
+- AI & Automation: Python, Gemini/OpenAI APIs, RAG + Vector DBs, LangChain, n8n/Make/webhooks, TensorFlow/scikit-learn, Playwright
 - Frontend: React, HTML, CSS, JavaScript, Bootstrap, Tailwind CSS
 - Backend: Laravel, PHP, Node.js, Express
 - Database: MySQL, MongoDB, phpMyAdmin
@@ -45,10 +46,13 @@ CURRENT WORK:
 - Built modules for: Enrollment, Registrar, Finance, Cashier, Student Portal, Teacher Portal, Attendance Monitoring, Peer Evaluation, and Reports
 
 PROJECTS:
-1. Resort Booking - Full-stack resort reservation system (React, Node.js, MongoDB, Express) - Live: https://resort-booking-sand.vercel.app/ | GitHub: https://github.com/Vin0210/ResortBooking
-2. SmashPoint - Pickleball court booking system (Laravel, MySQL, React) - Live: https://smashpoint.whf.bz/ | GitHub: https://github.com/Vin0210/SmashPoint
-3. RMMC System - Comprehensive School Management System (Laravel, MySQL) - Live: https://rmmcmain.com/
-4. Snake Identification App - ML app for identifying Philippine snakes (Flutter, TensorFlow)
+1. VinByte - RAG portfolio assistant live on this site (React + Netlify Function + Gemini, offline intents, rate limiting, fallback chain)
+2. Snake ID App - ML image recognition for Philippine snakes, on-device TFLite (Flutter, TensorFlow capstone, 2025)
+3. Ops Automations - inbox triage, MySQL cron alerts, Playwright booking checks (n8n, REST, EmailJS) in production
+4. Resort Booking - Full-stack resort reservation system (React, Node.js, MongoDB, Express) - Live: https://resort-booking-sand.vercel.app/ | GitHub: https://github.com/Vin0210/ResortBooking
+5. SmashPoint - Pickleball court booking system (Laravel, MySQL, React) - Live: https://smashpoint.whf.bz/ | GitHub: https://github.com/Vin0210/SmashPoint
+6. RMMC System - Comprehensive School Management System (Laravel, MySQL) - Live: https://rmmcmain.com/
+7. Snake Identification App - ML app for identifying Philippine snakes (Flutter, TensorFlow)
 5. Pokémon Web - Pokémon encyclopedia with team building (React, CSS, JSON Server) - Live: https://pokemonhehe.netlify.app/
 6. Todo List - Productivity app (React, CSS) - Live: https://todotodo1222.netlify.app/
 7. Fast Food E-Commerce - Online ordering platform (PHP, MySQL)

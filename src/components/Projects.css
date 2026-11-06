@@ -60,6 +60,26 @@
   transition: transform 0.25s ease-out;
 }
 
+/* Portrait phone screenshots (e.g. Snake Buddy): show whole screen, not a crop */
+.case-image-btn.portrait {
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: var(--bg-secondary);
+  cursor: zoom-in;
+}
+
+.case-image-btn.portrait img {
+  width: auto;
+  max-width: 100%;
+  height: 460px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
 /* Parallax-lite: the screenshot shifts a few px, like it was nudged */
 .project-case:hover .case-image-btn img,
 .case-image-btn:focus-visible img {

@@ -75,7 +75,7 @@ const Background = () => {
   return (
     <section id="background" className="background section-padding" aria-labelledby="background-heading">
     <div className="section-inner">
-      <Kicker index="04" label="background" />
+      <Kicker index="05" label="background" />
       <h2 id="background-heading" className="section-title">
         Where I&apos;ve <em>been.</em>
       </h2>

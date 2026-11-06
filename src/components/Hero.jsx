@@ -6,7 +6,7 @@ import './Hero.css';
 
 const PROMPT = '~ $ whoami';
 
-const ROLES = ['full-stack web developer', 'laravel developer', 'react developer'];
+const ROLES = ['ai & automation engineer', 'full-stack web developer', 'rag chatbot builder'];
 
 /**
  * Executes once on load: types the prompt, then goes solid.
@@ -96,11 +96,12 @@ const Hero = () => {
           </p>
 
           <p className="hero-desc">
-            I build and maintain web systems people rely on every day — school
-            management systems, booking sites, and internal tools. Mostly PHP
-            and Laravel, with JavaScript, React, Vue.js, REST APIs and MySQL.
+            I build web systems people rely on every day — plus AI chatbots,
+            RAG assistants, and workflow automations that save real hours.
+            Mostly Python and JavaScript, with PHP/Laravel, REST APIs and MySQL,
+            plus Gemini/OpenAI, LangChain, vector DBs, and n8n/Make.
             Currently a full-stack web developer at Itech&nbsp;Rar,&nbsp;Inc.
-            in the Philippines.
+            in the Philippines, moving toward AI &amp; automation full-time.
           </p>
 
           <div className="hero-actions">
